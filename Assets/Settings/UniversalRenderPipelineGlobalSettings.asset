@@ -53,21 +53,25 @@ MonoBehaviour:
       - rid: 6852985685364965393
       - rid: 6852985685364965394
       - rid: 8712630790384254976
-      - rid: 2792077034803167232
       - rid: 2792077034803167233
       - rid: 2792077034803167234
-      - rid: 2792077034803167235
       - rid: 2792077034803167236
       - rid: 2792077034803167237
       - rid: 2792077034803167238
-      - rid: 2792077034803167239
       - rid: 2792077034803167240
-      - rid: 2792077034803167241
-      - rid: 2792077034803167242
-      - rid: 2792077034803167243
     m_RuntimeSettings:
-      m_List: []
-  m_AssetVersion: 9
+      m_List:
+      - rid: 6852985685364965378
+      - rid: 6852985685364965379
+      - rid: 6852985685364965380
+      - rid: 6852985685364965381
+      - rid: 6852985685364965384
+      - rid: 6852985685364965385
+      - rid: 6852985685364965392
+      - rid: 6852985685364965394
+      - rid: 8712630790384254976
+      - rid: 2792077034803167237
+  m_AssetVersion: 8
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
   - Light Layer default
@@ -97,21 +101,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 2792077034803167232
-      type: {class: RayTracingRenderPipelineResources, ns: UnityEngine.Rendering.UnifiedRayTracing, asm: Unity.UnifiedRayTracing.Runtime}
-      data:
-        m_Version: 1
-        m_GeometryPoolKernels: {instanceID: 63300}
-        m_CopyBuffer: {instanceID: 63302}
-        m_CopyPositions: {instanceID: 63304}
-        m_BitHistogram: {instanceID: 63306}
-        m_BlockReducePart: {instanceID: 63308}
-        m_BlockScan: {instanceID: 63310}
-        m_BuildHlbvh: {instanceID: 63312}
-        m_RestructureBvh: {instanceID: 63314}
-        m_Scatter: {instanceID: 63316}
     - rid: 2792077034803167233
       type: {class: ScreenSpaceAmbientOcclusionPersistentResources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
@@ -129,11 +118,6 @@ MonoBehaviour:
         - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
         - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
         m_Version: 0
-    - rid: 2792077034803167235
-      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
-      data:
-        m_Version: 0
-        m_UberPostShader: {instanceID: 63318}
     - rid: 2792077034803167236
       type: {class: PostProcessData/TextureResources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
@@ -210,51 +194,10 @@ MonoBehaviour:
         uberPostPS: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
         finalPostPassPS: {fileID: 4800000, guid: c49e63ed1bbcb334780a3bd19dfed403, type: 3}
         m_ShaderResourcesVersion: 0
-    - rid: 2792077034803167239
-      type: {class: URPReflectionProbeSettings, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Universal.Runtime}
-      data:
-        version: 1
-        useReflectionProbeRotation: 0
     - rid: 2792077034803167240
       type: {class: UniversalRenderPipelineEditorAssets, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_DefaultSettingsVolumeProfile: {fileID: 11400000, guid: eda47df5b85f4f249abf7abd73db2cb2, type: 2}
-    - rid: 2792077034803167241
-      type: {class: VrsRenderPipelineRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
-      data:
-        m_TextureComputeShader: {instanceID: 63382}
-        m_VisualizationShader: {instanceID: 63384}
-        m_VisualizationLookupTable:
-          m_Data:
-          - {r: 0.785, g: 0.23, b: 0.2, a: 1}
-          - {r: 1, g: 0.8, b: 0.8, a: 1}
-          - {r: 0.4, g: 0.2, b: 0.2, a: 1}
-          - {r: 0.51, g: 0.8, b: 0.6, a: 1}
-          - {r: 0.6, g: 0.8, b: 1, a: 1}
-          - {r: 0.2, g: 0.4, b: 0.6, a: 1}
-          - {r: 0.8, g: 1, b: 0.8, a: 1}
-          - {r: 0.2, g: 0.4, b: 0.2, a: 1}
-          - {r: 0.125, g: 0.22, b: 0.36, a: 1}
-        m_ConversionLookupTable:
-          m_Data:
-          - {r: 0.785, g: 0.23, b: 0.2, a: 1}
-          - {r: 1, g: 0.8, b: 0.8, a: 1}
-          - {r: 0.4, g: 0.2, b: 0.2, a: 1}
-          - {r: 0.51, g: 0.8, b: 0.6, a: 1}
-          - {r: 0.6, g: 0.8, b: 1, a: 1}
-          - {r: 0.2, g: 0.4, b: 0.6, a: 1}
-          - {r: 0.8, g: 1, b: 0.8, a: 1}
-          - {r: 0.2, g: 0.4, b: 0.2, a: 1}
-          - {r: 0.125, g: 0.22, b: 0.36, a: 1}
-    - rid: 2792077034803167242
-      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
-      data:
-        m_version: 0
-    - rid: 2792077034803167243
-      type: {class: LightmapSamplingSettings, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
-      data:
-        m_Version: 1
-        m_UseBicubicLightmapSampling: 0
     - rid: 6852985685364965376
       type: {class: URPShaderStrippingSetting, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:

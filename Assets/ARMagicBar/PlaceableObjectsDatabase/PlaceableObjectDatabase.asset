@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
-  m_Name: RoseWindowLibrary
+  m_Script: {fileID: 11500000, guid: a8338018b9b047b5b08e7353922b2d4f, type: 3}
+  m_Name: PlaceableObjectDatabase
   m_EditorClassIdentifier: 
-  m_GuidLow: 5712321490836458801
-  m_GuidHigh: 15327880321467630249
-  m_DataStore:
-    m_Storage: []
-  m_Images: []
+  PlacementObjectSos:
+  - {fileID: 11400000, guid: 97857a61329c04a39a995051c115c374, type: 2}
