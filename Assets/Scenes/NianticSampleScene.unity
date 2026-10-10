@@ -364,7 +364,7 @@ Transform:
   m_GameObject: {fileID: 321794234}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.2727242, z: -0, w: 0.9620923}
-  m_LocalPosition: {x: -15.422, y: 0.07, z: 6.04}
+  m_LocalPosition: {x: -11.59, y: 3.31, z: 12.26}
   m_LocalScale: {x: 0.51386, y: 0.51386, z: 0.51386}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -858,6 +858,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AR Magic Bar Lite
       objectReference: {fileID: 0}
+    - target: {fileID: 8068442826486381181, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -879,7 +883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1166258622
 Transform:
   m_ObjectHideFlags: 0
@@ -1130,7 +1134,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1777714114
 Transform:
   m_ObjectHideFlags: 0
