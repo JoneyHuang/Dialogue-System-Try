@@ -59,7 +59,10 @@ public class M01Controller : MonoBehaviour
         if (opacitySlider != null)
         {
             opacitySlider.onValueChanged.AddListener(UpdateHistoricalOpacity);
+            opacitySlider.value = 0.5f;
         }
+
+
     }
 
     void UpdateHistoricalOpacity(float value)
@@ -109,6 +112,11 @@ public class M01Controller : MonoBehaviour
         if (historicalPanel != null)
         {
             historicalPanel.SetActive(true);
+
+            if (opacitySlider != null)
+            {
+                opacitySlider.value = 0.5f;
+            }
         }
     }
 }
