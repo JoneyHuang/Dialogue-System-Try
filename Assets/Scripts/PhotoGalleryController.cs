@@ -27,8 +27,17 @@ public class PhotoGalleryController : MonoBehaviour, IBeginDragHandler, IDragHan
     [Tooltip("Optional titles or captions corresponding to each photo.")]
     public string[] photoCaptions;
 
+    [Header("Photo Soundscapes (Audio)")]
+    [Tooltip("Optional soundscape clip for each photo (e.g., bells for Cathedral, music, ambient sounds).")]
+    public AudioClip[] photoAudios;
+
     public Button prevButton;
     public Button nextButton;
+
+    /// <summary>
+    /// Event invoked whenever the displayed photo changes. Passes (photoIndex, activeAudioClip).
+    /// </summary>
+    public System.Action<int, AudioClip> onPhotoChanged;
 
     [Header("Swipe Settings")]
     [Tooltip("Minimum drag distance (in pixels) required to trigger a swipe to the next/previous photo.")]
@@ -138,6 +147,19 @@ public class PhotoGalleryController : MonoBehaviour, IBeginDragHandler, IDragHan
         {
             nextButton.interactable = (photos.Length > 1);
         }
+
+        // Notify listeners (like M01Controller) that the active photo and audio changed
+        AudioClip activeAudio = (photoAudios != null && currentIndex < photoAudios.Length) ? photoAudios[currentIndex] : null;
+        onPhotoChanged?.Invoke(currentIndex, activeAudio);
+    }
+
+    public AudioClip GetCurrentAudio()
+    {
+        if (photoAudios != null && currentIndex >= 0 && currentIndex < photoAudios.Length)
+        {
+            return photoAudios[currentIndex];
+        }
+        return null;
     }
 
     public void ShowNextPhoto()

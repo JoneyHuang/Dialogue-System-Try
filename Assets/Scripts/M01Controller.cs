@@ -43,6 +43,10 @@ public class M01Controller : MonoBehaviour
     [Header("Historical Image (Then / Now)")]
     public Slider opacitySlider;
     public Image historicalImage;
+    public Material saturationMaterial;
+    public AudioSource historicalAudioSource;
+    public PhotoGalleryController photoGallery;
+    public Button exitComparisonButton;
 
     [Header("Debug")]
     [Tooltip("If true, starts flow automatically on scene start (for testing without walking to Pin).")]
@@ -95,6 +99,32 @@ public class M01Controller : MonoBehaviour
             opacitySlider.onValueChanged.RemoveListener(UpdateHistoricalOpacity);
             opacitySlider.onValueChanged.AddListener(UpdateHistoricalOpacity);
             opacitySlider.value = 0.5f;
+        }
+
+        if (historicalPanel != null && exitComparisonButton == null) exitComparisonButton = historicalPanel.transform.Find("Button")?.GetComponent<Button>();
+        if (historicalAudioSource == null) historicalAudioSource = GetComponent<AudioSource>();
+        if (historicalAudioSource == null) historicalAudioSource = gameObject.AddComponent<AudioSource>();
+        if (photoGallery == null && historicalPanel != null) photoGallery = historicalPanel.GetComponentInChildren<PhotoGalleryController>(true);
+
+        if (exitComparisonButton != null)
+        {
+            exitComparisonButton.onClick.RemoveListener(ExitHistoricalComparison);
+            exitComparisonButton.onClick.AddListener(ExitHistoricalComparison);
+            TMP_Text exitLabel = exitComparisonButton.GetComponentInChildren<TMP_Text>(true);
+            if (exitLabel != null) exitLabel.text = "Close";
+        }
+
+        if (historicalAudioSource != null)
+        {
+            historicalAudioSource.loop = true;
+            historicalAudioSource.playOnAwake = false;
+            historicalAudioSource.volume = 0f;
+        }
+        if (photoGallery != null)
+        {
+            photoGallery.onPhotoChanged -= OnHistoricalPhotoChanged;
+            photoGallery.onPhotoChanged += OnHistoricalPhotoChanged;
+            OnHistoricalPhotoChanged(0, photoGallery.GetCurrentAudio());
         }
 
         // Hide all panels initially until triggered by Pin
@@ -356,7 +386,25 @@ public class M01Controller : MonoBehaviour
             Color c = historicalImage.color;
             c.a = value;
             historicalImage.color = c;
+            Material mat = saturationMaterial != null ? saturationMaterial : historicalImage.material;
+            if (mat != null && mat.HasProperty("_Saturation")) mat.SetFloat("_Saturation", value);
         }
+    }
+
+    void OnHistoricalPhotoChanged(int index, AudioClip clip)
+    {
+        if (historicalAudioSource == null) return;
+        historicalAudioSource.Stop();
+        historicalAudioSource.clip = clip;
+        historicalAudioSource.volume = opacitySlider != null ? opacitySlider.value : 0f;
+        if (clip != null && historicalAudioSource.volume > 0.001f) historicalAudioSource.Play();
+    }
+
+    public void ExitHistoricalComparison()
+    {
+        if (historicalAudioSource != null) historicalAudioSource.Stop();
+        if (historicalPanel != null) historicalPanel.SetActive(false);
+        currentState = FlowState.Hidden;
     }
 }
 
