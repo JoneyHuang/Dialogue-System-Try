@@ -96,9 +96,23 @@ public class M01Controller : MonoBehaviour
 
         if (opacitySlider != null)
         {
-            opacitySlider.onValueChanged.RemoveListener(UpdateHistoricalOpacity);
-            opacitySlider.onValueChanged.AddListener(UpdateHistoricalOpacity);
-            opacitySlider.value = 0.5f;
+            bool hasPersistentOpacityListener = false;
+            for (int i = 0; i < opacitySlider.onValueChanged.GetPersistentEventCount(); i++)
+            {
+                if (opacitySlider.onValueChanged.GetPersistentTarget(i) == this &&
+                    opacitySlider.onValueChanged.GetPersistentMethodName(i) == nameof(UpdateHistoricalOpacity))
+                {
+                    hasPersistentOpacityListener = true;
+                    break;
+                }
+            }
+
+            if (!hasPersistentOpacityListener)
+            {
+                opacitySlider.onValueChanged.RemoveListener(UpdateHistoricalOpacity);
+                opacitySlider.onValueChanged.AddListener(UpdateHistoricalOpacity);
+            }
+            opacitySlider.SetValueWithoutNotify(0f);
         }
 
         if (historicalPanel != null && exitComparisonButton == null) exitComparisonButton = historicalPanel.transform.Find("Button")?.GetComponent<Button>();
@@ -110,15 +124,19 @@ public class M01Controller : MonoBehaviour
         {
             exitComparisonButton.onClick.RemoveListener(ExitHistoricalComparison);
             exitComparisonButton.onClick.AddListener(ExitHistoricalComparison);
-            TMP_Text exitLabel = exitComparisonButton.GetComponentInChildren<TMP_Text>(true);
-            if (exitLabel != null) exitLabel.text = "Close";
         }
 
         if (historicalAudioSource != null)
         {
             historicalAudioSource.loop = true;
             historicalAudioSource.playOnAwake = false;
+            historicalAudioSource.Stop();
             historicalAudioSource.volume = 0f;
+        }
+
+        if (historicalImage != null && saturationMaterial != null)
+        {
+            historicalImage.material = saturationMaterial;
         }
         if (photoGallery != null)
         {
@@ -362,14 +380,15 @@ public class M01Controller : MonoBehaviour
         if (hintPanel != null) hintPanel.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
 
+        if (opacitySlider != null)
+        {
+            opacitySlider.SetValueWithoutNotify(0f);
+        }
+        UpdateHistoricalOpacity(0f);
+
         if (historicalPanel != null)
         {
             historicalPanel.SetActive(true);
-
-            if (opacitySlider != null)
-            {
-                opacitySlider.value = 0.5f;
-            }
         }
 
         // NOTE: AlignStageView (玫瑰窗对位环) 暂时不用，如需启用可在此处调用:
@@ -379,30 +398,53 @@ public class M01Controller : MonoBehaviour
         // }
     }
 
-    void UpdateHistoricalOpacity(float value)
+    public void UpdateHistoricalOpacity(float value)
     {
+        value = Mathf.Clamp01(value);
+
         if (historicalImage != null)
         {
             Color c = historicalImage.color;
             c.a = value;
             historicalImage.color = c;
+
             Material mat = saturationMaterial != null ? saturationMaterial : historicalImage.material;
-            if (mat != null && mat.HasProperty("_Saturation")) mat.SetFloat("_Saturation", value);
+            if (mat != null && mat.HasProperty("_Saturation"))
+            {
+                mat.SetFloat("_Saturation", value);
+            }
+        }
+
+        if (historicalAudioSource != null)
+        {
+            historicalAudioSource.volume = value;
+
+            bool comparisonIsOpen = currentState == FlowState.HistoricalComparison &&
+                historicalPanel != null && historicalPanel.activeInHierarchy;
+            if (comparisonIsOpen && value > 0.001f && historicalAudioSource.clip != null &&
+                !historicalAudioSource.isPlaying)
+            {
+                historicalAudioSource.Play();
+            }
         }
     }
 
     void OnHistoricalPhotoChanged(int index, AudioClip clip)
     {
         if (historicalAudioSource == null) return;
+
         historicalAudioSource.Stop();
         historicalAudioSource.clip = clip;
-        historicalAudioSource.volume = opacitySlider != null ? opacitySlider.value : 0f;
-        if (clip != null && historicalAudioSource.volume > 0.001f) historicalAudioSource.Play();
+        UpdateHistoricalOpacity(opacitySlider != null ? opacitySlider.value : 0f);
     }
 
     public void ExitHistoricalComparison()
     {
-        if (historicalAudioSource != null) historicalAudioSource.Stop();
+        if (historicalAudioSource != null)
+        {
+            historicalAudioSource.Stop();
+            historicalAudioSource.volume = 0f;
+        }
         if (historicalPanel != null) historicalPanel.SetActive(false);
         currentState = FlowState.Hidden;
     }

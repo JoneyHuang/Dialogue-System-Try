@@ -179,6 +179,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &116981994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5626186844367514527, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &116981999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116981994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82202350ed93c8d4da7a4d77b6db99b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  hintPanel: {fileID: 1073740859}
+  dialoguePanel: {fileID: 403057343}
+  historicalPanel: {fileID: 854447579}
+  hintText: {fileID: 1667280515}
+  hintContinueButton: {fileID: 1127455591}
+  hintButtonLabel: {fileID: 0}
+  meetingHintPrompt: 'You have arrived at Cathedral Square!
+
+    You are now meeting
+    Susan, who grew up here in Christchurch. Let''s hear her story...'
+  alignHintPrompt: Before viewing the archival photo, please walk towards the site
+    and position yourself to match the historical perspective of the Cathedral.
+  dialogueText: {fileID: 2098113011}
+  characterName: {fileID: 1384542079}
+  continueButton: {fileID: 1528970521}
+  opacitySlider: {fileID: 1226493244}
+  historicalImage: {fileID: 763473488}
+  saturationMaterial: {fileID: 2100000, guid: 942fe4311a9de804b86bd4f8eab89960, type: 2}
+  historicalAudioSource: {fileID: 0}
+  photoGallery: {fileID: 0}
+  exitComparisonButton: {fileID: 0}
+  autoStartOnPlay: 0
+--- !u!1 &403057343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4566137447649513349, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +345,60 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &763473488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3311408769616806717, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &854447579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3967043879882034646, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1073740859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315819050435682116, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1127455591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5713212558558875716, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1226493244 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5463352209342453830, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1384542079 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9195539325613756429, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1422970595
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +478,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1528970521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6623358727303260946, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1667280515 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 373143653837807957, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1811323728
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +637,17 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &2098113011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5599549491575940989, guid: 1abc342c770a20c489366de48d073450, type: 3}
+  m_PrefabInstance: {fileID: 2074587180909549720}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2104615888
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,6 +786,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1007963998567591855, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007963998567591855, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007963998567591855, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612396775775062599, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3315819050435682116, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967043879882034646, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5626186844367514527, guid: 1abc342c770a20c489366de48d073450, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -662,10 +818,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9170848142471661801, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5626186844367514527, guid: 1abc342c770a20c489366de48d073450, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 116981999}
   m_SourcePrefab: {fileID: 100100000, guid: 1abc342c770a20c489366de48d073450, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
