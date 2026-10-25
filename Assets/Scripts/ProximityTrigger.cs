@@ -29,6 +29,8 @@ public class ProximityTrigger : MonoBehaviour
     [Header("Optional Controller Override")]
     [Tooltip("Optional direct reference to M01Controller. If null, falls back to M01Controller.Instance.")]
     public M01Controller m01Controller;
+    public PoI1InteractionController poI1InteractionController;
+    public bool showApproachHint = true;
 
     [Header("Distance Detect")]
     public float triggerDistance = 2.0f;   
@@ -53,11 +55,14 @@ public class ProximityTrigger : MonoBehaviour
             arCamera = Camera.main.transform;
         }
 
-        // Smart auto-detect: if m01Controller is explicitly assigned, default triggerDialogue to true
-        if (m01Controller != null)
-        {
+        // PoI1 uses its location intro first; Susan's dialogue starts from the intro panel CTA.
+        if (poI1InteractionController == null)
+            poI1InteractionController = GetComponentInParent<PoI1InteractionController>();
+
+        if (poI1InteractionController != null)
+            triggerDialogue = false;
+        else if (m01Controller != null)
             triggerDialogue = true;
-        }
 
         // Smart auto-detect: if name or parent contains 'Landing', mark as landing pin
         if (gameObject.name.ToLower().Contains("landing") || 
@@ -70,7 +75,19 @@ public class ProximityTrigger : MonoBehaviour
 
     void Update()
     {
-        if (hasTriggered || arCamera == null) return;
+        if (arCamera == null) return;
+
+        if (hasTriggered)
+        {
+            M01Controller flow = M01Controller.Instance;
+            bool storyInProgress = flow != null && flow.currentState != M01Controller.FlowState.Hidden;
+            if (poI1InteractionController != null && !storyInProgress && Vector3.Distance(transform.position, arCamera.position) > warningDistance)
+            {
+                hasTriggered = false;
+                transform.localScale = initialScale;
+            }
+            else return;
+        }
 
         // If this Pin requires Landing first, wait until Landing has been triggered
         if (requireLandingFirst && !HasVisitedLanding) return;
@@ -79,16 +96,21 @@ public class ProximityTrigger : MonoBehaviour
 
         if (distance <= warningDistance && distance > triggerDistance)
         {
+            if (poI1InteractionController != null && infoBubble != null && showApproachHint)
+                infoBubble.SetActive(true);
+
             // Breathing animation to attract attention
             float t = Mathf.PingPong(Time.time * 2f, 1f);
             transform.localScale = Vector3.Lerp(initialScale, initialScale * 1.25f, t);
         }
         else if (distance <= triggerDistance)
         {
+            if (poI1InteractionController != null && infoBubble != null) infoBubble.SetActive(false);
             TriggerPinAction();
         }
         else
         {
+            if (poI1InteractionController != null && infoBubble != null) infoBubble.SetActive(false);
             transform.localScale = initialScale;
         }
     }
@@ -116,14 +138,19 @@ public class ProximityTrigger : MonoBehaviour
             HasVisitedLanding = true;
         }
 
-        // 2. Show Info Bubble / Welcoming Panel
-        if (showInfoBubbleOnTrigger && infoBubble != null)
+        // 2. PoI1 opens its screen-space location intro. Other pins keep their existing bubble.
+        if (poI1InteractionController != null)
+        {
+            if (infoBubble != null) infoBubble.SetActive(false);
+            poI1InteractionController.OpenLocationIntro();
+        }
+        else if (showInfoBubbleOnTrigger && infoBubble != null)
         {
             infoBubble.SetActive(true);
         }
 
-        // 3. Trigger Susan's Dialogue ONLY if configured (for PoI 1)
-        if (triggerDialogue)
+        // 3. Keep legacy direct dialogue behavior for pins without a PoI1 intro controller.
+        if (triggerDialogue && poI1InteractionController == null)
         {
             if (m01Controller != null)
             {

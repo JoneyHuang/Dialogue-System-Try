@@ -96,8 +96,6 @@ public class M01Controller : MonoBehaviour
 
         if (opacitySlider != null)
         {
-            opacitySlider.onValueChanged.RemoveListener(UpdateHistoricalOpacity);
-            opacitySlider.onValueChanged.AddListener(UpdateHistoricalOpacity);
             opacitySlider.value = 0.5f;
         }
 
@@ -124,7 +122,21 @@ public class M01Controller : MonoBehaviour
         {
             photoGallery.onPhotoChanged -= OnHistoricalPhotoChanged;
             photoGallery.onPhotoChanged += OnHistoricalPhotoChanged;
-            OnHistoricalPhotoChanged(0, photoGallery.GetCurrentAudio());
+            historicalAudioSource.Stop();
+            historicalAudioSource.clip = photoGallery.GetCurrentAudio();
+            historicalAudioSource.volume = 0f;
+        }
+
+        if (historicalImage != null)
+        {
+            if (saturationMaterial == null || !saturationMaterial.HasProperty("_Saturation"))
+            {
+                Shader saturationShader = Shader.Find("UI/Saturation");
+                if (saturationShader != null) saturationMaterial = new Material(saturationShader);
+            }
+            else saturationMaterial = new Material(saturationMaterial);
+            if (saturationMaterial != null) historicalImage.material = saturationMaterial;
+            UpdateHistoricalOpacity(opacitySlider != null ? opacitySlider.value : 0f);
         }
 
         // Hide all panels initially until triggered by Pin
@@ -316,11 +328,8 @@ public class M01Controller : MonoBehaviour
     void EndDialogue()
     {
         if (dialoguePanel != null)
-        {
             dialoguePanel.SetActive(false);
-        }
 
-        // Transition to Hint 2 (Align Position Hint) before historical picture
         ShowAlignHint();
     }
 
@@ -369,6 +378,7 @@ public class M01Controller : MonoBehaviour
             if (opacitySlider != null)
             {
                 opacitySlider.value = 0.5f;
+                UpdateHistoricalOpacity(opacitySlider.value);
             }
         }
 
@@ -379,7 +389,7 @@ public class M01Controller : MonoBehaviour
         // }
     }
 
-    void UpdateHistoricalOpacity(float value)
+    public void UpdateHistoricalOpacity(float value)
     {
         if (historicalImage != null)
         {
@@ -389,6 +399,7 @@ public class M01Controller : MonoBehaviour
             Material mat = saturationMaterial != null ? saturationMaterial : historicalImage.material;
             if (mat != null && mat.HasProperty("_Saturation")) mat.SetFloat("_Saturation", value);
         }
+        UpdateHistoricalAudio(value);
     }
 
     void OnHistoricalPhotoChanged(int index, AudioClip clip)
@@ -397,7 +408,20 @@ public class M01Controller : MonoBehaviour
         historicalAudioSource.Stop();
         historicalAudioSource.clip = clip;
         historicalAudioSource.volume = opacitySlider != null ? opacitySlider.value : 0f;
-        if (clip != null && historicalAudioSource.volume > 0.001f) historicalAudioSource.Play();
+        UpdateHistoricalAudio(historicalAudioSource.volume);
+    }
+
+    void UpdateHistoricalAudio(float value)
+    {
+        if (historicalAudioSource == null) return;
+        bool comparisonVisible = currentState == FlowState.HistoricalComparison && historicalPanel != null && historicalPanel.activeInHierarchy;
+        historicalAudioSource.volume = comparisonVisible ? Mathf.Clamp01(value) : 0f;
+        if (!comparisonVisible || value <= 0.001f || historicalAudioSource.clip == null)
+        {
+            if (historicalAudioSource.isPlaying) historicalAudioSource.Pause();
+            return;
+        }
+        if (!historicalAudioSource.isPlaying) historicalAudioSource.Play();
     }
 
     public void ExitHistoricalComparison()
@@ -405,6 +429,9 @@ public class M01Controller : MonoBehaviour
         if (historicalAudioSource != null) historicalAudioSource.Stop();
         if (historicalPanel != null) historicalPanel.SetActive(false);
         currentState = FlowState.Hidden;
+        PoI1InteractionController poiController = PoI1InteractionController.Instance;
+        if (poiController == null) poiController = FindFirstObjectByType<PoI1InteractionController>();
+        if (poiController != null) poiController.SetSupplementaryMarkersActive(true);
     }
 }
 
