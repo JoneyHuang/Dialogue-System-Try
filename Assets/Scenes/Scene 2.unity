@@ -1655,7 +1655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.052304
+      value: 4.083
       objectReference: {fileID: 0}
     - target: {fileID: 8742538545776668643, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1700,6 +1700,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -3888481672020999207, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 826094436}
+    - targetCorrespondingSourceObject: {fileID: -3888481672020999207, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826094437}
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
 --- !u!1 &660146356 stripped
 GameObject:
@@ -2044,6 +2047,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6399999, y: 0.6399999, z: 0.2000001}
   m_Center: {x: -0.0000009536743, y: 0.00000047683716, z: -0.00002670288}
+--- !u!114 &826094437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660146356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661ced26c5143784fb7f7d7df9dfa7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoBubble: {fileID: 80872519}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,7 +2242,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 937314867}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 826094437}
+        m_TargetAssemblyTypeName: InfoBubbleTrigger, Assembly-CSharp
+        m_MethodName: CloseInfoBubble
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &937314867
 MonoBehaviour:
   m_ObjectHideFlags: 0
