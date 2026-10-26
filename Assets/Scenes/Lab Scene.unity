@@ -153,9 +153,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Info Bubble
       objectReference: {fileID: 0}
+    - target: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1321962094934918813, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1511324995151987488, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_Texture
@@ -482,7 +486,6 @@ Transform:
   m_LocalScale: {x: 0.39592132, y: 0.39592132, z: 0.39592132}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2134917056}
   - {fileID: 833683968}
   - {fileID: 339076668}
   m_Father: {fileID: 1166258622}
@@ -499,9 +502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56ad30f8a49aa24e92e849bdcf18ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  POI_1: {fileID: 833683967}
-  POI_2: {fileID: 339076667}
-  triggerChangePOI: 0
 --- !u!1 &226762109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,7 +1188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &416686530
 Transform:
   m_ObjectHideFlags: 0
@@ -1238,7 +1238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &430387267
 Transform:
   m_ObjectHideFlags: 0
@@ -1512,7 +1512,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &476263620
 Transform:
   m_ObjectHideFlags: 0
@@ -2406,7 +2406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1118387550 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8742538545776668643, guid: ef6cba065ced09d4b8b8285b884b6a75, type: 3}
@@ -2436,7 +2436,7 @@ GameObject:
   m_Layer: 0
   m_Name: HITLab Sofa
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4433,7 +4433,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1777714114
 Transform:
   m_ObjectHideFlags: 0
@@ -4890,13 +4890,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939929814}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.03, y: -0.1, z: -5.19}
+  m_LocalRotation: {x: -0.081261985, y: 0.6143193, z: 0.10292473, w: 0.77808404}
+  m_LocalPosition: {x: -33.72, y: 0.99, z: 22.99}
   m_LocalScale: {x: 0.8070132, y: 0.8070132, z: 0.74771386}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1312386957}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -14.65, y: 76.124, z: 3.575}
 --- !u!114 &1939929816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5148,7 +5148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HumanSegmentationStencilMode: 0
   m_HumanSegmentationDepthMode: 0
-  m_EnvironmentDepthMode: 3
+  m_EnvironmentDepthMode: 0
   m_EnvironmentDepthTemporalSmoothing: 1
   m_OcclusionPreferenceMode: 2
 --- !u!224 &1999803286 stripped
@@ -5177,57 +5177,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3315819050435682116, guid: 1abc342c770a20c489366de48d073450, type: 3}
   m_PrefabInstance: {fileID: 1513039767}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2134917055
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2134917056}
-  - component: {fileID: 2134917057}
-  m_Layer: 5
-  m_Name: M02Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2134917056
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134917055}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.0452974}
-  m_LocalScale: {x: 6.922438, y: 6.922438, z: 6.922438}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 224475670}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3738.2463, y: 2245.635}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2134917057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134917055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a56ad30f8a49aa24e92e849bdcf18ffa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  POI_1: {fileID: 833683967}
-  POI_2: {fileID: 339076667}
-  triggerChangePOI: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
