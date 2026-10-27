@@ -1819,7 +1819,7 @@ MonoBehaviour:
   _geolocationSmoothingEnabled: 1
   _deviceMapLocalizationEnabled: 0
   _deviceMapLocalizationFramerate: 10
-  _vpsDebuggerEnabled: 0
+  _vpsDebuggerEnabled: 1
   _maxRequestsInTransitPerTarget: 0
   _anchorDistanceGateMeters: 0
   _autoTrack: 1
@@ -1853,8 +1853,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1312386957}
+  - {fileID: 1166258622}
   - {fileID: 1777714114}
+  - {fileID: 1312386957}
   m_Father: {fileID: 950905591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &750155124
@@ -2372,7 +2373,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 767920705}
-  - {fileID: 1166258622}
   - {fileID: 660213455}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2483,13 +2483,13 @@ Transform:
   m_GameObject: {fileID: 1166258621}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.421074, y: -35.38061, z: -25.940468}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 224475670}
   - {fileID: 476263620}
-  m_Father: {fileID: 950905591}
+  m_Father: {fileID: 660213455}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1166258623
 MonoBehaviour:
@@ -2997,8 +2997,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arCamera: {fileID: 1939929815}
-  triggerDistance: 5
-  warningDistance: 4
+  triggerDistance: 2
+  warningDistance: 5
   hidePinOnTrigger: 1
   onTriggered:
     m_PersistentCalls:
@@ -4545,7 +4545,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1420760259}
         m_TargetAssemblyTypeName: M01Controller, Assembly-CSharp
-        m_MethodName: StartDialogue
+        m_MethodName: StartStoryFlow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4612,7 +4612,7 @@ Transform:
   m_GameObject: {fileID: 1736454975}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000005381369, y: 0.5986052, z: 0.00000004021396, w: 0.8010442}
-  m_LocalPosition: {x: 19.590004, y: -0.9200037, z: -1.3100022}
+  m_LocalPosition: {x: 22.43, y: -1.1, z: 8.36}
   m_LocalScale: {x: 230.06, y: 230.06, z: 230.06}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5009,15 +5009,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.009671774
+      value: -0.0097
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0005498858
+      value: -0.0001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.11033816
+      value: -0.1103
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
       propertyPath: m_LocalRotation.w

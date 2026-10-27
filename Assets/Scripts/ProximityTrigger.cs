@@ -48,7 +48,7 @@ public class ProximityTrigger : MonoBehaviour
         if (distance <= warningDistance && distance > triggerDistance)
         {
             // Breathing animation to attract attention
-            float t = Mathf.PingPong(Time.time * 2f, 1f);
+            float t = Mathf.PingPong(Time.time * 1f, 1f);
             transform.localScale = Vector3.Lerp(initialScale, initialScale * 1.25f, t);
         }
         else if (distance <= triggerDistance)
