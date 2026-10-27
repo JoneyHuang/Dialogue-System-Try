@@ -30,6 +30,12 @@ public class ProximityTrigger : MonoBehaviour
     [Tooltip("Optional direct reference to M01Controller. If null, falls back to M01Controller.Instance.")]
     public M01Controller m01Controller;
 
+    [Header("Next Destination / PoI 1")]
+    [Tooltip("The PoI 1 Pin to activate once the user exits the Welcoming Panel.")]
+    public GameObject poi1Pin;
+    [Tooltip("Optional AR Content/Anchor at PoI 1 to also activate (or keep inactive until Pin is reached).")]
+    public GameObject poi1Content;
+
     [Header("Distance Detect")]
     public float triggerDistance = 2.0f;   
     public float warningDistance = 5.0f;  
@@ -45,6 +51,16 @@ public class ProximityTrigger : MonoBehaviour
         if (infoBubble != null)
         {
             infoBubble.SetActive(false);
+        }
+
+        // If this is the Starting Point / Landing Pin, ensure PoI 1 elements start inactive
+        if (poi1Pin != null)
+        {
+            poi1Pin.SetActive(false);
+        }
+        if (poi1Content != null)
+        {
+            poi1Content.SetActive(false);
         }
 
         // Auto-assign camera if unassigned
@@ -147,5 +163,35 @@ public class ProximityTrigger : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    /// <summary>
+    /// Attach this method to the CTA Button OnClick event on the Welcoming Panel.
+    /// Confirms the starting phase is completed, closes the panel, and activates PoI 1 pin / content.
+    /// </summary>
+    public void OnStartExploringClicked()
+    {
+        // 1. Mark starting/landing phase as completed
+        HasVisitedLanding = true;
+
+        // 2. Hide the Welcoming Panel / info bubble
+        if (infoBubble != null)
+        {
+            infoBubble.SetActive(false);
+        }
+
+        // 3. Activate PoI 1 Pin for the player to follow
+        if (poi1Pin != null)
+        {
+            poi1Pin.SetActive(true);
+        }
+
+        // 4. Optionally activate PoI 1 AR content / anchor (or leave for PoI 1 Pin trigger)
+        if (poi1Content != null)
+        {
+            poi1Content.SetActive(true);
+        }
+
+        Debug.Log("Starting phase complete. Welcoming panel dismissed, PoI 1 Pin is now active!");
+    }
 }
-
+
