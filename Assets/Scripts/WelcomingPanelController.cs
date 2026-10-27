@@ -15,8 +15,8 @@ public class WelcomingPanelController : MonoBehaviour
     [Tooltip("The CTA button on the panel (e.g. 'Start Exploring').")]
     public Button ctaButton;
 
-    [Tooltip("The PoI 1 Pin to activate once this panel is dismissed.")]
-    public GameObject poi1Pin;
+    [Tooltip("The PoI 1 GameObject (PoI 1 Root, Anchor, or Pin) to activate once this panel is dismissed.")]
+    public GameObject poi1Target;
 
     void Awake()
     {
@@ -39,10 +39,10 @@ public class WelcomingPanelController : MonoBehaviour
             ctaButton.onClick.AddListener(OnStartExploringClicked);
         }
 
-        // Ensure PoI 1 Pin starts inactive while in Welcoming / Starting phase
-        if (poi1Pin != null)
+        // Ensure PoI 1 starts completely hidden while user is at Starting Point / Welcoming Panel
+        if (poi1Target != null)
         {
-            poi1Pin.SetActive(false);
+            poi1Target.SetActive(false);
         }
     }
 
@@ -58,7 +58,7 @@ public class WelcomingPanelController : MonoBehaviour
     }
 
     /// <summary>
-    /// Dismisses the welcoming panel and activates the PoI 1 Pin.
+    /// Dismisses the welcoming panel and activates PoI 1.
     /// </summary>
     public void OnStartExploringClicked()
     {
@@ -67,14 +67,14 @@ public class WelcomingPanelController : MonoBehaviour
             panelRoot.SetActive(false);
         }
 
-        if (poi1Pin != null)
+        if (poi1Target != null)
         {
-            poi1Pin.SetActive(true);
-            Debug.Log("[WelcomingPanelController] Welcoming panel dismissed. PoI 1 Pin is now active!");
+            poi1Target.SetActive(true);
+            Debug.Log($"[WelcomingPanelController] Welcoming panel dismissed. '{poi1Target.name}' is now active!");
         }
         else
         {
-            Debug.LogWarning("[WelcomingPanelController] poi1Pin is not assigned!");
+            Debug.LogWarning("[WelcomingPanelController] poi1Target is not assigned!");
         }
     }
 }

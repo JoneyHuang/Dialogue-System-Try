@@ -260,6 +260,8 @@ public class M01Controller : MonoBehaviour
         if (hintPanel != null)
         {
             hintPanel.SetActive(true);
+            Debug.Log($"[M01Controller] ShowMeetingHint: hintPanel '{hintPanel.name}' activated successfully.");
+
             if (hintText != null)
             {
                 hintText.text = meetingHintPrompt;
@@ -271,6 +273,7 @@ public class M01Controller : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning("[M01Controller] ShowMeetingHint: hintPanel is NULL! Falling back directly to StartDialogue(). Please check M01Controller Inspector.");
             // If hint panel is missing, jump directly to dialogue
             StartDialogue();
         }
