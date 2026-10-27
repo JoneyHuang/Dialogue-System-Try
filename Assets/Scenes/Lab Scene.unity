@@ -1855,7 +1855,6 @@ Transform:
   m_Children:
   - {fileID: 1312386957}
   - {fileID: 1777714114}
-  - {fileID: 1166258622}
   m_Father: {fileID: 950905591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &750155124
@@ -2176,7 +2175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &833683968
 Transform:
   m_ObjectHideFlags: 0
@@ -2373,6 +2372,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 767920705}
+  - {fileID: 1166258622}
   - {fileID: 660213455}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2482,14 +2482,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166258621}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -47.421074, y: -35.38061, z: -25.940468}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 224475670}
   - {fileID: 476263620}
-  m_Father: {fileID: 660213455}
+  m_Father: {fileID: 950905591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1166258623
 MonoBehaviour:
@@ -4465,19 +4465,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 141846781}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1375737371}
-        m_TargetAssemblyTypeName: ProximityTrigger, Assembly-CSharp
-        m_MethodName: OnStartExploringClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1672887795 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
@@ -5346,9 +5334,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HumanSegmentationStencilMode: 0
   m_HumanSegmentationDepthMode: 0
-  m_EnvironmentDepthMode: 0
+  m_EnvironmentDepthMode: 3
   m_EnvironmentDepthTemporalSmoothing: 1
-  m_OcclusionPreferenceMode: 2
+  m_OcclusionPreferenceMode: 1
 --- !u!224 &1999803286 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4991653786127009335, guid: 1abc342c770a20c489366de48d073450, type: 3}
