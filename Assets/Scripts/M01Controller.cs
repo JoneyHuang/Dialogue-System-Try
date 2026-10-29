@@ -114,7 +114,7 @@ public class M01Controller : MonoBehaviour
                 opacitySlider.onValueChanged.RemoveListener(UpdateHistoricalOpacity);
                 opacitySlider.onValueChanged.AddListener(UpdateHistoricalOpacity);
             }
-            opacitySlider.SetValueWithoutNotify(0f);
+            opacitySlider.SetValueWithoutNotify(0.3f);
         }
 
         if (historicalPanel != null && exitComparisonButton == null) exitComparisonButton = historicalPanel.transform.Find("Button")?.GetComponent<Button>();
@@ -387,9 +387,9 @@ public class M01Controller : MonoBehaviour
 
         if (opacitySlider != null)
         {
-            opacitySlider.SetValueWithoutNotify(0f);
+            opacitySlider.SetValueWithoutNotify(0.5f);
         }
-        UpdateHistoricalOpacity(0f);
+        UpdateHistoricalOpacity(0.5f);
 
         if (historicalPanel != null)
         {
