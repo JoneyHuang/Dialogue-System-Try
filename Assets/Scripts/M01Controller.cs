@@ -54,12 +54,14 @@ public class M01Controller : MonoBehaviour
 
     private string[] dialogue =
     {
+        "My name is Susan. I grew up and live in Christchurch.",
         "Standing here in Cathedral Square today, it's quiet... It's different from what I remembered.",
-        "The tower and spire carry my special memories.",
+        "The tower and spire are missing, but they carry my special memories.",
         "When I was at school, I got lost around Cathedral Square during the trip. I remember my teacher, Mr Watson, told us:",
         " 'If you are lost, look for the Cathedral spire—it's the tallest building in the town!' ",
-        " 'If you could see the spire, you knew where you were.'",
-        "Walk closer to the interpretation panel. Can you spot a picture of the rose window etched into the facade?"
+        " I heard the bell, looked up, and found my way back.",
+        "The last time I saw the spire, I was visiting the square with my homestay student.",
+        "Now, when I pass by here, I still see the absence of that spire. I try to outline its contours in my mind... just like lifting my phone to capture it — it's a habit that never left me..."
     };
 
     private int currentLine = 0;
