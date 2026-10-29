@@ -39,6 +39,10 @@ public class M01Controller : MonoBehaviour
     public TMP_Text dialogueText;
     public TMP_Text characterName;
     public Button continueButton;
+    [Tooltip("Container for the linear dialogue choices shown after Susan's prompt.")]
+    public GameObject options;
+    [Tooltip("Buttons in Options. Their child TMP text is used as the player's reply.")]
+    public Button[] optionButtons;
 
     [Header("Historical Image (Then / Now)")]
     public Slider opacitySlider;
@@ -64,7 +68,12 @@ public class M01Controller : MonoBehaviour
         "Now, when I pass by here, I still see the absence of that spire. I try to outline its contours in my mind... just like lifting my phone to capture it — it's a habit that never left me..."
     };
 
+    [TextArea(2, 4)]
+    public string choiceResponse = "I remember how unsettling that must have felt. Mr Watson's advice stayed with you.";
+
     private int currentLine = 0;
+    private bool awaitingChoice = false;
+    private bool showingChoiceResponse = false;
 
     void Awake()
     {
@@ -88,6 +97,15 @@ public class M01Controller : MonoBehaviour
         {
             continueButton.onClick.RemoveListener(NextLine);
             continueButton.onClick.AddListener(NextLine);
+        }
+
+        if (optionButtons != null)
+        {
+            foreach (Button optionButton in optionButtons)
+            {
+                if (optionButton == null) continue;
+                optionButton.onClick.AddListener(() => OnOptionSelected(optionButton));
+            }
         }
 
         if (hintContinueButton != null)
@@ -217,6 +235,15 @@ public class M01Controller : MonoBehaviour
 
             if (continueButton == null)
                 continueButton = dialoguePanel.transform.Find("ContinueButton")?.GetComponent<Button>();
+
+            if (options == null)
+            {
+                Transform optionsTransform = dialoguePanel.transform.Find("Options");
+                if (optionsTransform != null) options = optionsTransform.gameObject;
+            }
+
+            if (options != null && (optionButtons == null || optionButtons.Length == 0))
+                optionButtons = options.GetComponentsInChildren<Button>(true);
         }
 
         // Auto-wire Historical elements
@@ -313,6 +340,10 @@ public class M01Controller : MonoBehaviour
         }
 
         currentLine = 0;
+        awaitingChoice = false;
+        showingChoiceResponse = false;
+        SetOptionsVisible(false);
+        SetContinueVisible(true);
         if (dialogueText != null && dialogue.Length > 0)
         {
             dialogueText.text = dialogue[currentLine];
@@ -321,6 +352,15 @@ public class M01Controller : MonoBehaviour
 
     void NextLine()
     {
+        if (awaitingChoice) return;
+
+        if (showingChoiceResponse)
+        {
+            showingChoiceResponse = false;
+            if (dialogueText != null) dialogueText.text = choiceResponse;
+            return;
+        }
+
         currentLine++;
 
         if (currentLine < dialogue.Length)
@@ -329,11 +369,58 @@ public class M01Controller : MonoBehaviour
             {
                 dialogueText.text = dialogue[currentLine];
             }
+
+            if (currentLine == ChoicePromptLine)
+            {
+                awaitingChoice = true;
+                SetContinueVisible(false);
+                SetOptionsVisible(true);
+                SetOptionsInteractable(true);
+            }
         }
         else
         {
             EndDialogue();
         }
+    }
+
+    // These consecutive lines form one linear interaction in the existing dialogue sequence.
+    private const int ChoicePromptLine = 3;
+
+    void OnOptionSelected(Button selectedButton)
+    {
+        if (!awaitingChoice || selectedButton == null) return;
+        ApplySelectedOption(selectedButton);
+    }
+
+    void ApplySelectedOption(Button selectedButton)
+    {
+        TMP_Text optionLabel = selectedButton.GetComponentInChildren<TMP_Text>(true);
+        awaitingChoice = false;
+        SetOptionsInteractable(false);
+        SetOptionsVisible(false);
+        if (dialogueText != null) dialogueText.text = optionLabel != null ? optionLabel.text : string.Empty;
+        showingChoiceResponse = true;
+        SetContinueVisible(true);
+    }
+
+    void SetOptionsVisible(bool visible)
+    {
+        if (options != null) options.SetActive(visible);
+    }
+
+    void SetOptionsInteractable(bool interactable)
+    {
+        if (optionButtons == null) return;
+        foreach (Button optionButton in optionButtons)
+        {
+            if (optionButton != null) optionButton.interactable = interactable;
+        }
+    }
+
+    void SetContinueVisible(bool visible)
+    {
+        if (continueButton != null) continueButton.gameObject.SetActive(visible);
     }
 
     void EndDialogue()
