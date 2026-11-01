@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255388190266590070}
   m_LocalRotation: {x: -0, y: 0.51689595, z: -0, w: 0.8560483}
-  m_LocalPosition: {x: 0, y: 0, z: 1.996}
+  m_LocalPosition: {x: 0, y: 0, z: 1.917}
   m_LocalScale: {x: 0.00060692744, y: 0.00058634346, z: 0.0014692378}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3505198097521694378
 MonoBehaviour:
   m_ObjectHideFlags: 0
