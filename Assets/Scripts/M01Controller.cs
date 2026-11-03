@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -40,6 +41,12 @@ public class M01Controller : MonoBehaviour
     public TMP_Text characterName;
     public Button continueButton;
 
+    [Header("Typewriter Settings")]
+    [Tooltip("Seconds per character during dialogue typing.")]
+    public float typingSpeed = 0.035f;
+    [Tooltip("Pause extra time on punctuation marks (,, ., !, ?, —) to simulate natural breathing.")]
+    public bool enablePunctuationPauses = true;
+
     [Header("Historical Image (Then / Now)")]
     public Slider opacitySlider;
     public Image historicalImage;
@@ -65,6 +72,9 @@ public class M01Controller : MonoBehaviour
     };
 
     private int currentLine = 0;
+    private Coroutine typingCoroutine = null;
+    private bool isTyping = false;
+    private Button dialoguePanelButton = null;
 
     void Awake()
     {
@@ -86,8 +96,21 @@ public class M01Controller : MonoBehaviour
         // Register button listeners
         if (continueButton != null)
         {
-            continueButton.onClick.RemoveListener(NextLine);
-            continueButton.onClick.AddListener(NextLine);
+            continueButton.onClick.RemoveListener(OnDialogueClicked);
+            continueButton.onClick.AddListener(OnDialogueClicked);
+        }
+
+        // Auto-support panel clicking (clicking anywhere on DialoguePanel advances or skips)
+        if (dialoguePanel != null)
+        {
+            dialoguePanelButton = dialoguePanel.GetComponent<Button>();
+            if (dialoguePanelButton == null)
+            {
+                dialoguePanelButton = dialoguePanel.AddComponent<Button>();
+                dialoguePanelButton.transition = Selectable.Transition.None;
+            }
+            dialoguePanelButton.onClick.RemoveListener(OnDialogueClicked);
+            dialoguePanelButton.onClick.AddListener(OnDialogueClicked);
         }
 
         if (hintContinueButton != null)
@@ -313,9 +336,93 @@ public class M01Controller : MonoBehaviour
         }
 
         currentLine = 0;
-        if (dialogueText != null && dialogue.Length > 0)
+        DisplayCurrentLine();
+    }
+
+    /// <summary>
+    /// Unified click handler: if typing, fast-forwards to show entire sentence; if done, moves to next sentence.
+    /// </summary>
+    public void OnDialogueClicked()
+    {
+        if (currentState != FlowState.Dialogue) return;
+
+        if (isTyping)
+        {
+            // Fast-forward / Skip typing animation
+            SkipTyping();
+        }
+        else
+        {
+            // Proceed to next sentence
+            NextLine();
+        }
+    }
+
+    void DisplayCurrentLine()
+    {
+        if (dialogue == null || dialogue.Length == 0 || currentLine >= dialogue.Length) return;
+
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
+
+        typingCoroutine = StartCoroutine(TypeSentenceRoutine(dialogue[currentLine]));
+    }
+
+    IEnumerator TypeSentenceRoutine(string sentence)
+    {
+        isTyping = true;
+        if (continueButton != null)
+        {
+            continueButton.gameObject.SetActive(false);
+        }
+
+        if (dialogueText != null)
+        {
+            dialogueText.text = "";
+            char[] chars = sentence.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                char letter = chars[i];
+                dialogueText.text += letter;
+
+                if (enablePunctuationPauses && (letter == ',' || letter == '.' || letter == '!' || letter == '?' || letter == '—' || letter == ':'))
+                {
+                    yield return new WaitForSeconds(typingSpeed * 4f);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(typingSpeed);
+                }
+            }
+        }
+
+        FinishTyping();
+    }
+
+    void SkipTyping()
+    {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+
+        if (dialogueText != null && currentLine < dialogue.Length)
         {
             dialogueText.text = dialogue[currentLine];
+        }
+
+        FinishTyping();
+    }
+
+    void FinishTyping()
+    {
+        isTyping = false;
+        if (continueButton != null)
+        {
+            continueButton.gameObject.SetActive(true);
         }
     }
 
@@ -325,10 +432,7 @@ public class M01Controller : MonoBehaviour
 
         if (currentLine < dialogue.Length)
         {
-            if (dialogueText != null)
-            {
-                dialogueText.text = dialogue[currentLine];
-            }
+            DisplayCurrentLine();
         }
         else
         {
@@ -338,6 +442,13 @@ public class M01Controller : MonoBehaviour
 
     void EndDialogue()
     {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+        isTyping = false;
+
         if (dialoguePanel != null)
         {
             dialoguePanel.SetActive(false);
