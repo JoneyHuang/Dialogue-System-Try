@@ -37,15 +37,8 @@ public class M01Controller : MonoBehaviour
     public string alignHintPrompt = "Before viewing the archival photo, please walk towards the site and position yourself to match the historical perspective of the Cathedral.";
 
     [Header("Dialogue UI")]
-    public TMP_Text dialogueText;
-    public TMP_Text characterName;
-    public Button continueButton;
-
-    [Header("Typewriter Settings")]
-    [Tooltip("Seconds per character during dialogue typing.")]
-    public float typingSpeed = 0.035f;
-    [Tooltip("Pause extra time on punctuation marks (,, ., !, ?, —) to simulate natural breathing.")]
-    public bool enablePunctuationPauses = true;
+    [Tooltip("Dedicated controller for Dialogue.")]
+    public DialogueController dialogueController;
 
     [Header("Historical Image (Then / Now)")]
     [Tooltip("Dedicated controller for Historical Comparison.")]
@@ -54,23 +47,6 @@ public class M01Controller : MonoBehaviour
     [Header("Debug")]
     [Tooltip("If true, starts flow automatically on scene start (for testing without walking to Pin).")]
     public bool autoStartOnPlay = false;
-
-    private string[] dialogue =
-    {
-        "My name is Susan. I grew up and live in Christchurch.",
-        "Standing here in Cathedral Square today, it's quiet... It's different from what I remembered.",
-        "The tower and spire are missing, but they carry my special memories.",
-        "When I was at school, I got lost around Cathedral Square during the trip. I remember my teacher, Mr Watson, told us:",
-        " 'If you are lost, look for the Cathedral spire—it's the tallest building in the town!' ",
-        " I heard the bell, looked up, and found my way back.",
-        "The last time I saw the spire, I was visiting the square with my homestay student.",
-        "Now, when I pass by here, I still see the absence of that spire. I try to outline its contours in my mind... just like lifting my phone to capture it — it's a habit that never left me..."
-    };
-
-    private int currentLine = 0;
-    private Coroutine typingCoroutine = null;
-    private bool isTyping = false;
-    private Button dialoguePanelButton = null;
 
     void Awake()
     {
@@ -89,26 +65,6 @@ public class M01Controller : MonoBehaviour
 
     void Start()
     {
-        // Register button listeners
-        if (continueButton != null)
-        {
-            continueButton.onClick.RemoveListener(OnDialogueClicked);
-            continueButton.onClick.AddListener(OnDialogueClicked);
-        }
-
-        // Auto-support panel clicking (clicking anywhere on DialoguePanel advances or skips)
-        if (dialoguePanel != null)
-        {
-            dialoguePanelButton = dialoguePanel.GetComponent<Button>();
-            if (dialoguePanelButton == null)
-            {
-                dialoguePanelButton = dialoguePanel.AddComponent<Button>();
-                dialoguePanelButton.transition = Selectable.Transition.None;
-            }
-            dialoguePanelButton.onClick.RemoveListener(OnDialogueClicked);
-            dialoguePanelButton.onClick.AddListener(OnDialogueClicked);
-        }
-
         if (hintContinueButton != null)
         {
             hintContinueButton.onClick.RemoveListener(OnHintContinueClicked);
@@ -152,8 +108,6 @@ public class M01Controller : MonoBehaviour
         {
             Transform t = canvasTr.Find("DialoguePanel");
             if (t != null) dialoguePanel = t.gameObject;
-            else if (dialogueText != null && dialogueText.transform.parent != null)
-                dialoguePanel = dialogueText.transform.parent.gameObject;
         }
 
         if (historicalPanel == null)
@@ -183,14 +137,8 @@ public class M01Controller : MonoBehaviour
         // Auto-wire Dialogue elements
         if (dialoguePanel != null)
         {
-            if (dialogueText == null)
-                dialogueText = dialoguePanel.transform.Find("Dialogue Text")?.GetComponent<TMP_Text>();
-
-            if (characterName == null)
-                characterName = dialoguePanel.transform.Find("NameText")?.GetComponent<TMP_Text>();
-
-            if (continueButton == null)
-                continueButton = dialoguePanel.transform.Find("ContinueButton")?.GetComponent<Button>();
+            if (dialogueController == null)
+                dialogueController = dialoguePanel.GetComponent<DialogueController>();
         }
 
         // Auto-wire Historical elements
@@ -264,7 +212,7 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// Step 2: Susan Dialogue conversation
+    /// Step 2: Susan Dialogue conversation (Delegated to DialogueController)
     /// </summary>
     public void StartDialogue()
     {
@@ -273,134 +221,21 @@ public class M01Controller : MonoBehaviour
         if (hintPanel != null) hintPanel.SetActive(false);
         if (historicalPanel != null) historicalPanel.SetActive(false);
 
-        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        // 自动查找防呆
+        if (dialogueController == null && dialoguePanel != null)
+            dialogueController = dialoguePanel.GetComponent<DialogueController>();
 
-        if (characterName != null)
+        if (dialogueController != null)
         {
-            characterName.text = "Susan";
-        }
-
-        currentLine = 0;
-        DisplayCurrentLine();
-    }
-
-    /// <summary>
-    /// Unified click handler: if typing, fast-forwards to show entire sentence; if done, moves to next sentence.
-    /// </summary>
-    public void OnDialogueClicked()
-    {
-        if (currentState != FlowState.Dialogue) return;
-
-        if (isTyping)
-        {
-            // Fast-forward / Skip typing animation
-            SkipTyping();
+            dialogueController.OnDialogueFinished -= ShowAlignHint;
+            dialogueController.OnDialogueFinished += ShowAlignHint;
+            dialogueController.StartDialogue();
         }
         else
         {
-            // Proceed to next sentence
-            NextLine();
+            Debug.LogError("[M01Controller] 未找到 DialogueController，请在 DialoguePanel 挂载该脚本！");
+            ShowAlignHint();
         }
-    }
-
-    void DisplayCurrentLine()
-    {
-        if (dialogue == null || dialogue.Length == 0 || currentLine >= dialogue.Length) return;
-
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-        }
-
-        typingCoroutine = StartCoroutine(TypeSentenceRoutine(dialogue[currentLine]));
-    }
-
-    IEnumerator TypeSentenceRoutine(string sentence)
-    {
-        isTyping = true;
-        if (continueButton != null)
-        {
-            continueButton.gameObject.SetActive(false);
-        }
-
-        if (dialogueText != null)
-        {
-            dialogueText.text = "";
-            char[] chars = sentence.ToCharArray();
-            for (int i = 0; i < chars.Length; i++)
-            {
-                char letter = chars[i];
-                dialogueText.text += letter;
-
-                if (enablePunctuationPauses && (letter == ',' || letter == '.' || letter == '!' || letter == '?' || letter == '—' || letter == ':'))
-                {
-                    yield return new WaitForSeconds(typingSpeed * 4f);
-                }
-                else
-                {
-                    yield return new WaitForSeconds(typingSpeed);
-                }
-            }
-        }
-
-        FinishTyping();
-    }
-
-    void SkipTyping()
-    {
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
-
-        if (dialogueText != null && currentLine < dialogue.Length)
-        {
-            dialogueText.text = dialogue[currentLine];
-        }
-
-        FinishTyping();
-    }
-
-    void FinishTyping()
-    {
-        isTyping = false;
-        if (continueButton != null)
-        {
-            continueButton.gameObject.SetActive(true);
-        }
-    }
-
-    void NextLine()
-    {
-        currentLine++;
-
-        if (currentLine < dialogue.Length)
-        {
-            DisplayCurrentLine();
-        }
-        else
-        {
-            EndDialogue();
-        }
-    }
-
-    void EndDialogue()
-    {
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
-        isTyping = false;
-
-        if (dialoguePanel != null)
-        {
-            dialoguePanel.SetActive(false);
-        }
-
-        // Transition to Hint 2 (Align Position Hint) before historical picture
-        ShowAlignHint();
     }
 
     /// <summary>

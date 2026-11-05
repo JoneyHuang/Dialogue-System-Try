@@ -4999,6 +4999,7 @@ MonoBehaviour:
   alignHintPrompt: Susan is sharing a photo of the Cathedral Spire that she remembered
     with you. Point the camera to the current Cathedral, and after the photo appears,
     position yourself to match the historical photos of the Cathedral
+  dialogueController: {fileID: 8328906292513212158}
   dialogueText: {fileID: 5599549490604622058}
   characterName: {fileID: 9195539324709959578}
   continueButton: {fileID: 6623358728811564165}
@@ -9143,6 +9144,7 @@ GameObject:
   - component: {fileID: 2744125998705451133}
   - component: {fileID: 2238571222732553597}
   - component: {fileID: 8328906292513212157}
+  - component: {fileID: 8328906292513212158}
   m_Layer: 5
   m_Name: DialoguePanel
   m_TagString: Untagged
@@ -10387,6 +10389,40 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8328906292513212158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566137446410823698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6f009757ccd30a4194303a530278bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterNameText: {fileID: 9195539324709959578}
+  dialogueBodyText: {fileID: 5599549490604622058}
+  continueButton: {fileID: 6623358728811564165}
+  enableFullScreenClick: 1
+  debounceAfterSkip: 0.15
+  typingSpeed: 0.035
+  enablePunctuationPauses: 1
+  defaultSpeaker: Susan
+  defaultLines:
+  - My name is Susan. I grew up and live in Christchurch.
+  - Standing here in Cathedral Square today, it's quiet... It's different from what
+    I remembered.
+  - The tower and spire are missing, but they carry my special memories.
+  - 'When I was at school, I got lost around Cathedral Square during the trip. I
+    remember my teacher, Mr Watson, told us:'
+  - " 'If you are lost, look for the Cathedral spire\u2014it's the tallest building
+    in the town!' "
+  - ' I heard the bell, looked up, and found my way back.'
+  - The last time I saw the spire, I was visiting the square with my homestay student.
+  - "Now, when I pass by here, I still see the absence of that spire. I try to outline
+    its contours in my mind... just like lifting my phone to capture it \u2014 it's
+    a habit that never left me..."
 --- !u!1 &8353955752227653667
 GameObject:
   m_ObjectHideFlags: 0
