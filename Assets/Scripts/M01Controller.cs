@@ -1,8 +1,11 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
+/// <summary>
+/// M01 现场体验轻量级流程调度器 (Coordinator / Sequencer)。
+/// 负责编排引导提示 (Prompt) -> Susan 对话 (Dialogue) -> 视角对齐 (Align) -> 历史照片对比 (Historical)。
+/// 具体的 UI 呈现与交互均委托给独立的子组件完成。
+/// </summary>
 public class M01Controller : MonoBehaviour
 {
     public static M01Controller Instance { get; private set; }
@@ -19,33 +22,28 @@ public class M01Controller : MonoBehaviour
     [Header("Current Flow State")]
     public FlowState currentState = FlowState.Hidden;
 
-    [Header("Panels")]
-    [Tooltip("Panel showing prompts (Hint 1 for meeting Susan, Hint 2 for positioning/alignment).")]
-    public GameObject hintPanel;
-    [Tooltip("Panel showing Susan's dialogue conversation.")]
-    public GameObject dialoguePanel;
-    [Tooltip("Panel showing the Then/Now historical photo slider and gallery.")]
-    public GameObject historicalPanel;
+    [Header("Sub-Controllers (即插即用组件)")]
+    [Tooltip("通用提示/引导弹窗控制器")]
+    public PromptPanelController promptPanelController;
 
-    [Header("Hint UI")]
-    public TMP_Text hintText;
-    public Button hintContinueButton;
-    public TMP_Text hintButtonLabel;
+    [Tooltip("打字机对话系统控制器")]
+    public DialogueController dialogueController;
+
+    [Tooltip("历史照片对比控制器")]
+    public HistoricalComparisonController historicalComparisonController;
+
+    [Header("Prompts Content")]
     [TextArea(2, 4)]
     public string meetingHintPrompt = "You have arrived at Cathedral Square!\nYou are now meeting Susan, who grew up here in Christchurch. Let's hear her story...";
     [TextArea(2, 4)]
     public string alignHintPrompt = "Before viewing the archival photo, please walk towards the site and position yourself to match the historical perspective of the Cathedral.";
 
-    [Header("Dialogue UI")]
-    [Tooltip("Dedicated controller for Dialogue.")]
-    public DialogueController dialogueController;
-
-    [Header("Historical Image (Then / Now)")]
-    [Tooltip("Dedicated controller for Historical Comparison.")]
-    public HistoricalComparisonController historicalComparisonController;
+    [Header("Next Destination (可选)")]
+    [Tooltip("完成该 POI 后激活的下一个目标物体 (如 PoI 2 Pin 或玫瑰窗 HotSpot)")]
+    public GameObject nextPoiTarget;
 
     [Header("Debug")]
-    [Tooltip("If true, starts flow automatically on scene start (for testing without walking to Pin).")]
+    [Tooltip("Play 模式启动时自动触发流程（方便无需行走快速调试）")]
     public bool autoStartOnPlay = false;
 
     void Awake()
@@ -65,19 +63,13 @@ public class M01Controller : MonoBehaviour
 
     void Start()
     {
-        if (hintContinueButton != null)
-        {
-            hintContinueButton.onClick.RemoveListener(OnHintContinueClicked);
-            hintContinueButton.onClick.AddListener(OnHintContinueClicked);
-        }
-
+        // 绑定历史对比关闭事件
         if (historicalComparisonController != null)
         {
             historicalComparisonController.onComparisonClosed -= ExitHistoricalComparison;
             historicalComparisonController.onComparisonClosed += ExitHistoricalComparison;
         }
 
-        // Hide all panels initially until triggered by Pin
         HideAllPanels();
 
         if (autoStartOnPlay)
@@ -87,78 +79,48 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// Automatically searches and assigns missing references in the Canvas hierarchy.
-    /// Ensures stability even if Inspector references are missing after prefab instantiation.
+    /// 自动在场景 Canvas 中寻找并装配子模块控制器，杜绝 Inspector 漏拖导致的空指针
     /// </summary>
-    void AutoWireComponents()
+    public void AutoWireComponents()
     {
         Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null) return;
 
         Transform canvasTr = canvas.transform;
 
-        // Auto-wire panels
-        if (hintPanel == null)
+        if (promptPanelController == null)
         {
             Transform t = canvasTr.Find("HintPanel");
-            if (t != null) hintPanel = t.gameObject;
+            if (t != null)
+                promptPanelController = t.GetComponent<PromptPanelController>();
         }
 
-        if (dialoguePanel == null)
+        if (dialogueController == null)
         {
             Transform t = canvasTr.Find("DialoguePanel");
-            if (t != null) dialoguePanel = t.gameObject;
+            if (t != null)
+                dialogueController = t.GetComponent<DialogueController>();
         }
 
-        if (historicalPanel == null)
+        if (historicalComparisonController == null)
         {
             Transform t = canvasTr.Find("HistoricalPanel");
-            if (t != null) historicalPanel = t.gameObject;
-        }
-
-        // Auto-wire Hint elements
-        if (hintPanel != null)
-        {
-            if (hintText == null)
-                hintText = hintPanel.transform.Find("HintText")?.GetComponent<TMP_Text>();
-
-            if (hintContinueButton == null)
-            {
-                Transform btnTr = hintPanel.transform.Find("HintContinueButton");
-                if (btnTr != null)
-                {
-                    hintContinueButton = btnTr.GetComponent<Button>();
-                    if (hintButtonLabel == null)
-                        hintButtonLabel = btnTr.GetComponentInChildren<TMP_Text>();
-                }
-            }
-        }
-
-        // Auto-wire Dialogue elements
-        if (dialoguePanel != null)
-        {
-            if (dialogueController == null)
-                dialogueController = dialoguePanel.GetComponent<DialogueController>();
-        }
-
-        // Auto-wire Historical elements
-        if (historicalPanel != null)
-        {
-            if (historicalComparisonController == null)
-                historicalComparisonController = historicalPanel.GetComponent<HistoricalComparisonController>();
+            if (t != null)
+                historicalComparisonController = t.GetComponent<HistoricalComparisonController>();
         }
     }
 
     public void HideAllPanels()
     {
-        if (hintPanel != null) hintPanel.SetActive(false);
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (historicalPanel != null) historicalPanel.SetActive(false);
+        if (promptPanelController != null) promptPanelController.Hide();
+        if (dialogueController != null) dialogueController.gameObject.SetActive(false);
+        if (historicalComparisonController != null) historicalComparisonController.gameObject.SetActive(false);
+
         currentState = FlowState.Hidden;
     }
 
     /// <summary>
-    /// Entry point triggered when user arrives at POI 1 / collides with Pin in real-world AR.
+    /// 入口：由现场导航 Pin 的 ProximityTrigger 到达时调用
     /// </summary>
     public void StartStoryFlow()
     {
@@ -166,64 +128,31 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// Step 1: Show Hint 1 ("You are now meeting Susan...")
+    /// 阶段 1：展示“初识 Susan”提示
     /// </summary>
     public void ShowMeetingHint()
     {
         currentState = FlowState.MeetingHint;
 
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (historicalPanel != null) historicalPanel.SetActive(false);
-
-        if (hintPanel != null)
+        if (promptPanelController != null)
         {
-            hintPanel.SetActive(true);
-            Debug.Log($"[M01Controller] ShowMeetingHint: hintPanel '{hintPanel.name}' activated successfully.");
-
-            if (hintText != null)
-            {
-                hintText.text = meetingHintPrompt;
-            }
-            if (hintButtonLabel != null)
-            {
-                hintButtonLabel.text = "Meet Susan";
-            }
+            promptPanelController.ShowPrompt(meetingHintPrompt, "Meet Susan", StartDialogue);
         }
         else
         {
-            Debug.LogWarning("[M01Controller] ShowMeetingHint: hintPanel is NULL! Falling back directly to StartDialogue(). Please check M01Controller Inspector.");
-            // If hint panel is missing, jump directly to dialogue
+            Debug.LogWarning("[M01Controller] 未找到 PromptPanelController，直接进入对话！");
             StartDialogue();
-        }
-    }
-
-    void OnHintContinueClicked()
-    {
-        if (currentState == FlowState.MeetingHint)
-        {
-            // Hint 1 confirmed -> Start Dialogue
-            StartDialogue();
-        }
-        else if (currentState == FlowState.AlignHint)
-        {
-            // Hint 2 confirmed -> Open Historical Panel
-            ShowHistoricalPanel();
         }
     }
 
     /// <summary>
-    /// Step 2: Susan Dialogue conversation (Delegated to DialogueController)
+    /// 阶段 2：启动 Susan 对话
     /// </summary>
     public void StartDialogue()
     {
         currentState = FlowState.Dialogue;
 
-        if (hintPanel != null) hintPanel.SetActive(false);
-        if (historicalPanel != null) historicalPanel.SetActive(false);
-
-        // 自动查找防呆
-        if (dialogueController == null && dialoguePanel != null)
-            dialogueController = dialoguePanel.GetComponent<DialogueController>();
+        if (promptPanelController != null) promptPanelController.Hide();
 
         if (dialogueController != null)
         {
@@ -233,32 +162,23 @@ public class M01Controller : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[M01Controller] 未找到 DialogueController，请在 DialoguePanel 挂载该脚本！");
+            Debug.LogError("[M01Controller] 未找到 DialogueController，直接进入站位引导！");
             ShowAlignHint();
         }
     }
 
     /// <summary>
-    /// Step 3: Show Hint 2 ("Please position yourself to align with the historical perspective...")
+    /// 阶段 3：对话结束，展示“视角与站位对齐”引导提示
     /// </summary>
     public void ShowAlignHint()
     {
         currentState = FlowState.AlignHint;
 
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (historicalPanel != null) historicalPanel.SetActive(false);
+        if (dialogueController != null) dialogueController.gameObject.SetActive(false);
 
-        if (hintPanel != null)
+        if (promptPanelController != null)
         {
-            hintPanel.SetActive(true);
-            if (hintText != null)
-            {
-                hintText.text = alignHintPrompt;
-            }
-            if (hintButtonLabel != null)
-            {
-                hintButtonLabel.text = "I'm in Position";
-            }
+            promptPanelController.ShowPrompt(alignHintPrompt, "I'm in Position", ShowHistoricalPanel);
         }
         else
         {
@@ -267,14 +187,13 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// Step 4: Show Historical Comparison Panel (Then / Now Slider & Gallery)
+    /// 阶段 4：站位完成，打开历史照片对比
     /// </summary>
     public void ShowHistoricalPanel()
     {
         currentState = FlowState.HistoricalComparison;
 
-        if (hintPanel != null) hintPanel.SetActive(false);
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+        if (promptPanelController != null) promptPanelController.Hide();
 
         if (historicalComparisonController != null)
         {
@@ -290,6 +209,9 @@ public class M01Controller : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 阶段 5：退出历史对比，完成 M01，交接下一个 POI
+    /// </summary>
     public void ExitHistoricalComparison()
     {
         if (historicalComparisonController != null)
@@ -298,5 +220,12 @@ public class M01Controller : MonoBehaviour
         }
 
         currentState = FlowState.Hidden;
+
+        // 激活下一个 POI 目标
+        if (nextPoiTarget != null)
+        {
+            nextPoiTarget.SetActive(true);
+            Debug.Log($"[M01Controller] M01 完成！已激活下一目的地：{nextPoiTarget.name}");
+        }
     }
 }

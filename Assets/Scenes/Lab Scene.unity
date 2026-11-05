@@ -3169,6 +3169,7 @@ MonoBehaviour:
   arCamera: {fileID: 1939929815}
   triggerDistance: 1
   warningDistance: 5
+  ignoreVerticalDistance: 1
   hidePinOnTrigger: 1
   onTriggered:
     m_PersistentCalls:
@@ -4644,6 +4645,7 @@ MonoBehaviour:
   arCamera: {fileID: 1939929815}
   triggerDistance: 2
   warningDistance: 5
+  ignoreVerticalDistance: 1
   hidePinOnTrigger: 1
   onTriggered:
     m_PersistentCalls:
@@ -4984,12 +4986,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  hintPanel: {fileID: 3315819049796909267}
-  dialoguePanel: {fileID: 4566137446410823698}
-  historicalPanel: {fileID: 3967043878710585921}
-  hintText: {fileID: 373143654541199042}
-  hintContinueButton: {fileID: 5713212557315864531}
-  hintButtonLabel: {fileID: 0}
+  promptPanelController: {fileID: 8150316963004870456}
+  dialogueController: {fileID: 8328906292513212158}
+  historicalComparisonController: {fileID: 6143374607047530868}
   meetingHintPrompt: 'You have arrived at War Memorial, where the traditional Annual
     Anzac Memorial would hold. It''s located next to the Cathedral tower that was
     collapsed during the earthquake.
@@ -4999,13 +4998,7 @@ MonoBehaviour:
   alignHintPrompt: Susan is sharing a photo of the Cathedral Spire that she remembered
     with you. Point the camera to the current Cathedral, and after the photo appears,
     position yourself to match the historical photos of the Cathedral
-  dialogueController: {fileID: 8328906292513212158}
-  dialogueText: {fileID: 5599549490604622058}
-  characterName: {fileID: 9195539324709959578}
-  continueButton: {fileID: 6623358728811564165}
-  typingSpeed: 0.05
-  enablePunctuationPauses: 1
-  historicalComparisonController: {fileID: 6143374607047530868}
+  nextPoiTarget: {fileID: 0}
   autoStartOnPlay: 0
 --- !u!4 &1420760260
 Transform:
@@ -6254,6 +6247,7 @@ MonoBehaviour:
   arCamera: {fileID: 1939929815}
   triggerDistance: 1
   warningDistance: 5
+  ignoreVerticalDistance: 1
   hidePinOnTrigger: 1
   onTriggered:
     m_PersistentCalls:
@@ -8639,8 +8633,9 @@ GameObject:
   - component: {fileID: 8150316963004870455}
   - component: {fileID: 3432879356845252494}
   - component: {fileID: 5431589140933497624}
+  - component: {fileID: 8150316963004870456}
   m_Layer: 5
-  m_Name: HintPanel
+  m_Name: PromptPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10249,6 +10244,21 @@ RectTransform:
   m_AnchoredPosition: {x: -8, y: 350.28}
   m_SizeDelta: {x: -711.2955, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8150316963004870456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315819049796909267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2a87da65f7bd44490be664f14d518c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptText: {fileID: 373143654541199042}
+  continueButton: {fileID: 5713212557315864531}
+  buttonLabel: {fileID: 684495603980578519}
 --- !u!114 &8252954519074853951
 MonoBehaviour:
   m_ObjectHideFlags: 0

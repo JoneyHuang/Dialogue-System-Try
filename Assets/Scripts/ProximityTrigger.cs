@@ -18,6 +18,10 @@ public class ProximityTrigger : MonoBehaviour
     [Tooltip("Distance in meters at which the pin starts a breathing animation to attract attention.")]
     public float warningDistance = 5.0f;
 
+    [Header("AR Outdoor Planar Detection")]
+    [Tooltip("Height sensitivity")]
+    public bool ignoreVerticalDistance = true;
+
     [Header("Trigger Behavior")]
     [Tooltip("Hide this Pin GameObject once triggered.")]
     public bool hidePinOnTrigger = true;
@@ -43,7 +47,16 @@ public class ProximityTrigger : MonoBehaviour
     {
         if (hasTriggered || arCamera == null) return;
 
-        float distance = Vector3.Distance(transform.position, arCamera.position);
+        Vector3 pinPos = transform.position;
+        Vector3 camPos = arCamera.position;
+
+        if (ignoreVerticalDistance)
+        {
+            pinPos.y = 0f;
+            camPos.y = 0f;
+        }
+
+        float distance = Vector3.Distance(pinPos, camPos);
 
         if (distance <= warningDistance && distance > triggerDistance)
         {
