@@ -48,6 +48,8 @@ public class M01Controller : MonoBehaviour
     public bool enablePunctuationPauses = true;
 
     [Header("Historical Image (Then / Now)")]
+    [Tooltip("Dedicated controller for Historical Comparison. If assigned or found on HistoricalPanel, M01 delegates comparison tasks to it.")]
+    public HistoricalComparisonController historicalComparisonController;
     public Slider opacitySlider;
     public Image historicalImage;
     public Material saturationMaterial;
@@ -117,6 +119,12 @@ public class M01Controller : MonoBehaviour
         {
             hintContinueButton.onClick.RemoveListener(OnHintContinueClicked);
             hintContinueButton.onClick.AddListener(OnHintContinueClicked);
+        }
+
+        if (historicalComparisonController != null)
+        {
+            historicalComparisonController.onComparisonClosed -= ExitHistoricalComparison;
+            historicalComparisonController.onComparisonClosed += ExitHistoricalComparison;
         }
 
         if (opacitySlider != null)
@@ -245,6 +253,9 @@ public class M01Controller : MonoBehaviour
         // Auto-wire Historical elements
         if (historicalPanel != null)
         {
+            if (historicalComparisonController == null)
+                historicalComparisonController = historicalPanel.GetComponent<HistoricalComparisonController>();
+
             if (opacitySlider == null)
                 opacitySlider = historicalPanel.GetComponentInChildren<Slider>(true);
 
@@ -496,6 +507,14 @@ public class M01Controller : MonoBehaviour
         if (hintPanel != null) hintPanel.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
 
+        // Forward to decoupled HistoricalComparisonController if available
+        if (historicalComparisonController != null)
+        {
+            historicalComparisonController.OpenComparison();
+            return;
+        }
+
+        // Fallback for legacy mode
         if (opacitySlider != null)
         {
             opacitySlider.SetValueWithoutNotify(0.5f);
@@ -506,16 +525,17 @@ public class M01Controller : MonoBehaviour
         {
             historicalPanel.SetActive(true);
         }
-
-        // NOTE: AlignStageView (玫瑰窗对位环) 暂时不用，如需启用可在此处调用:
-        // if (FindFirstObjectByType<AlignStageView>() != null)
-        // {
-        //     FindFirstObjectByType<AlignStageView>().ShowAligning();
-        // }
     }
 
     public void UpdateHistoricalOpacity(float value)
     {
+        // Forward to decoupled HistoricalComparisonController if available
+        if (historicalComparisonController != null)
+        {
+            historicalComparisonController.UpdateOpacity(value);
+            return;
+        }
+
         value = Mathf.Clamp01(value);
 
         if (historicalImage != null)
@@ -556,12 +576,20 @@ public class M01Controller : MonoBehaviour
 
     public void ExitHistoricalComparison()
     {
-        if (historicalAudioSource != null)
+        if (historicalComparisonController != null && historicalComparisonController.gameObject.activeSelf)
         {
-            historicalAudioSource.Stop();
-            historicalAudioSource.volume = 0f;
+            historicalComparisonController.CloseComparison();
         }
-        if (historicalPanel != null) historicalPanel.SetActive(false);
+        else
+        {
+            if (historicalAudioSource != null)
+            {
+                historicalAudioSource.Stop();
+                historicalAudioSource.volume = 0f;
+            }
+            if (historicalPanel != null) historicalPanel.SetActive(false);
+        }
+
         currentState = FlowState.Hidden;
     }
 }
