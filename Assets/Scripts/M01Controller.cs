@@ -48,14 +48,8 @@ public class M01Controller : MonoBehaviour
     public bool enablePunctuationPauses = true;
 
     [Header("Historical Image (Then / Now)")]
-    [Tooltip("Dedicated controller for Historical Comparison. If assigned or found on HistoricalPanel, M01 delegates comparison tasks to it.")]
+    [Tooltip("Dedicated controller for Historical Comparison.")]
     public HistoricalComparisonController historicalComparisonController;
-    public Slider opacitySlider;
-    public Image historicalImage;
-    public Material saturationMaterial;
-    public AudioSource historicalAudioSource;
-    public PhotoGalleryController photoGallery;
-    public Button exitComparisonButton;
 
     [Header("Debug")]
     [Tooltip("If true, starts flow automatically on scene start (for testing without walking to Pin).")]
@@ -125,57 +119,6 @@ public class M01Controller : MonoBehaviour
         {
             historicalComparisonController.onComparisonClosed -= ExitHistoricalComparison;
             historicalComparisonController.onComparisonClosed += ExitHistoricalComparison;
-        }
-
-        if (opacitySlider != null)
-        {
-            bool hasPersistentOpacityListener = false;
-            for (int i = 0; i < opacitySlider.onValueChanged.GetPersistentEventCount(); i++)
-            {
-                if (opacitySlider.onValueChanged.GetPersistentTarget(i) == this &&
-                    opacitySlider.onValueChanged.GetPersistentMethodName(i) == nameof(UpdateHistoricalOpacity))
-                {
-                    hasPersistentOpacityListener = true;
-                    break;
-                }
-            }
-
-            if (!hasPersistentOpacityListener)
-            {
-                opacitySlider.onValueChanged.RemoveListener(UpdateHistoricalOpacity);
-                opacitySlider.onValueChanged.AddListener(UpdateHistoricalOpacity);
-            }
-            opacitySlider.SetValueWithoutNotify(0.3f);
-        }
-
-        if (historicalPanel != null && exitComparisonButton == null) exitComparisonButton = historicalPanel.transform.Find("Button")?.GetComponent<Button>();
-        if (historicalAudioSource == null) historicalAudioSource = GetComponent<AudioSource>();
-        if (historicalAudioSource == null) historicalAudioSource = gameObject.AddComponent<AudioSource>();
-        if (photoGallery == null && historicalPanel != null) photoGallery = historicalPanel.GetComponentInChildren<PhotoGalleryController>(true);
-
-        if (exitComparisonButton != null)
-        {
-            exitComparisonButton.onClick.RemoveListener(ExitHistoricalComparison);
-            exitComparisonButton.onClick.AddListener(ExitHistoricalComparison);
-        }
-
-        if (historicalAudioSource != null)
-        {
-            historicalAudioSource.loop = true;
-            historicalAudioSource.playOnAwake = false;
-            historicalAudioSource.Stop();
-            historicalAudioSource.volume = 0f;
-        }
-
-        if (historicalImage != null && saturationMaterial != null)
-        {
-            historicalImage.material = saturationMaterial;
-        }
-        if (photoGallery != null)
-        {
-            photoGallery.onPhotoChanged -= OnHistoricalPhotoChanged;
-            photoGallery.onPhotoChanged += OnHistoricalPhotoChanged;
-            OnHistoricalPhotoChanged(0, photoGallery.GetCurrentAudio());
         }
 
         // Hide all panels initially until triggered by Pin
@@ -255,15 +198,6 @@ public class M01Controller : MonoBehaviour
         {
             if (historicalComparisonController == null)
                 historicalComparisonController = historicalPanel.GetComponent<HistoricalComparisonController>();
-
-            if (opacitySlider == null)
-                opacitySlider = historicalPanel.GetComponentInChildren<Slider>(true);
-
-            if (historicalImage == null)
-            {
-                Transform imgTr = historicalPanel.transform.Find("HistoricalImage");
-                if (imgTr != null) historicalImage = imgTr.GetComponent<Image>();
-            }
         }
     }
 
@@ -507,87 +441,25 @@ public class M01Controller : MonoBehaviour
         if (hintPanel != null) hintPanel.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
 
-        // Forward to decoupled HistoricalComparisonController if available
         if (historicalComparisonController != null)
         {
             historicalComparisonController.OpenComparison();
-            return;
-        }
-
-        // Fallback for legacy mode
-        if (opacitySlider != null)
-        {
-            opacitySlider.SetValueWithoutNotify(0.5f);
-        }
-        UpdateHistoricalOpacity(0.5f);
-
-        if (historicalPanel != null)
-        {
-            historicalPanel.SetActive(true);
         }
     }
 
     public void UpdateHistoricalOpacity(float value)
     {
-        // Forward to decoupled HistoricalComparisonController if available
         if (historicalComparisonController != null)
         {
             historicalComparisonController.UpdateOpacity(value);
-            return;
         }
-
-        value = Mathf.Clamp01(value);
-
-        if (historicalImage != null)
-        {
-            Color c = historicalImage.color;
-            c.a = value;
-            historicalImage.color = c;
-
-            Material mat = saturationMaterial != null ? saturationMaterial : historicalImage.material;
-            if (mat != null && mat.HasProperty("_Saturation"))
-            {
-                mat.SetFloat("_Saturation", value);
-            }
-        }
-
-        if (historicalAudioSource != null)
-        {
-            historicalAudioSource.volume = value;
-
-            bool comparisonIsOpen = currentState == FlowState.HistoricalComparison &&
-                historicalPanel != null && historicalPanel.activeInHierarchy;
-            if (comparisonIsOpen && value > 0.001f && historicalAudioSource.clip != null &&
-                !historicalAudioSource.isPlaying)
-            {
-                historicalAudioSource.Play();
-            }
-        }
-    }
-
-    void OnHistoricalPhotoChanged(int index, AudioClip clip)
-    {
-        if (historicalAudioSource == null) return;
-
-        historicalAudioSource.Stop();
-        historicalAudioSource.clip = clip;
-        UpdateHistoricalOpacity(opacitySlider != null ? opacitySlider.value : 0f);
     }
 
     public void ExitHistoricalComparison()
     {
-        if (historicalComparisonController != null && historicalComparisonController.gameObject.activeSelf)
+        if (historicalComparisonController != null)
         {
             historicalComparisonController.CloseComparison();
-        }
-        else
-        {
-            if (historicalAudioSource != null)
-            {
-                historicalAudioSource.Stop();
-                historicalAudioSource.volume = 0f;
-            }
-            if (historicalPanel != null) historicalPanel.SetActive(false);
         }
 
         currentState = FlowState.Hidden;
