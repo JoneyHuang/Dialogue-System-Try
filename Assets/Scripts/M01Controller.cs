@@ -26,10 +26,10 @@ public class M01Controller : MonoBehaviour
     [Tooltip("通用提示/引导弹窗控制器")]
     public PromptPanelController promptPanelController;
 
-    [Tooltip("打字机对话系统控制器")]
+    [Tooltip("Typer Effect")]
     public DialogueController dialogueController;
 
-    [Tooltip("历史照片对比控制器")]
+    [Tooltip("Historical Comparison Controller")]
     public HistoricalComparisonController historicalComparisonController;
 
     [Header("Prompts Content")]
@@ -38,7 +38,7 @@ public class M01Controller : MonoBehaviour
     [TextArea(2, 4)]
     public string alignHintPrompt = "Before viewing the archival photo, please walk towards the site and position yourself to match the historical perspective of the Cathedral.";
 
-    [Header("Next Destination (可选)")]
+    [Header("Next Destination (optional)")]
     [Tooltip("完成该 POI 后激活的下一个目标物体 (如 PoI 2 Pin 或玫瑰窗 HotSpot)")]
     public GameObject nextPoiTarget;
 
