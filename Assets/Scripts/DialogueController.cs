@@ -34,20 +34,11 @@ public class DialogueController : MonoBehaviour
     [Tooltip("标点符号额外停顿，模拟说话自然语气")]
     public bool enablePunctuationPauses = true;
 
-    [Header("Dialogue Content (可被外部覆盖)")]
-    public string defaultSpeaker = "Susan";
+    [Header("Dialogue Content (Fallback — 通常由 PoIStoryData 覆盖)")]
+    [Tooltip("当调用方未传入 lines 参数时使用的后备台词。生产环境建议留空，内容改由 PoIStoryData 管理。")]
+    public string defaultSpeaker = "Storyteller";
     [TextArea(2, 4)]
-    public string[] defaultLines =
-    {
-        "My name is Susan. I grew up and live in Christchurch.",
-        "Standing here in Cathedral Square today, it's quiet... It's different from what I remembered.",
-        "The tower and spire are missing, but they carry my special memories.",
-        "When I was at school, I got lost around Cathedral Square during the trip. I remember my teacher, Mr Watson, told us:",
-        " 'If you are lost, look for the Cathedral spire—it's the tallest building in the town!' ",
-        " I heard the bell, looked up, and found my way back.",
-        "The last time I saw the spire, I was visiting the square with my homestay student.",
-        "Now, when I pass by here, I still see the absence of that spire. I try to outline its contours in my mind... just like lifting my phone to capture it — it's a habit that never left me..."
-    };
+    public string[] defaultLines = { };
 
     /// <summary>
     /// 对话全部播放完毕后触发的事件

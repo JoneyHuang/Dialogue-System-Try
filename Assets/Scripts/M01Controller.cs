@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// M01 现场体验轻量级流程调度器 (Coordinator / Sequencer)。
-/// 负责编排引导提示 (Prompt) -> Susan 对话 (Dialogue) -> 视角对齐 (Align) -> 历史照片对比 (Historical)。
-/// 具体的 UI 呈现与交互均委托给独立的子组件完成。
+/// M01 现场体验流程调度器 (Coordinator / Sequencer)。
+/// 负责编排：到达提示 → Susan 对话 → 视角对齐 → 历史照片对比 → 反思 → 进入 M02。
+/// 叙事内容全部来自 PoIStoryData ScriptableObject，代码与文案完全分离。
 /// </summary>
 public class M01Controller : MonoBehaviour
 {
@@ -16,27 +16,26 @@ public class M01Controller : MonoBehaviour
         MeetingHint,
         Dialogue,
         AlignHint,
-        HistoricalComparison
+        HistoricalComparison,
+        Reflection
     }
 
     [Header("Current Flow State")]
     public FlowState currentState = FlowState.Hidden;
 
+    [Header("Story Data (ScriptableObject)")]
+    [Tooltip("将 Assets/StoryData/PoI_01_Susan.asset 拖入此栏")]
+    public PoIStoryData storyData;
+
     [Header("Sub-Controllers (即插即用组件)")]
     [Tooltip("通用提示/引导弹窗控制器")]
     public PromptPanelController promptPanelController;
 
-    [Tooltip("Typer Effect")]
+    [Tooltip("Typewriter 对话系统控制器")]
     public DialogueController dialogueController;
 
-    [Tooltip("Historical Comparison Controller")]
+    [Tooltip("历史照片对比控制器")]
     public HistoricalComparisonController historicalComparisonController;
-
-    [Header("Prompts Content")]
-    [TextArea(2, 4)]
-    public string meetingHintPrompt = "You have arrived at Cathedral Square!\nYou are now meeting Susan, who grew up here in Christchurch. Let's hear her story...";
-    [TextArea(2, 4)]
-    public string alignHintPrompt = "Before viewing the archival photo, please walk towards the site and position yourself to match the historical perspective of the Cathedral.";
 
     [Header("Next Destination (optional)")]
     [Tooltip("完成该 POI 后激活的下一个目标物体 (如 PoI 2 Pin 或玫瑰窗 HotSpot)")]
@@ -45,6 +44,19 @@ public class M01Controller : MonoBehaviour
     [Header("Debug")]
     [Tooltip("Play 模式启动时自动触发流程（方便无需行走快速调试）")]
     public bool autoStartOnPlay = false;
+
+    // ─── Fallback 文案（当 storyData 未赋值时使用）────────────────────────────
+    private const string kFallbackArrivalPrompt =
+        "You have arrived at Cathedral Square!\nYou are now meeting Susan, who grew up here in Christchurch. Let\u2019s hear her story...";
+    private const string kFallbackArrivalBtn = "Meet Susan";
+    private const string kFallbackAlignPrompt =
+        "Before viewing the archival photo, please walk towards the site and position yourself to match the historical perspective of the Cathedral.";
+    private const string kFallbackAlignBtn = "I\u2019m in Position";
+    private const string kFallbackReflectionPrompt =
+        "Susan\u2019s memory of the spire lives on in this space. Standing here, what do you notice about what has changed \u2014 and what remains?";
+    private const string kFallbackReflectionBtn = "Continue to M2";
+
+    // ─── Unity Lifecycle ──────────────────────────────────────────────────────
 
     void Awake()
     {
@@ -66,8 +78,8 @@ public class M01Controller : MonoBehaviour
         // 绑定历史对比关闭事件
         if (historicalComparisonController != null)
         {
-            historicalComparisonController.onComparisonClosed -= ExitHistoricalComparison;
-            historicalComparisonController.onComparisonClosed += ExitHistoricalComparison;
+            historicalComparisonController.onComparisonClosed -= OnHistoricalComparisonClosed;
+            historicalComparisonController.onComparisonClosed += OnHistoricalComparisonClosed;
         }
 
         HideAllPanels();
@@ -77,6 +89,8 @@ public class M01Controller : MonoBehaviour
             StartStoryFlow();
         }
     }
+
+    // ─── Auto-wiring ──────────────────────────────────────────────────────────
 
     /// <summary>
     /// 自动在场景 Canvas 中寻找并装配子模块控制器，杜绝 Inspector 漏拖导致的空指针
@@ -110,6 +124,8 @@ public class M01Controller : MonoBehaviour
         }
     }
 
+    // ─── Panel Utility ────────────────────────────────────────────────────────
+
     public void HideAllPanels()
     {
         if (promptPanelController != null) promptPanelController.Hide();
@@ -118,6 +134,8 @@ public class M01Controller : MonoBehaviour
 
         currentState = FlowState.Hidden;
     }
+
+    // ─── Flow Steps ───────────────────────────────────────────────────────────
 
     /// <summary>
     /// 入口：由现场导航 Pin 的 ProximityTrigger 到达时调用
@@ -128,15 +146,18 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 1：展示“初识 Susan”提示
+    /// 阶段 1：展示"初识 Susan"到达提示
     /// </summary>
     public void ShowMeetingHint()
     {
         currentState = FlowState.MeetingHint;
 
+        string prompt = storyData != null ? storyData.arrivalPrompt : kFallbackArrivalPrompt;
+        string btnText = storyData != null ? storyData.arrivalButtonText : kFallbackArrivalBtn;
+
         if (promptPanelController != null)
         {
-            promptPanelController.ShowPrompt(meetingHintPrompt, "Meet Susan", StartDialogue);
+            promptPanelController.ShowPrompt(prompt, btnText, StartDialogue);
         }
         else
         {
@@ -146,7 +167,7 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 2：启动 Susan 对话
+    /// 阶段 2：启动 Susan 对话（台词从 ScriptableObject 取得）
     /// </summary>
     public void StartDialogue()
     {
@@ -154,11 +175,16 @@ public class M01Controller : MonoBehaviour
 
         if (promptPanelController != null) promptPanelController.Hide();
 
+        string[] lines = (storyData != null && storyData.dialogueLines != null && storyData.dialogueLines.Length > 0)
+            ? storyData.dialogueLines
+            : null;
+        string speaker = storyData != null ? storyData.speakerName : null;
+
         if (dialogueController != null)
         {
             dialogueController.OnDialogueFinished -= ShowAlignHint;
             dialogueController.OnDialogueFinished += ShowAlignHint;
-            dialogueController.StartDialogue();
+            dialogueController.StartDialogue(lines, speaker);
         }
         else
         {
@@ -168,7 +194,7 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 3：对话结束，展示“视角与站位对齐”引导提示
+    /// 阶段 3：对话结束，展示"视角与站位对齐"引导提示
     /// </summary>
     public void ShowAlignHint()
     {
@@ -176,9 +202,12 @@ public class M01Controller : MonoBehaviour
 
         if (dialogueController != null) dialogueController.gameObject.SetActive(false);
 
+        string prompt = storyData != null ? storyData.alignmentPrompt : kFallbackAlignPrompt;
+        string btnText = storyData != null ? storyData.alignmentButtonText : kFallbackAlignBtn;
+
         if (promptPanelController != null)
         {
-            promptPanelController.ShowPrompt(alignHintPrompt, "I'm in Position", ShowHistoricalPanel);
+            promptPanelController.ShowPrompt(prompt, btnText, ShowHistoricalPanel);
         }
         else
         {
@@ -210,22 +239,62 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 5：退出历史对比，完成 M01，交接下一个 POI
+    /// 历史对比面板关闭时的回调（由 onComparisonClosed 事件触发）
     /// </summary>
-    public void ExitHistoricalComparison()
+    private void OnHistoricalComparisonClosed()
     {
         if (historicalComparisonController != null)
         {
             historicalComparisonController.CloseComparison();
         }
 
+        ShowReflection();
+    }
+
+    /// <summary>
+    /// 阶段 5：AR 交互结束后展示反思提示（新增）
+    /// </summary>
+    public void ShowReflection()
+    {
+        currentState = FlowState.Reflection;
+
+        string prompt = storyData != null ? storyData.reflectionPrompt : kFallbackReflectionPrompt;
+        string btnText = storyData != null ? storyData.reflectionButtonText : kFallbackReflectionBtn;
+
+        if (promptPanelController != null)
+        {
+            promptPanelController.ShowPrompt(prompt, btnText, CompleteM01);
+        }
+        else
+        {
+            CompleteM01();
+        }
+    }
+
+    /// <summary>
+    /// 阶段 6：M01 完成，激活下一个 POI 目标
+    /// </summary>
+    public void CompleteM01()
+    {
         currentState = FlowState.Hidden;
 
-        // 激活下一个 POI 目标
+        if (promptPanelController != null) promptPanelController.Hide();
+
         if (nextPoiTarget != null)
         {
             nextPoiTarget.SetActive(true);
             Debug.Log($"[M01Controller] M01 完成！已激活下一目的地：{nextPoiTarget.name}");
         }
+        else
+        {
+            Debug.Log("[M01Controller] M01 完成！未设置 nextPoiTarget。");
+        }
     }
+
+    // ─── Legacy / Compat ──────────────────────────────────────────────────────
+
+    /// <summary>
+    /// 保留方法名兼容旧事件绑定（内部改为调用 OnHistoricalComparisonClosed）
+    /// </summary>
+    public void ExitHistoricalComparison() => OnHistoricalComparisonClosed();
 }
