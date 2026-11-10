@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8909a7b854c460945b7273a620ed017e, type: 3}
+  m_Name: PoI_01_Susan
+  m_EditorClassIdentifier: 
+  speakerName: Storyteller
+  characterAvatar: {fileID: 0}
+  arrivalPrompt: You have arrived at the site.
+  arrivalButtonText: Start
+  dialogueLines:
+  - My name is Susan. I grew up and live in Christchurch.
+  - Standing here in Cathedral Square today... The Cathedral tower and spire are
+    missing, but they hold a special place in my memory. They been the easiest way
+    to find my way around Christchurch. You could see it from so many places in the
+    town.
+  - "When I was at school, I got lost around Cathedral Square during a school trip.
+    I remember my teacher, Mr Watson, once told us: 'If you are lost, look for the
+    Cathedral spire\u2014it's the tallest building in the town!'  I heard the bell,
+    looked up, and found my way back."
+  - "The last time I saw the spire, I was visiting the square with my homestay student.
+    Now, when I pass by here, I still see the absence of that spire. I always try
+    to look up as I used to, and I outline its contours in my mind \u2014 it's a
+    habit that never left me."
+  - Even when I wasn't standing right beside it, knowing where the cathedral was
+    helped me feel oriented in the city. I suppose it was always part of how I remembered
+    Christchurch...
+  alignmentPrompt: Position yourself to match the historical perspective.
+  alignmentButtonText: I'm in Position
+  interactionInstruction: 
+  interactionButtonText: Got it
+  reflectionPrompt: Take a moment to reflect on what you've just experienced.
+  reflectionButtonText: Continue

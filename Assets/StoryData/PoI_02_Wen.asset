@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8909a7b854c460945b7273a620ed017e, type: 3}
+  m_Name: PoI_02_Wen
+  m_EditorClassIdentifier: 
+  speakerName: Wen
+  characterAvatar: {fileID: 0}
+  arrivalPrompt: You have arrived at the site.
+  arrivalButtonText: Start
+  dialogueLines:
+  - "Visiting the Cathedral right before the earthquake, I\u2019ve always felt an
+    almost mystical connection to this cathedral. "
+  - Back in 2011, while staying with my homestay Susan as an international student,
+    we came here just a week before the earthquake. The Cathedral Square was vibrant,
+    and I could hear some music inside.
+  - We only took a quick photo outside on the West Porch and didn't step in... I
+    never imagined that would be my last chance for 15 years. I revisit here today
+    not only to meet Susan, but also to check the place. I even brought that old
+    2011 photo to show her.
+  - "\u201CSince I never got to step inside back then... could you help me scan this
+    porch to listen to the soundscape that was echoing inside? It was a weekend,
+    so it could have been the choir practising, but I am not sure\u2026"
+  alignmentPrompt: Position yourself to match the historical perspective.
+  alignmentButtonText: I'm in Position
+  interactionInstruction: 
+  interactionButtonText: Got it
+  reflectionPrompt: Take a moment to reflect on what you've just experienced.
+  reflectionButtonText: Continue

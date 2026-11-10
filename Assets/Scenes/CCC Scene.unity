@@ -1475,7 +1475,7 @@ Transform:
   m_GameObject: {fileID: 339076667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1916,7 +1916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &430387267
 Transform:
   m_ObjectHideFlags: 0
@@ -2199,7 +2199,7 @@ Transform:
   m_GameObject: {fileID: 481321972}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000005381369, y: 0.5986052, z: 0.00000004021396, w: 0.8010442}
-  m_LocalPosition: {x: 4.2187963, y: -0.54326606, z: -1.4226979}
+  m_LocalPosition: {x: -57.95, y: -0.54326606, z: -4.1}
   m_LocalScale: {x: 230.06, y: 230.06, z: 230.06}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3007,7 +3007,6 @@ Transform:
   - {fileID: 53866495}
   - {fileID: 634534365}
   - {fileID: 145986123}
-  - {fileID: 1314624411}
   - {fileID: 1945880311}
   m_Father: {fileID: 660213455}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4268,88 +4267,6 @@ Transform:
   - {fileID: 1939929815}
   m_Father: {fileID: 660213455}
   m_LocalEulerAnglesHint: {x: -1.362, y: -9.965, z: 4.497}
---- !u!1001 &1314624410
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 831706811}
-    m_Modifications:
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.377985
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.377985
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.377985
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 14.2
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 22.22
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.25951102
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.96574014
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 149.918
-      objectReference: {fileID: 0}
-    - target: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6906466553193527753, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8771091787928289351, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_Name
-      value: christchurch cathedral
-      objectReference: {fileID: 0}
-    - target: {fileID: 8771091787928289351, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: -4161369568681901532, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
---- !u!4 &1314624411 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3910990755373119420, guid: fbca413fc0f6e1b46987accca652ce34, type: 3}
-  m_PrefabInstance: {fileID: 1314624410}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1339645397
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,7 +4579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1321962094934918813, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -10237,19 +10154,22 @@ MonoBehaviour:
   enablePunctuationPauses: 1
   defaultSpeaker: Susan
   defaultLines:
-  - My name is Susan. I grew up and live in Christchurch.
-  - Standing here in Cathedral Square today, it's quiet... It's different from what
-    I remembered.
-  - The tower and spire are missing, but they carry my special memories.
-  - 'When I was at school, I got lost around Cathedral Square during the trip. I
-    remember my teacher, Mr Watson, told us:'
-  - " 'If you are lost, look for the Cathedral spire\u2014it's the tallest building
-    in the town!' "
-  - ' I heard the bell, looked up, and found my way back.'
-  - The last time I saw the spire, I was visiting the square with my homestay student.
-  - "Now, when I pass by here, I still see the absence of that spire. I try to outline
+  - My name is Susan. I grew up and live in Christchurch.Standing here in Cathedral
+    Square today, it's quiet... It's different from what I remembered. The tower
+    and spire are missing, but they carry my special memories.
+  - "When I was at school, I got lost around Cathedral Square during the trip. I
+    remember my teacher, Mr Watson, once told us: 'If you are lost, look for the
+    Cathedral spire\u2014it's the tallest building in the town!'  I heard the bell,
+    looked up, and found my way back."
+  - "The last time I saw the spire, I was visiting the square with my homestay student.
+    Now, when I pass by here, I still see the absence of that spire. I try to outline
     its contours in my mind... just like lifting my phone to capture it \u2014 it's
     a habit that never left me..."
+  - 
+  - 
+  - 
+  - 
+  - 
 --- !u!1 &8353955752227653667
 GameObject:
   m_ObjectHideFlags: 0
