@@ -204,11 +204,16 @@ public class HistoricalComparisonController : MonoBehaviour
         UpdateOpacity(currentVal);
     }
 
+    private bool isClosing = false;
+
     /// <summary>
     /// Closes the comparison panel, pauses/stops audio, and invokes onComparisonClosed.
     /// </summary>
     public void CloseComparison()
     {
+        if (isClosing) return;
+        isClosing = true;
+
         if (historicalAudioSource != null)
         {
             historicalAudioSource.Stop();
@@ -217,7 +222,14 @@ public class HistoricalComparisonController : MonoBehaviour
 
         gameObject.SetActive(false);
 
-        onComparisonClosed?.Invoke();
+        try
+        {
+            onComparisonClosed?.Invoke();
+        }
+        finally
+        {
+            isClosing = false;
+        }
     }
 
 #if UNITY_EDITOR

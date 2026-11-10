@@ -79,13 +79,17 @@ public class DialogueController : MonoBehaviour
         if (!enableFullScreenClick) return;
 
         // 如果已经创建过，直接复用
-        if (transform.Find("FullScreenTapArea") != null)
+        Transform existing = transform.Find("FullScreenTapArea");
+        if (existing != null)
         {
-            fullScreenTapArea = transform.Find("FullScreenTapArea").gameObject;
+            fullScreenTapArea = existing.gameObject;
             return;
         }
 
-        // 在自身下挂一个全屏透明背景接收触控
+        // 仅在真实 Play 模式运行时创建，避免在 Editor 视图中影响 Hierarchy
+        if (!Application.isPlaying) return;
+
+        // 在自身下挂一个透明背景接收触控
         fullScreenTapArea = new GameObject("FullScreenTapArea", typeof(RectTransform), typeof(Image), typeof(Button));
         fullScreenTapArea.transform.SetParent(transform, false);
         fullScreenTapArea.transform.SetAsFirstSibling(); // 置于最底层，不挡文字
@@ -93,8 +97,8 @@ public class DialogueController : MonoBehaviour
         var rt = fullScreenTapArea.GetComponent<RectTransform>();
         rt.anchorMin = Vector2.zero;
         rt.anchorMax = Vector2.one;
-        rt.offsetMin = new Vector2(-2000, -2000); // 确保铺满任何分辨率屏幕
-        rt.offsetMax = new Vector2(2000, 2000);
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
 
         var img = fullScreenTapArea.GetComponent<Image>();
         img.color = Color.clear; // 完全透明

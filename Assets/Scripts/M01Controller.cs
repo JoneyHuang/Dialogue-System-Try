@@ -42,7 +42,7 @@ public class M01Controller : MonoBehaviour
     public GameObject nextPoiTarget;
 
     [Header("Debug")]
-    [Tooltip("Play 模式启动时自动触发流程（方便无需行走快速调试）")]
+    [Tooltip("Play 模式启动时自动触发流程（正式测试请保持 false，等待走到 Pin 触发）")]
     public bool autoStartOnPlay = false;
 
     // ─── Fallback 文案（当 storyData 未赋值时使用）────────────────────────────
@@ -240,14 +240,10 @@ public class M01Controller : MonoBehaviour
 
     /// <summary>
     /// 历史对比面板关闭时的回调（由 onComparisonClosed 事件触发）
+    /// 注意：此时面板已经由 HistoricalComparisonController 自身关闭，切勿再次调用 CloseComparison() 导致无限递归死锁！
     /// </summary>
     private void OnHistoricalComparisonClosed()
     {
-        if (historicalComparisonController != null)
-        {
-            historicalComparisonController.CloseComparison();
-        }
-
         ShowReflection();
     }
 
@@ -272,7 +268,7 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 6：M01 完成，激活下一个 POI 目标
+    /// 阶段 6：M01 完成，通知 ExperimentHub 并激活可选后续目标
     /// </summary>
     public void CompleteM01()
     {
@@ -280,6 +276,13 @@ public class M01Controller : MonoBehaviour
 
         if (promptPanelController != null) promptPanelController.Hide();
 
+        // 1. 如果存在 ExperimentHubController，通知 Hub：M1 已完成并返回控制台
+        if (ExperimentHubController.Instance != null)
+        {
+            ExperimentHubController.Instance.OnPoICompleted("M1");
+        }
+
+        // 2. 兼容原先的直接链式激活（如果设置了 nextPoiTarget）
         if (nextPoiTarget != null)
         {
             nextPoiTarget.SetActive(true);
@@ -287,7 +290,7 @@ public class M01Controller : MonoBehaviour
         }
         else
         {
-            Debug.Log("[M01Controller] M01 完成！未设置 nextPoiTarget。");
+            Debug.Log("[M01Controller] M01 完成！已向 Hub 汇报完毕。");
         }
     }
 

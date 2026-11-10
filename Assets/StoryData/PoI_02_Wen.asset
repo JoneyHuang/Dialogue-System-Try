@@ -17,8 +17,8 @@ MonoBehaviour:
   arrivalPrompt: You have arrived at the site.
   arrivalButtonText: Start
   dialogueLines:
-  - "Visiting the Cathedral right before the earthquake, I\u2019ve always felt an
-    almost mystical connection to this cathedral. "
+  - "I\u2019ve always felt a special connection to this Cathedral, ever since I first
+    visited it in 2011."
   - Back in 2011, while staying with my homestay Susan as an international student,
     we came here just a week before the earthquake. The Cathedral Square was vibrant,
     and I could hear some music inside.
@@ -26,9 +26,8 @@ MonoBehaviour:
     never imagined that would be my last chance for 15 years. I revisit here today
     not only to meet Susan, but also to check the place. I even brought that old
     2011 photo to show her.
-  - "\u201CSince I never got to step inside back then... could you help me scan this
-    porch to listen to the soundscape that was echoing inside? It was a weekend,
-    so it could have been the choir practising, but I am not sure\u2026"
+  - Since I never got to step inside back then... could you help me discover what
+    the Cathedral might have sounded like that day?
   alignmentPrompt: Position yourself to match the historical perspective.
   alignmentButtonText: I'm in Position
   interactionInstruction: 

@@ -2154,7 +2154,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2024166744}
   - {fileID: 384480290193553652}
   - {fileID: 430796913}
   - {fileID: 1605832082}
@@ -2992,7 +2991,6 @@ GameObject:
   - component: {fileID: 767920705}
   - component: {fileID: 767920704}
   - component: {fileID: 767920703}
-  - component: {fileID: 767920702}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -3000,23 +2998,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &767920702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767920701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.XR.CoreUtils::Unity.XR.CoreUtils.XROrigin
-  m_Camera: {fileID: 0}
-  m_OriginBaseGameObject: {fileID: 767920701}
-  m_CameraFloorOffsetObject: {fileID: 0}
-  m_RequestedTrackingOriginMode: 0
-  m_CameraYOffset: 1.1176
 --- !u!114 &767920703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3169,6 +3150,7 @@ MonoBehaviour:
   arCamera: {fileID: 1939929815}
   triggerDistance: 1
   warningDistance: 5
+  ignoreVerticalDistance: 1
   hidePinOnTrigger: 1
   onTriggered:
     m_PersistentCalls:
@@ -3381,7 +3363,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 481321973}
-  - {fileID: 1245001491}
   - {fileID: 945802814}
   m_Father: {fileID: 224475670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3538,13 +3519,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945802813}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.13512614, z: -0, w: 0.99082845}
-  m_LocalPosition: {x: -4.83, y: -2.602, z: -8.188}
+  m_LocalRotation: {x: -0, y: 0.61177814, z: -0, w: 0.79102945}
+  m_LocalPosition: {x: 2.3599951, y: -2.602003, z: 2.090002}
   m_LocalScale: {x: 4.2970195, y: 2.007749, z: 1.7197759}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 833683968}
-  m_LocalEulerAnglesHint: {x: 0, y: -15.532, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 75.436, z: 0}
 --- !u!65 &945802815
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3648,6 +3629,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2024166744}
   - {fileID: 767920705}
   - {fileID: 660213455}
   m_Father: {fileID: 0}
@@ -3810,19 +3792,23 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 430387267}
+    m_TransformParent: {fileID: 950905591}
     m_Modifications:
+    - target: {fileID: 2202751652132208087, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
+      propertyPath: placementMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2603503272331012375, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1480
+      value: -47.421074
       objectReference: {fileID: 0}
     - target: {fileID: 2603503272331012375, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -889
+      value: -35.38061
       objectReference: {fileID: 0}
     - target: {fileID: 2603503272331012375, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -25.940466
       objectReference: {fileID: 0}
     - target: {fileID: 2603503272331012375, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3862,7 +3848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8068442826486381181, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4217,88 +4203,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &1245001490
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 833683968}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 7.886984
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 7.8869834
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 7.8869834
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.45
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.18
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -19.98
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6970991
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.6970991
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.11854516
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.118545145
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -19.302
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: a23d1b0dc553640f682d502af95e7789, type: 2}
-    - target: {fileID: 919132149155446097, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_Name
-      value: Tower
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
---- !u!4 &1245001491 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4303a2a569304fc4095cea5d931d0816, type: 3}
-  m_PrefabInstance: {fileID: 1245001490}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1307055116
 GameObject:
   m_ObjectHideFlags: 0
@@ -4644,6 +4548,7 @@ MonoBehaviour:
   arCamera: {fileID: 1939929815}
   triggerDistance: 2
   warningDistance: 5
+  ignoreVerticalDistance: 1
   hidePinOnTrigger: 1
   onTriggered:
     m_PersistentCalls:
@@ -4985,32 +4890,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  hintPanel: {fileID: 3315819049796909267}
-  dialoguePanel: {fileID: 4566137446410823698}
-  historicalPanel: {fileID: 3967043878710585921}
-  hintText: {fileID: 373143654541199042}
-  hintContinueButton: {fileID: 5713212557315864531}
-  hintButtonLabel: {fileID: 0}
-  meetingHintPrompt: 'You have arrived at War Memorial, where the traditional Annual
-    Anzac Memorial would hold. It''s located next to the Cathedral tower that was
-    collapsed during the earthquake.
-
-    Meet Susan, who grew up here in Christchurch,
-    and hear her story...'
-  alignHintPrompt: Susan is sharing a photo of the Cathedral Spire that she remembered
-    with you. Point the camera to the current Cathedral, and after the photo appears,
-    position yourself to match the historical photos of the Cathedral
-  dialogueText: {fileID: 5599549490604622058}
-  characterName: {fileID: 9195539324709959578}
-  continueButton: {fileID: 6623358728811564165}
-  typingSpeed: 0.035
-  enablePunctuationPauses: 1
-  opacitySlider: {fileID: 5463352208434986961}
-  historicalImage: {fileID: 3311408770255463594}
-  saturationMaterial: {fileID: 2100000, guid: 942fe4311a9de804b86bd4f8eab89960, type: 2}
-  historicalAudioSource: {fileID: 1420760261}
-  photoGallery: {fileID: 7553018285566980551}
-  exitComparisonButton: {fileID: 201638241034841453}
+  storyData: {fileID: 0}
+  promptPanelController: {fileID: 0}
+  dialogueController: {fileID: 0}
+  historicalComparisonController: {fileID: 0}
+  nextPoiTarget: {fileID: 0}
   autoStartOnPlay: 0
 --- !u!4 &1420760260
 Transform:
@@ -5966,6 +5850,9 @@ MonoBehaviour:
   panelRoot: {fileID: 1605832081}
   ctaButton: {fileID: 1636572271}
   poi1Target: {fileID: 833683967}
+  pageData: []
+  titleTexts: []
+  pages: []
 --- !u!1 &1632891920
 GameObject:
   m_ObjectHideFlags: 0
@@ -6356,6 +6243,7 @@ MonoBehaviour:
   arCamera: {fileID: 1939929815}
   triggerDistance: 1
   warningDistance: 5
+  ignoreVerticalDistance: 1
   hidePinOnTrigger: 1
   onTriggered:
     m_PersistentCalls:
