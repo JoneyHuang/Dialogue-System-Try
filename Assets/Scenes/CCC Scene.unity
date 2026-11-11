@@ -1133,9 +1133,6 @@ PrefabInstance:
       addedObject: {fileID: 1718002124}
     - targetCorrespondingSourceObject: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1718002123}
-    - targetCorrespondingSourceObject: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1718002126}
   m_SourcePrefab: {fileID: 100100000, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
 --- !u!1 &223475769
@@ -2131,6 +2128,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pin
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2471,9 +2472,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2024166744}
+  - {fileID: 1605832082}
   - {fileID: 384480290193553652}
   - {fileID: 430796913}
-  - {fileID: 1605832082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &430796912
@@ -5683,7 +5684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1321962094934918813, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -6900,7 +6901,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelRoot: {fileID: 1605832081}
   ctaButton: {fileID: 1636572271}
-  poi1Target: {fileID: 833683967}
+  hubPanel: {fileID: 1718002121}
+  poi1Target: {fileID: 0}
   pageData:
   - title: 
     content: 
@@ -7469,40 +7471,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
   m_PrefabInstance: {fileID: 192719466}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1718002123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718002121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0611bef7184834aa79c8bc69f94f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelRoot: {fileID: 1718002121}
-  ctaButton: {fileID: 1274035003}
-  poi1Target: {fileID: 833683967}
-  pageData:
-  - title: 
-    content: 
-  - title: Your Journey
-    content: "01 \u2014 Look Back\nDiscover how the Cathedral has changed through
-      historical photographs and 3D reconstruction.\n\n02 \u2014 Step Inside\nExplore
-      a glimpse of the Cathedral's inaccessible historical interior through an AR
-      portal.\n\n03 \u2014 Discover the Details\nExplore the Cathedral through its
-      architecture, sounds and stories."
-  - title: How to Explore
-    content: "- Follow the POI markers to discover each experience.  \n- Approach
-      a marker to activate its story.  \n- Follow the on\u2011screen instructions
-      to interact with AR content.  \n- Take your time. There is no rush."
-  titleTexts:
-  - {fileID: 0}
-  pages:
-  - {fileID: 488248313}
-  - {fileID: 1557924711}
-  - {fileID: 1022331001}
 --- !u!114 &1718002124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7560,7 +7528,7 @@ MonoBehaviour:
     launchButton: {fileID: 736720726}
     statusText: {fileID: 225748885}
     checkmarkIcon: {fileID: 0}
-    poiTargetObject: {fileID: 481321972}
+    poiTargetObject: {fileID: 1672887795}
     isCompleted: 0
   poi2:
     poiId: M2

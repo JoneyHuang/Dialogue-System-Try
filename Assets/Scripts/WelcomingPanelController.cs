@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 // Added for onboarding page navigation
@@ -21,8 +21,12 @@ public class WelcomingPanelController : MonoBehaviour
     [Tooltip("The CTA button on the panel (e.g. 'Start Exploring').")]
     public Button ctaButton;
 
-    [Tooltip("The PoI 1 GameObject (PoI 1 Root, Anchor, or Pin) to activate once this panel is dismissed.")]
+    [Tooltip("The Experiment Hub Panel Gameobject to show after onboarding.")]
+    public GameObject hubPanel;
+
+    [Tooltip("Legacy fallback: The PoI 1 Gameobject (if hub is not used)")]
     public GameObject poi1Target;
+
         // ---- Structured onboarding data (title + body) ----
     [System.Serializable]
     public class OnboardingPageData
@@ -221,14 +225,22 @@ public class WelcomingPanelController : MonoBehaviour
             panelRoot.SetActive(false);
         }
 
-        if (poi1Target != null)
+        if (hubPanel != null)
+        {
+            hubPanel.SetActive(true);
+            Debug.Log("[WelcomingPanelController] Onboarding complete. Experiment Hub is now active!");
+        }
+        
+        else if (ExperimentHubController.Instance != null && ExperimentHubController.Instance.hubPanel != null)
+        {
+            ExperimentHubController.Instance.hubPanel.SetActive(true);
+            Debug.Log("[WelcomingPanelController] Onboarding complete. Activated Hub via Singleton!");
+        }
+        
+        else if (poi1Target != null)
         {
             poi1Target.SetActive(true);
-            Debug.Log($"[WelcomingPanelController] Welcoming panel dismissed. '{poi1Target.name}' is now active!");
-        }
-        else
-        {
-            Debug.LogWarning("[WelcomingPanelController] poi1Target is not assigned!");
+            Debug.Log($"[WelcomingPanelController] Hub not found, activated '{poi1Target.name}' directly.");
         }
     }
 }

@@ -17,30 +17,28 @@ MonoBehaviour:
   arrivalPrompt: You have arrived at the site.
   arrivalButtonText: Start
   dialogueLines:
-  - My name is Susan. I grew up and live in Christchurch.
-  - Standing here in Cathedral Square today... The Cathedral tower and spire are
-    missing, but they hold a special place in my memory. They had been the easiest
-    way to find my way around Christchurch. You could see it from so many places
-    in the town.
-  - "When I was at school, I got lost around Cathedral Square during a school trip.
-    I remember my teacher, Mr Watson, once told us: 'If you are lost, look for the
-    Cathedral spire\u2014it's the tallest building in the town!' I heard the bell,
-    looked up, and found my way back."
-  - 'The last time I saw the Cathedral standing as it once did was during a visit
-    to the Square with my homestay student, just before the earthquake. I remember
-    that visit with Wen quite clearly. We had no idea how much that ordinary afternoon
-    would come to mean to us.
-
-'
+  - "My name is Susan. I grew up here in Christchurch, and it\u2019s still my home
+    today."
+  - Standing here in Cathedral Square now, it feels quite different from what I remember.
+    The tower and spire are missing, but they hold a special place in my memory.
+    You used to be able to see it from almost anywhere in the city.
+  - "Back in high school, I got lost around Cathedral Square during a field trip.
+    I remembered my teacher, Mr Watson, always told us: 'If you are lost, look for
+    the Cathedral spire\u2014it's the tallest building in the town!' I heard the
+    bell, looked up, and found my way back."
+  - The last time I saw the Cathedral standing as it once was was right before the
+    earthquake, when I visited the Square with my homestay student, Wen. We had no
+    idea how much that ordinary afternoon would come to mean to us.
   - "Now, when I pass by here, I still see the absence of that spire. I always try
-    to look up as I used to, and I outline its contours in my mind \u2014 it's a
-    habit that never left me."
-  - Even when I wasn't standing right beside it, knowing where the cathedral was
-    helped me feel oriented in the city. I suppose it was always part of how I remembered
-    Christchurch...
+    to look up as I used to, and outline its contours in my mind \u2014 it's a habit
+    that never left me."
+  - Even when you weren't standing right next to it, knowing where the Cathedral
+    was helped you find your bearings. I suppose it was always a part of how I knew
+    I was home..
   alignmentPrompt: Position yourself to match the historical perspective.
   alignmentButtonText: I'm in Position
   interactionInstruction: 
   interactionButtonText: Got it
-  reflectionPrompt: Take a moment to reflect on what you've just experienced.
+  reflectionPrompt: 'Take a moment to reflect on what you''ve just experienced: What
+    did the Cathedral mean to the people living in this city?'
   reflectionButtonText: Continue
