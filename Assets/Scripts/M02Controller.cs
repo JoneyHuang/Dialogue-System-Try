@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 /// <summary>
 /// M02 现场体验流程调度器 (Coordinator / Sequencer)。
-/// 负责编排：到达提示 (Wen) → 对话 → 传送门交互引导 → 激活 Portal 观察全景 → 反思卡 → 汇报给 ExperimentHub 并返回。
-/// 叙事内容全部来自 PoIStoryData ScriptableObject。
+/// 负责编排：到达提示 (Wen) → 对话 → 传送门站位引导 → 动态落点激活 Portal 
+/// → 5秒沉浸期 → 延迟显现操作栏 (拍照/完成) → 反思卡 → 汇报给 ExperimentHub 并返回。
 /// </summary>
 public class M02Controller : MonoBehaviour
 {
@@ -35,12 +35,28 @@ public class M02Controller : MonoBehaviour
     [Tooltip("Typewriter 对话系统控制器 (DialoguePanel)")]
     public DialogueController dialogueController;
 
-    [Header("AR Portal Content")]
+    [Header("AR Portal Content & Placement")]
     [Tooltip("现场的 Gothic Window 传送门根物体 (包含窗框与全景球)")]
     public GameObject portalObject;
 
-    [Tooltip("观察全景时屏幕上的'完成观察/继续'按钮 (可选，若不指定会自动使用 PromptPanel)")]
+    [Tooltip("是否在用户正前方动态生成 Portal (破除固定位置被人流/围栏阻挡的限制)")]
+    public bool spawnInFrontOfUser = true;
+
+    [Tooltip("动态生成时与相机的水平距离（米）")]
+    public float spawnDistance = 2.2f;
+
+    [Header("Portal Viewing HUD (延迟显现操作栏)")]
+    [Tooltip("Portal 观看期间的操作容器面板 (包含拍照与结束按钮)")]
+    public GameObject portalHudRoot;
+
+    [Tooltip("拍照按钮 (可选)")]
+    public Button capturePhotoButton;
+
+    [Tooltip("完成观察/跳过按钮")]
     public Button finishViewingButton;
+
+    [Tooltip("延迟显示操作栏的等待时间 (秒)，给被试自由探索的心理沉淀期")]
+    public float delayBeforeHudVisible = 5.0f;
 
     [Header("Debug")]
     [Tooltip("Play 模式启动时自动触发流程（正式测试请保持 false）")]
@@ -51,11 +67,13 @@ public class M02Controller : MonoBehaviour
         "You have arrived at the second site.\nMeet Wen, an architect and heritage researcher. Let's hear his perspective...";
     private const string kFallbackArrivalBtn = "Meet Wen";
     private const string kFallbackPortalPrompt =
-        "Step closer and look through the portal to explore the Cathedral's historical interior.";
-    private const string kFallbackPortalBtn = "Enter Portal";
+        "Look towards an open area in front of you. Step through the portal to explore the historical interior.";
+    private const string kFallbackPortalBtn = "Open Portal";
     private const string kFallbackReflectionPrompt =
         "Seeing the interior preserved in time, what emotions or details stand out to you the most?";
     private const string kFallbackReflectionBtn = "Continue";
+
+    private Coroutine hudDelayCoroutine = null;
 
     // ─── Unity Lifecycle ──────────────────────────────────────────────────────
 
@@ -78,11 +96,17 @@ public class M02Controller : MonoBehaviour
     {
         HideAllPanels();
 
+        // 绑定按钮事件
         if (finishViewingButton != null)
         {
             finishViewingButton.onClick.RemoveListener(OnFinishViewingClicked);
             finishViewingButton.onClick.AddListener(OnFinishViewingClicked);
-            finishViewingButton.gameObject.SetActive(false);
+        }
+
+        if (capturePhotoButton != null)
+        {
+            capturePhotoButton.onClick.RemoveListener(OnCapturePhotoClicked);
+            capturePhotoButton.onClick.AddListener(OnCapturePhotoClicked);
         }
 
         if (autoStartOnPlay)
@@ -118,10 +142,18 @@ public class M02Controller : MonoBehaviour
 
     public void HideAllPanels()
     {
+        if (hudDelayCoroutine != null)
+        {
+            StopCoroutine(hudDelayCoroutine);
+            hudDelayCoroutine = null;
+        }
+
         if (promptPanelController != null) promptPanelController.Hide();
         if (dialogueController != null) dialogueController.gameObject.SetActive(false);
         if (portalObject != null) portalObject.SetActive(false);
+        if (portalHudRoot != null) portalHudRoot.SetActive(false);
         if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(false);
+        if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(false);
 
         currentState = FlowState.Hidden;
     }
@@ -189,7 +221,7 @@ public class M02Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 3：对话结束，展示交互操作引导
+    /// 阶段 3：对话结束，展示清晰的空间与站位操作引导
     /// </summary>
     public void ShowPortalInstruction()
     {
@@ -218,55 +250,113 @@ public class M02Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 4：激活 Portal，开始全景观察
+    /// 阶段 4：激活 Portal，进入纯净沉浸观察期 (彻底隐藏 PromptPanel，延迟呈现操作栏)
     /// </summary>
     public void EnterPortalViewing()
     {
         currentState = FlowState.PortalViewing;
 
-        if (promptPanelController != null) promptPanelController.Hide();
+        // 1. 彻底隐藏中央 PromptPanel，将视野完全还给 AR 现场
+        if (promptPanelController != null)
+        {
+            promptPanelController.Hide();
+        }
 
-        // 激活 3D Gothic Window 传送门
+        // 2. 动态安全定位或直接激活 Portal
         if (portalObject != null)
         {
+            if (spawnInFrontOfUser && Camera.main != null)
+            {
+                PlacePortalInFrontOfCamera();
+            }
+
             portalObject.SetActive(true);
-            Debug.Log("[M02Controller] 传送门已激活！用户可环顾查看历史全景。");
-        }
-        else
-        {
-            Debug.LogWarning("[M02Controller] portalObject 未分配！");
+            Debug.Log("[M02Controller] 传送门已激活！用户可自由环顾与穿过门框。");
         }
 
-        // 提供退出/完成观察的触发方式
-        if (finishViewingButton != null)
-        {
-            finishViewingButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            // 如果未单独配置按钮，利用 PromptPanel 作为轻量常驻提示卡
-            if (promptPanelController != null)
-            {
-                promptPanelController.ShowPrompt("Look around to explore the interior.\nWhen you are ready, continue to reflect.", "Finish Viewing", OnFinishViewingClicked);
-            }
-        }
+        // 3. 初始隐藏操作栏，开启延迟沉浸计时
+        if (portalHudRoot != null) portalHudRoot.SetActive(false);
+        if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(false);
+        if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(false);
+
+        if (hudDelayCoroutine != null) StopCoroutine(hudDelayCoroutine);
+        hudDelayCoroutine = StartCoroutine(ShowHudAfterDelayRoutine());
     }
 
     /// <summary>
-    /// 结束观察传送门
+    /// 在当前相机正前方安全平坦处放置 Portal，避免固定锚点被现场人群撞上
+    /// </summary>
+    private void PlacePortalInFrontOfCamera()
+    {
+        Transform cam = Camera.main.transform;
+        Vector3 forwardXZ = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+
+        if (forwardXZ.sqrMagnitude < 0.001f)
+            forwardXZ = Vector3.forward;
+
+        // 计算相机正前方 spawnDistance 处的水平位置
+        Vector3 targetPos = cam.position + forwardXZ * spawnDistance;
+        
+        // 保持 Portal 原有的 Y 轴高度（贴地），或以相机脚下为参考
+        targetPos.y = portalObject.transform.position.y;
+
+        portalObject.transform.position = targetPos;
+        portalObject.transform.rotation = Quaternion.LookRotation(forwardXZ, Vector3.up);
+
+        Debug.Log($"[M02Controller] Portal 已动态安放在用户前方：{targetPos}");
+    }
+
+    /// <summary>
+    /// 延迟显示操作栏：给被试 5 秒没有任何按钮打扰的纯粹沉浸探索期
+    /// </summary>
+    private IEnumerator ShowHudAfterDelayRoutine()
+    {
+        yield return new WaitForSeconds(delayBeforeHudVisible);
+
+        // 沉浸期结束，轻柔唤出操作栏
+        if (portalHudRoot != null)
+        {
+            portalHudRoot.SetActive(true);
+        }
+        else
+        {
+            // 若未配置专属容器，单独点亮按钮
+            if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(true);
+            if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(true);
+        }
+
+        Debug.Log("[M02Controller] 沉浸期结束，已显示操作按钮 (拍照 / 完成)。");
+    }
+
+    /// <summary>
+    /// 用户点击拍照按钮（先预留接口，后续挂接正式截屏）
+    /// </summary>
+    public void OnCapturePhotoClicked()
+    {
+        Debug.Log("[M02Controller] 用户点击了拍照按钮！准备记录并赠送给 Wen。");
+        
+        // 拍照后直接顺理成章进入结束与反思
+        OnFinishViewingClicked();
+    }
+
+    /// <summary>
+    /// 用户主动结束观察 (无论是点击 Finish Viewing 还是拍完照)
     /// </summary>
     public void OnFinishViewingClicked()
     {
-        if (finishViewingButton != null)
+        if (hudDelayCoroutine != null)
         {
-            finishViewingButton.gameObject.SetActive(false);
+            StopCoroutine(hudDelayCoroutine);
+            hudDelayCoroutine = null;
         }
 
-        if (portalObject != null)
-        {
-            portalObject.SetActive(false);
-        }
+        // 隐藏 HUD 和 Portal
+        if (portalHudRoot != null) portalHudRoot.SetActive(false);
+        if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(false);
+        if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(false);
+        if (portalObject != null) portalObject.SetActive(false);
 
+        // 此时才正式展示反思阶段！
         ShowReflection();
     }
 
@@ -302,7 +392,6 @@ public class M02Controller : MonoBehaviour
         currentState = FlowState.Hidden;
 
         if (promptPanelController != null) promptPanelController.Hide();
-
         if (portalObject != null) portalObject.SetActive(false);
 
         // 通知 Hub：M2 完成！
@@ -313,4 +402,3 @@ public class M02Controller : MonoBehaviour
         }
     }
 }
-
