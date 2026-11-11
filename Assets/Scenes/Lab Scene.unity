@@ -1017,6 +1017,7 @@ Transform:
   - {fileID: 833683968}
   - {fileID: 339076668}
   - {fileID: 278740091}
+  - {fileID: 945802814}
   m_Father: {fileID: 1166258622}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226762109
@@ -2140,7 +2141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &430387267
 Transform:
   m_ObjectHideFlags: 0
@@ -3509,6 +3510,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937314864}
   m_CullTransparentMesh: 1
+--- !u!1001 &945802813
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 224475670}
+    m_Modifications:
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5257545
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5257545
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5257545
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.354844
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.2000024
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.09
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7556342
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.65499395
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 81.838
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771091787928289351, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+      propertyPath: m_Name
+      value: heart_in_love_gtlf
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: -4161369568681901532, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+--- !u!4 &945802814 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3910990755373119420, guid: c877a62e219a3c944acde870a72ed829, type: 3}
+  m_PrefabInstance: {fileID: 945802813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &950905590
 GameObject:
   m_ObjectHideFlags: 0
@@ -5798,6 +5873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelRoot: {fileID: 1605832081}
   ctaButton: {fileID: 1636572271}
+  hubPanel: {fileID: 0}
   poi1Target: {fileID: 833683967}
   pageData:
   - title: 
