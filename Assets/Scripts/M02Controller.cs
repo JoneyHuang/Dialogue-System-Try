@@ -45,6 +45,12 @@ public class M02Controller : MonoBehaviour
     [Tooltip("动态生成时与相机的水平距离（米）")]
     public float spawnDistance = 2.2f;
 
+    [Tooltip("高度偏移量（米，相对于相机的高度。设为 -0.2 表示门中心略低于视线，脚踏实地）")]
+    public float heightOffset = -0.2f;
+
+    [Tooltip("门的 Y 轴旋转微调偏角（如果门背对你，填 180）")]
+    public float rotationOffsetAngle = 0f;
+
     [Header("Portal Viewing HUD (延迟显现操作栏)")]
     [Tooltip("Portal 观看期间的操作容器面板 (包含拍照与结束按钮)")]
     public GameObject portalHudRoot;
@@ -297,13 +303,21 @@ public class M02Controller : MonoBehaviour
         // 计算相机正前方 spawnDistance 处的水平位置
         Vector3 targetPos = cam.position + forwardXZ * spawnDistance;
         
-        // 保持 Portal 原有的 Y 轴高度（贴地），或以相机脚下为参考
-        targetPos.y = portalObject.transform.position.y;
+        // 高度以相机高度为基准加上偏移，确保视线正前方，绝不掉入地下
+        targetPos.y = cam.position.y + heightOffset;
 
         portalObject.transform.position = targetPos;
-        portalObject.transform.rotation = Quaternion.LookRotation(forwardXZ, Vector3.up);
 
-        Debug.Log($"[M02Controller] Portal 已动态安放在用户前方：{targetPos}");
+        // 传送门应垂直于地面立正（X/Z 轴欧拉角为 0，杜绝任何左右或前后歪斜），且正朝向相机
+        Quaternion lookRot = Quaternion.LookRotation(-forwardXZ, Vector3.up);
+        if (Mathf.Abs(rotationOffsetAngle) > 0.1f)
+        {
+            lookRot *= Quaternion.Euler(0f, rotationOffsetAngle, 0f);
+        }
+
+        portalObject.transform.rotation = lookRot;
+
+        Debug.Log($"[M02Controller] Portal 已立正安放在用户正前方：{targetPos}，旋转：{lookRot.eulerAngles}");
     }
 
     /// <summary>
@@ -313,19 +327,17 @@ public class M02Controller : MonoBehaviour
     {
         yield return new WaitForSeconds(delayBeforeHudVisible);
 
-        // 沉浸期结束，轻柔唤出操作栏
+        // 沉浸期结束，唤出操作容器与按钮
         if (portalHudRoot != null)
         {
             portalHudRoot.SetActive(true);
         }
-        else
-        {
-            // 若未配置专属容器，单独点亮按钮
-            if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(true);
-            if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(true);
-        }
 
-        Debug.Log("[M02Controller] 沉浸期结束，已显示操作按钮 (拍照 / 完成)。");
+        // 确保无论父容器状态如何，这两个子按钮都被明确激活显示！
+        if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(true);
+        if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(true);
+
+        Debug.Log("[M02Controller] 沉浸期结束，已激活操作按钮 (拍照 / 完成)。");
     }
 
     /// <summary>
