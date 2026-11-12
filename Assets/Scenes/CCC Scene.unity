@@ -840,7 +840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1321962094934918813, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -1919,15 +1919,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30.96656
+      value: 2.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.999998
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.10316
+      value: 2.62
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3922,7 +3922,7 @@ GameObject:
   - component: {fileID: 869565514}
   - component: {fileID: 869565513}
   m_Layer: 0
-  m_Name: Lab Outdoor(LocationMesh)
+  m_Name: HITLab Sofa(LocationMesh)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3984,26 +3984,13 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3206784499943273011, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -858149784294003304, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -2880357685388293101, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -4606788584631911122, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: 795524739749019077, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -1161052572894261271, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -5981780122625366985, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -395418796134568907, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: 6968941847709009792, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: 4747334014999907412, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: 5652349394414597364, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -7038373609375565260, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -8666858334955114965, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: 1153100058963584938, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -4689286232482881855, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -1730299889395156305, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: 4049145344055152615, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -5546046434420510832, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: 5355362891669293469, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
-  - {fileID: -3264502006962650013, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
+  - {fileID: -6564585462201333807, guid: 75f039922e7562f42aada8a74818c614, type: 2}
+  - {fileID: -3556780921662598047, guid: 75f039922e7562f42aada8a74818c614, type: 2}
+  - {fileID: 2657805621418483197, guid: 75f039922e7562f42aada8a74818c614, type: 2}
+  - {fileID: 1351995654065895016, guid: 75f039922e7562f42aada8a74818c614, type: 2}
+  - {fileID: 3595022425660081808, guid: 75f039922e7562f42aada8a74818c614, type: 2}
+  - {fileID: 6384550982048418585, guid: 75f039922e7562f42aada8a74818c614, type: 2}
+  - {fileID: -2982875737977057229, guid: 75f039922e7562f42aada8a74818c614, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4032,7 +4019,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869565511}
-  m_Mesh: {fileID: 2429545315007296900, guid: 6c9219bf2d1b80548b9bab8fcd67f71c, type: 2}
+  m_Mesh: {fileID: 5009333911232865856, guid: 75f039922e7562f42aada8a74818c614, type: 2}
 --- !u!1 &937314864
 GameObject:
   m_ObjectHideFlags: 0
@@ -4722,7 +4709,7 @@ GameObject:
   - component: {fileID: 1166258622}
   - component: {fileID: 1166258623}
   m_Layer: 0
-  m_Name: Lab Outdoor
+  m_Name: HITLab Sofa
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -4759,14 +4746,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Payload:
-    Data: 0a1608aed4e1b4e7f3daa2ba0110baeb9dedb08cffd49601189bc9b28798342a270a15089badbad4ed8082a6f501108cb9d689dee089b05b12090a001205250000803f1d0000803f321211e72547d5a9c245c019d36ca307a4926540
+    Data: 0a1408ffd98ed9ff96eda456109fb792e388a8b8e34a18d082ac87e9332a260a1408a583b3eadcc092a02e1096bd9cdc8084b5d80f12090a001205250000803f1d0000803f3212114998bbc39dc245c01925a4ceb8a4926540
   MeshContainer: {fileID: 1942191868}
   IncludeMeshInBuild: 0
   GpsLocation:
-    lat_degrees: -43.520809173583984
-    lng_degrees: 172.58251953125
+    lat_degrees: -43.52043914794922
+    lng_degrees: 172.58261108398438
   ARLocationManifest: {fileID: 0}
-  AssetGuid: 6c9219bf2d1b80548b9bab8fcd67f71c
+  AssetGuid: 75f039922e7562f42aada8a74818c614
 --- !u!1001 &1167303312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5759,7 +5746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1321962094934918813, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_PresetInfoIsWorld
