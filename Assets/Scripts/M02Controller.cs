@@ -45,10 +45,13 @@ public class M02Controller : MonoBehaviour
     [Tooltip("动态生成时与相机的水平距离（米）")]
     public float spawnDistance = 2.2f;
 
+    [Tooltip("是否让 Portal 的正面面向用户 (true 为面对用户，false 为背对用户)")]
+    public bool faceTowardsUser = true;
+
     [Tooltip("高度偏移量（米，相对于相机的高度。设为 -0.2 表示门中心略低于视线，脚踏实地）")]
     public float heightOffset = -0.2f;
 
-    [Tooltip("门的 Y 轴旋转微调偏角（如果门背对你，填 180）")]
+    [Tooltip("门的 Y 轴旋转微调偏角（度数，若模型自身正反面有偏差可在此加减如 180）")]
     public float rotationOffsetAngle = 0f;
 
     [Header("Portal Viewing HUD (延迟显现操作栏)")]
@@ -235,11 +238,16 @@ public class M02Controller : MonoBehaviour
 
         if (dialogueController != null) dialogueController.gameObject.SetActive(false);
 
-        string prompt = (storyData != null && !string.IsNullOrEmpty(storyData.alignmentPrompt))
-            ? storyData.alignmentPrompt
-            : ((storyData != null && !string.IsNullOrEmpty(storyData.interactionInstruction))
-                ? storyData.interactionInstruction
-                : kFallbackPortalPrompt);
+        // Alignment + Instruction
+        string prompt = "";
+        if (storyData != null) 
+        {
+          if (!string.IsNullOrEmpty(storyData.alignmentPrompt))
+          prompt += storyData.alignmentPrompt + "\n\n";
+
+          if (!string.IsNullOrEmpty(storyData.interactionInstruction))
+          prompt += storyData.interactionInstruction;
+        }
 
         string btnText = (storyData != null && !string.IsNullOrEmpty(storyData.alignmentButtonText))
             ? storyData.alignmentButtonText
@@ -290,34 +298,44 @@ public class M02Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 在当前相机正前方安全平坦处放置 Portal，避免固定锚点被现场人群撞上
+    /// 在用户按下“Open Portal”那一刻，准确计算当前相机的绝对世界坐标与视线，把 Portal 稳稳放置在正前方
     /// </summary>
     private void PlacePortalInFrontOfCamera()
     {
-        Transform cam = Camera.main.transform;
-        Vector3 forwardXZ = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+        Camera cam = Camera.main;
+        if (cam == null)
+        {
+            Debug.LogWarning("[M02Controller] Camera.main 为空，无法动态放置 Portal！");
+            return;
+        }
+
+        Transform camTr = cam.transform;
+
+        // 获取相机在水平地面上的视线前方向量（去除仰视/俯视倾斜）
+        Vector3 forwardXZ = Vector3.ProjectOnPlane(camTr.forward, Vector3.up).normalized;
 
         if (forwardXZ.sqrMagnitude < 0.001f)
             forwardXZ = Vector3.forward;
 
-        // 计算相机正前方 spawnDistance 处的水平位置
-        Vector3 targetPos = cam.position + forwardXZ * spawnDistance;
+        // 核心：计算当前相机正前方的世界坐标
+        Vector3 targetWorldPos = camTr.position + forwardXZ * spawnDistance;
         
-        // 高度以相机高度为基准加上偏移，确保视线正前方，绝不掉入地下
-        targetPos.y = cam.position.y + heightOffset;
+        // 高度以当前相机所处的高度加上偏移
+        targetWorldPos.y = camTr.position.y + heightOffset;
 
-        portalObject.transform.position = targetPos;
+        // 计算朝向：faceTowardsUser 为 true 则门朝向相机（-forwardXZ），否则背向相机（forwardXZ）
+        Vector3 lookDir = faceTowardsUser ? -forwardXZ : forwardXZ;
+        Quaternion targetWorldRot = Quaternion.LookRotation(lookDir, Vector3.up);
 
-        // 传送门应垂直于地面立正（X/Z 轴欧拉角为 0，杜绝任何左右或前后歪斜），且正朝向相机
-        Quaternion lookRot = Quaternion.LookRotation(-forwardXZ, Vector3.up);
         if (Mathf.Abs(rotationOffsetAngle) > 0.1f)
         {
-            lookRot *= Quaternion.Euler(0f, rotationOffsetAngle, 0f);
+            targetWorldRot *= Quaternion.Euler(0f, rotationOffsetAngle, 0f);
         }
 
-        portalObject.transform.rotation = lookRot;
+        // 使用世界坐标绝对赋值，彻底屏蔽任何父节点的局部变换干扰
+        portalObject.transform.SetPositionAndRotation(targetWorldPos, targetWorldRot);
 
-        Debug.Log($"[M02Controller] Portal 已立正安放在用户正前方：{targetPos}，旋转：{lookRot.eulerAngles}");
+        Debug.Log($"[M02Controller] Portal 已在新位置立正！相机位置: {camTr.position}, 目标位置: {targetWorldPos}, 旋转: {targetWorldRot.eulerAngles}");
     }
 
     /// <summary>

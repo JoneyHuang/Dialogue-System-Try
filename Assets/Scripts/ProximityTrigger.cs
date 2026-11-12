@@ -33,13 +33,37 @@ public class ProximityTrigger : MonoBehaviour
     private Vector3 initialScale;
     private bool hasTriggered = false;
 
-    void Start()
+    void Awake()
     {
         initialScale = transform.localScale;
+    }
+
+    void OnEnable()
+    {
+        // 每次重新点亮 Pin 时（例如 Hub 重新派发），自动复位状态，允许再次触发！
+        ResetTriggerState();
+    }
+
+    void Start()
+    {
+        if (initialScale == Vector3.zero)
+            initialScale = transform.localScale;
 
         if (arCamera == null && Camera.main != null)
         {
             arCamera = Camera.main.transform;
+        }
+    }
+
+    /// <summary>
+    /// 重置触发状态（支持多次测试与实验复原）
+    /// </summary>
+    public void ResetTriggerState()
+    {
+        hasTriggered = false;
+        if (initialScale != Vector3.zero)
+        {
+            transform.localScale = initialScale;
         }
     }
 

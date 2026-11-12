@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8909a7b854c460945b7273a620ed017e, type: 3}
+  m_Name: PoI_03_Mr Watson
+  m_EditorClassIdentifier: 
+  speakerName: Wen
+  characterAvatar: {fileID: 0}
+  arrivalPrompt: You have arrived at the site.
+  arrivalButtonText: Start
+  dialogueLines:
+  - "I\u2019ve always felt a special connection to this Cathedral, ever since I first
+    visited it in 2011."
+  - Back in 2011, while staying with my homestay Susan as an international student,
+    we came here just a week before the earthquake. The Cathedral Square was vibrant,
+    and I could hear musi ccoming from inside.
+  - 'We only took a quick photo outside on the West Porch and didn''t step in. At
+    the time, it just seemed like an ordinary visit, but I never imagined that would
+    be my last chance. '
+  - 15 years have passed, I revisit here today not only to meet Susan, but also to
+    check the place. The place has gone through so many changes since the earthquake
+    that I hardly remembered what it tused to look like.
+  - Since I never got to step inside back then... could you help me discover what
+    the Cathedral might have sounded like that day?
+  alignmentPrompt: Open the camera, and you will see a portal window in front of
+    you. Please look around and ensure your surrounding is safe.
+  alignmentButtonText: Okay
+  interactionInstruction: 'Tips: Walk closer to feel how the audio flows in the space.
+    Take your time to  observe and listen. '
+  interactionButtonText: Got it
+  reflectionPrompt: Take a moment to reflect on what you've just experienced.
+  reflectionButtonText: Continue

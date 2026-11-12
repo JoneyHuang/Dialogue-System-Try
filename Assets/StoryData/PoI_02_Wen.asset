@@ -30,10 +30,11 @@ MonoBehaviour:
     that I hardly remembered what it tused to look like.
   - Since I never got to step inside back then... could you help me discover what
     the Cathedral might have sounded like that day?
-  alignmentPrompt: 'Open the camera, and you will see a green plane on the floor.
-    Please take your time to  observe and listen. '
-  alignmentButtonText: I'm in Position
-  interactionInstruction: 
+  alignmentPrompt: Open the camera, and you will see a portal window in front of
+    you. Please look around and ensure your surrounding is safe.
+  alignmentButtonText: Okay
+  interactionInstruction: 'Tips: Walk closer to feel how the audio flows in the space.
+    Take your time to  observe and listen. '
   interactionButtonText: Got it
   reflectionPrompt: Take a moment to reflect on what you've just experienced.
   reflectionButtonText: Continue
