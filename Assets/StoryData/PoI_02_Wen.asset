@@ -15,7 +15,7 @@ MonoBehaviour:
   speakerName: Wen
   characterAvatar: {fileID: 0}
   arrivalPrompt: You have arrived at the site.
-  arrivalButtonText: Start
+  arrivalButtonText: Meet Wen
   dialogueLines:
   - "I\u2019ve always felt a special connection to this Cathedral, ever since I first
     visited it in 2011."

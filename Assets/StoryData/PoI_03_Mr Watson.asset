@@ -12,29 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8909a7b854c460945b7273a620ed017e, type: 3}
   m_Name: PoI_03_Mr Watson
   m_EditorClassIdentifier: 
-  speakerName: Wen
+  speakerName: Mr Watson
   characterAvatar: {fileID: 0}
-  arrivalPrompt: You have arrived at the site.
-  arrivalButtonText: Start
+  arrivalPrompt: "As a choirster in 1970s, a lifetime of memories about Cathedral
+    stays with Mr Watson. Later as a teacher, he brought students to visit the Cathedral
+    every year, always reminding them to look for the spire if they ever got lost\nAfter
+    the Cathedral was closed, Mr Watson continues to follow its restoreration closely.
+    He knows its stories intimately \u2014 and believes that even its stones have
+    stories to tell."
+  arrivalButtonText: Meet the Storyteller
   dialogueLines:
-  - "I\u2019ve always felt a special connection to this Cathedral, ever since I first
-    visited it in 2011."
-  - Back in 2011, while staying with my homestay Susan as an international student,
-    we came here just a week before the earthquake. The Cathedral Square was vibrant,
-    and I could hear musi ccoming from inside.
-  - 'We only took a quick photo outside on the West Porch and didn''t step in. At
-    the time, it just seemed like an ordinary visit, but I never imagined that would
-    be my last chance. '
-  - 15 years have passed, I revisit here today not only to meet Susan, but also to
-    check the place. The place has gone through so many changes since the earthquake
-    that I hardly remembered what it tused to look like.
-  - Since I never got to step inside back then... could you help me discover what
-    the Cathedral might have sounded like that day?
-  alignmentPrompt: Open the camera, and you will see a portal window in front of
-    you. Please look around and ensure your surrounding is safe.
+  - ' '
+  - My experience in the choir had a profound impact on my life. I learned to play
+    the organ, and I still play for services at local churches today.
+  - ' '
+  - ' '
+  alignmentPrompt: 
   alignmentButtonText: Okay
-  interactionInstruction: 'Tips: Walk closer to feel how the audio flows in the space.
-    Take your time to  observe and listen. '
+  interactionInstruction: 
   interactionButtonText: Got it
-  reflectionPrompt: Take a moment to reflect on what you've just experienced.
+  reflectionPrompt: 
   reflectionButtonText: Continue
