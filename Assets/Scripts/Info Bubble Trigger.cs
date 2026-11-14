@@ -18,6 +18,13 @@ public class InfoBubbleTrigger: MonoBehaviour
         "这里介绍这个地点的建造背景、重要年代或建筑特色。建议挑选 2–3 个最值得现场观察的细节，让访客能将屏幕上的信息与眼前的建筑对应起来。"
     };
 
+    [Header("Hotspot Progress Tracking")]
+    [Tooltip("Optional event fired when this info bubble is opened or viewed.")]
+    public UnityEngine.Events.UnityEvent onBubbleOpened;
+    public UnityEngine.Events.UnityEvent onBubbleClosed;
+
+    public bool HasBeenInspected { get; private set; } = false;
+
     private int currentPage;
 
     private void Start()
@@ -35,6 +42,8 @@ public class InfoBubbleTrigger: MonoBehaviour
         {
             ShowPage(0);
             infoBubble.SetActive(true);
+            HasBeenInspected = true;
+            onBubbleOpened?.Invoke();
         }
     }
 
@@ -69,6 +78,9 @@ public class InfoBubbleTrigger: MonoBehaviour
     public void CloseInfoBubble()
     {
         if (infoBubble != null)
+        {
             infoBubble.SetActive(false);
+            onBubbleClosed?.Invoke();
+        }
     }
 }

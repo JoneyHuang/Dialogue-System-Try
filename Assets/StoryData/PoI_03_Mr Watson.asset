@@ -14,22 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakerName: Mr Watson
   characterAvatar: {fileID: 0}
-  arrivalPrompt: "As a choirster in 1970s, a lifetime of memories about Cathedral
-    stays with Mr Watson. Later as a teacher, he brought students to visit the Cathedral
-    every year, always reminding them to look for the spire if they ever got lost\nAfter
-    the Cathedral was closed, Mr Watson continues to follow its restoreration closely.
-    He knows its stories intimately \u2014 and believes that even its stones have
-    stories to tell."
-  arrivalButtonText: Meet the Storyteller
+  arrivalPrompt: "As a choirister in the 1970s, a lifetime of memories about the
+    Cathedral stays with Mr Watson. Even after the earthquakes, he has continued
+    to follow the Cathedral's story. He knows its stories intimately \u2014 and believes
+    that even its stones have stories to tell."
+  arrivalButtonText: Meet Mr Watson
   dialogueLines:
-  - ' '
-  - My experience in the choir had a profound impact on my life. I learned to play
-    the organ, and I still play for services at local churches today.
-  - ' '
-  - ' '
+  - Hello, young friend. What a pleasure to see you here.
+  - I forgot to introduce myself. My name is Louis Watson. People call me Mr Watson.
+    I used to sing in the Cathedral Choir when I was a young boy, and later when
+    I became a teacher, I brought my students here every year.
+  - There were some naughty ones wandering and missing their ways that I had to remind
+    them to look for the tallest spire to find the right way.
+  - I have so many memories of this Cathedral. Some are carved in stone, some can
+    be seen in its windows, and some can still be heard in music. Since you are here
+    today, why don't you spend a little time with me so I can show you around?
+  - I will keep you company, just in case you need a hand. I can tell you what I
+    remember about each spot you explore. Take your time, and remember you can always
+    pause, put down the tablet, and take in the real space around you.
   alignmentPrompt: 
-  alignmentButtonText: Okay
-  interactionInstruction: 
-  interactionButtonText: Got it
-  reflectionPrompt: 
+  alignmentButtonText: 
+  interactionInstruction: Three memories are waiting in this space \u2014 carved
+    in stone, reflected in glass, and carried in music. Explore them at your own
+    pace, and feel free to look around and touch your surroundings.
+  interactionButtonText: Start Exploring
+  reflectionPrompt: '"What do you think makes a place worth remembering?"'
   reflectionButtonText: Continue

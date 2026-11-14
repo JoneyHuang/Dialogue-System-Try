@@ -3,57 +3,60 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controls the Then/Now historical comparison panel.
-/// Manages image opacity, shader saturation, historical soundscapes, photo gallery synchronization,
-/// and exit callbacks. Can be used standalone or orchestrated by M01Controller/FlowManager.
+/// Controls the past / present / future comparison experience.
+/// Slider values 0..0.5 blend out the historical image; 0.5..1 reveal the AR model.
 /// </summary>
 public class HistoricalComparisonController : MonoBehaviour
 {
-    [Header("Visual & Saturation")]
-    [Tooltip("The main UI Image displaying the historical archival photo.")]
+    [Header("Visuals")]
+    [Tooltip("Historical archival photo displayed by the Canvas.")]
     public Image historicalImage;
 
-    [Tooltip("Material running UI_Saturation shader with a '_Saturation' float property.")]
+    [Tooltip("Optional UI material with a _Saturation property.")]
     public Material saturationMaterial;
 
-    [Tooltip("Slider controlling Then/Now opacity and audio soundscape volume.")]
+    [Tooltip("Time scrubber: 0 = past, 0.5 = present, 1 = reconstructed future.")]
     public Slider opacitySlider;
 
-    [Tooltip("Default opacity when panel is opened (0.0 = completely transparent, 1.0 = fully historical).")]
+    [Tooltip("AR reconstruction GameObject. It may live under a different scene parent from this Canvas.")]
+    public GameObject futureModel;
+
     [Range(0f, 1f)]
-    public float defaultInitialOpacity = 0.5f;
+    public float defaultInitialOpacity = 0f;
 
     [Header("Audio & Gallery")]
-    [Tooltip("AudioSource playing the historic soundscape (e.g. Cathedral bells, choir).")]
     public AudioSource historicalAudioSource;
-
-    [Tooltip("Photo gallery component handling swipes and photo switching.")]
     public PhotoGalleryController photoGallery;
-
-    [Tooltip("Button used to exit the comparison view.")]
     public Button exitButton;
 
-    /// <summary>
-    /// Event invoked when the user exits the historical comparison panel.
-    /// Useful for notifying M01Controller / Flow Coordinators to advance the journey.
-    /// </summary>
+    [Header("Responsive Slider Layout")]
+    [Tooltip("Optional: assign the slider RectTransform. It is also found from the Slider if left empty.")]
+    public RectTransform sliderRect;
+    [Tooltip("Slider track length in pixels, applied along its active axis.")]
+    public float sliderLength = 360f;
+    [Tooltip("Track thickness in pixels.")]
+    public float sliderThickness = 64f;
+    [Tooltip("Inset from the screen edge.")]
+    public float screenEdgeInset = 48f;
+
     public event Action onComparisonClosed;
+
+    private RectTransform panelRect;
+    private bool isClosing;
+    private bool layoutWasPortrait;
 
     private void Awake()
     {
         AutoWireComponents();
         WireListeners();
+        ApplyResponsiveLayout(true);
     }
 
     private void Start()
     {
-        // Apply material to image if assigned
         if (historicalImage != null && saturationMaterial != null)
-        {
             historicalImage.material = saturationMaterial;
-        }
 
-        // Configure audio source defaults
         if (historicalAudioSource != null)
         {
             historicalAudioSource.loop = true;
@@ -62,56 +65,60 @@ public class HistoricalComparisonController : MonoBehaviour
             historicalAudioSource.volume = 0f;
         }
 
-        // Sync initial photo audio if gallery is present
         if (photoGallery != null)
-        {
             OnHistoricalPhotoChanged(0, photoGallery.GetCurrentAudio());
-        }
+
+        SetFutureModelVisible(false);
+        UpdateTimeline(defaultInitialOpacity);
     }
 
-    /// <summary>
-    /// Automatically searches child transforms and self to wire missing references.
-    /// Prevents manual drag-and-drop mistakes in the Inspector.
-    /// </summary>
+    private void Update()
+    {
+        ApplyResponsiveLayout(false);
+    }
+
     public void AutoWireComponents()
     {
-        if (photoGallery == null)
-        {
-            photoGallery = GetComponentInChildren<PhotoGalleryController>(true);
-        }
-
-        if (opacitySlider == null)
-        {
-            opacitySlider = GetComponentInChildren<Slider>(true);
-        }
+        if (photoGallery == null) photoGallery = GetComponentInChildren<PhotoGalleryController>(true);
+        if (opacitySlider == null) opacitySlider = GetComponentInChildren<Slider>(true);
+        if (opacitySlider != null && sliderRect == null) sliderRect = opacitySlider.GetComponent<RectTransform>();
 
         if (historicalImage == null)
         {
             if (photoGallery != null && photoGallery.displayImage != null)
-            {
                 historicalImage = photoGallery.displayImage;
-            }
             else
             {
-                Transform imgTr = transform.Find("HistoricalImage");
-                if (imgTr != null) historicalImage = imgTr.GetComponent<Image>();
+                Transform imageTransform = transform.Find("HistoricalImage");
+                if (imageTransform != null) historicalImage = imageTransform.GetComponent<Image>();
+            }
+        }
+
+        // Locate the AR model instance, even if it's not a direct child of this Canvas.
+        if (futureModel == null)
+        {
+            // Search all transforms in the scene for a name containing "Cathedral" and a MeshRenderer.
+            var candidates = FindObjectsOfType<Transform>(true);
+            foreach (var t in candidates)
+            {
+                if (t.name.Contains("Cathedral") && t.GetComponent<MeshRenderer>() != null)
+                {
+                    futureModel = t.gameObject;
+                    break;
+                }
             }
         }
 
         if (exitButton == null)
         {
-            Transform btnTr = transform.Find("ExitButton") ?? transform.Find("Button");
-            if (btnTr != null) exitButton = btnTr.GetComponent<Button>();
+            Transform buttonTransform = transform.Find("ExitButton") ?? transform.Find("Button");
+            if (buttonTransform != null) exitButton = buttonTransform.GetComponent<Button>();
         }
 
         if (historicalAudioSource == null)
-        {
-            historicalAudioSource = GetComponent<AudioSource>();
-            if (historicalAudioSource == null)
-            {
-                historicalAudioSource = GetComponentInParent<AudioSource>();
-            }
-        }
+            historicalAudioSource = GetComponent<AudioSource>() ?? GetComponentInParent<AudioSource>();
+
+        panelRect = GetComponent<RectTransform>();
     }
 
     private void WireListeners()
@@ -124,8 +131,8 @@ public class HistoricalComparisonController : MonoBehaviour
 
         if (opacitySlider != null)
         {
-            opacitySlider.onValueChanged.RemoveListener(UpdateOpacity);
-            opacitySlider.onValueChanged.AddListener(UpdateOpacity);
+            opacitySlider.onValueChanged.RemoveListener(UpdateTimeline);
+            opacitySlider.onValueChanged.AddListener(UpdateTimeline);
         }
 
         if (photoGallery != null)
@@ -135,80 +142,105 @@ public class HistoricalComparisonController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Opens the historical comparison panel, resets the slider, and activates audio/visuals.
-    /// </summary>
     public void OpenComparison()
     {
         gameObject.SetActive(true);
-
-        float targetOpacity = defaultInitialOpacity;
-        if (opacitySlider != null)
-        {
-            opacitySlider.SetValueWithoutNotify(targetOpacity);
-        }
-
-        UpdateOpacity(targetOpacity);
+        isClosing = false;
+        SetFutureModelVisible(false);
+        float initialValue = Mathf.Clamp01(defaultInitialOpacity);
+        if (opacitySlider != null) opacitySlider.SetValueWithoutNotify(initialValue);
+        UpdateTimeline(initialValue);
+        ApplyResponsiveLayout(true);
     }
 
-    /// <summary>
-    /// Updates historical photo alpha, saturation shader, and soundscape volume.
-    /// </summary>
-    /// <param name="value">Normalized opacity between 0.0 and 1.0.</param>
-    public void UpdateOpacity(float value)
+    /// <summary>Compatibility entry point; value now represents the full timeline.</summary>
+    public void UpdateOpacity(float value) => UpdateTimeline(value);
+
+    public void UpdateTimeline(float value)
     {
         value = Mathf.Clamp01(value);
 
-        // 1. Update Historical Image Alpha and Material Saturation
+        // Past -> present: image fades to transparent. The present midpoint is a clean camera view.
+        float historicalAlpha = 1f - Mathf.Clamp01(value / 0.5f);
         if (historicalImage != null)
         {
-            Color c = historicalImage.color;
-            c.a = value;
-            historicalImage.color = c;
+            Color color = historicalImage.color;
+            color.a = historicalAlpha;
+            historicalImage.color = color;
 
-            Material mat = saturationMaterial != null ? saturationMaterial : historicalImage.material;
-            if (mat != null && mat.HasProperty("_Saturation"))
-            {
-                mat.SetFloat("_Saturation", value);
-            }
+            Material material = saturationMaterial != null ? saturationMaterial : historicalImage.material;
+            if (material != null && material.HasProperty("_Saturation"))
+                material.SetFloat("_Saturation", historicalAlpha);
         }
 
-        // 2. Update Historical Audio Volume & Playback
+        // Present -> future: enable the existing AR prefab instance. It remains opaque in this first pass.
+        SetFutureModelVisible(value > 0.505f);
+
         if (historicalAudioSource != null)
         {
-            historicalAudioSource.volume = value;
-
-            bool isPanelActive = gameObject.activeInHierarchy;
-            if (isPanelActive && value > 0.001f && historicalAudioSource.clip != null && !historicalAudioSource.isPlaying)
-            {
+            historicalAudioSource.volume = historicalAlpha;
+            if (gameObject.activeInHierarchy && historicalAlpha > 0.001f && historicalAudioSource.clip != null && !historicalAudioSource.isPlaying)
                 historicalAudioSource.Play();
-            }
-            else if (value <= 0.001f && historicalAudioSource.isPlaying)
-            {
+            else if (historicalAlpha <= 0.001f && historicalAudioSource.isPlaying)
                 historicalAudioSource.Pause();
-            }
         }
     }
 
-    /// <summary>
-    /// Callback when PhotoGallery switches photos: updates the soundscape clip and refreshes volume.
-    /// </summary>
+    private void SetFutureModelVisible(bool visible)
+    {
+        if (futureModel != null && futureModel.activeSelf != visible)
+            futureModel.SetActive(visible);
+    }
+
     private void OnHistoricalPhotoChanged(int index, AudioClip clip)
     {
         if (historicalAudioSource == null) return;
-
         historicalAudioSource.Stop();
         historicalAudioSource.clip = clip;
-
-        float currentVal = opacitySlider != null ? opacitySlider.value : defaultInitialOpacity;
-        UpdateOpacity(currentVal);
+        UpdateTimeline(opacitySlider != null ? opacitySlider.value : defaultInitialOpacity);
     }
 
-    private bool isClosing = false;
+    private void ApplyResponsiveLayout(bool force)
+    {
+        if (opacitySlider == null || sliderRect == null) return;
 
-    /// <summary>
-    /// Closes the comparison panel, pauses/stops audio, and invokes onComparisonClosed.
-    /// </summary>
+        // Force vertical orientation regardless of screen aspect.
+        opacitySlider.direction = Slider.Direction.BottomToTop;
+
+        // Position slider at the right edge, spanning vertically.
+        sliderRect.anchorMin = new Vector2(1f, 0f);
+        sliderRect.anchorMax = new Vector2(1f, 1f);
+        sliderRect.pivot = new Vector2(1f, 0.5f);
+        sliderRect.anchoredPosition = new Vector2(-screenEdgeInset, 0f);
+        sliderRect.localRotation = Quaternion.identity;
+        sliderRect.localScale = Vector3.one;
+        // Width is thickness, height is the defined length (or limited by screen size).
+        float height = Mathf.Min(sliderLength, Screen.height * 0.85f);
+        sliderRect.sizeDelta = new Vector2(sliderThickness, height);
+
+        // Adjust fill and handle rects for a clean vertical track.
+        if (opacitySlider.fillRect != null)
+        {
+            var fill = opacitySlider.fillRect;
+            fill.anchorMin = new Vector2(0.5f, 0f);
+            fill.anchorMax = new Vector2(0.5f, 1f);
+            fill.anchoredPosition = Vector2.zero;
+            fill.sizeDelta = new Vector2(sliderThickness, 0f);
+        }
+        if (opacitySlider.handleRect != null)
+        {
+            var handle = opacitySlider.handleRect;
+            // Handle anchored at bottom initially.
+            handle.anchorMin = new Vector2(0.5f, 0f);
+            handle.anchorMax = new Vector2(0.5f, 0f);
+            handle.anchoredPosition = Vector2.zero;
+            handle.sizeDelta = new Vector2(sliderThickness, sliderThickness);
+        }
+
+        if (panelRect != null)
+            panelRect.ForceUpdateRectTransforms();
+    }
+
     public void CloseComparison()
     {
         if (isClosing) return;
@@ -220,23 +252,13 @@ public class HistoricalComparisonController : MonoBehaviour
             historicalAudioSource.volume = 0f;
         }
 
+        SetFutureModelVisible(false);
         gameObject.SetActive(false);
-
-        try
-        {
-            onComparisonClosed?.Invoke();
-        }
-        finally
-        {
-            isClosing = false;
-        }
+        try { onComparisonClosed?.Invoke(); }
+        finally { isClosing = false; }
     }
 
 #if UNITY_EDITOR
-    private void Reset()
-    {
-        AutoWireComponents();
-    }
+    private void Reset() => AutoWireComponents();
 #endif
 }
-
