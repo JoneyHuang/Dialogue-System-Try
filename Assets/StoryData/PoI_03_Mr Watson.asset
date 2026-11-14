@@ -24,14 +24,17 @@ MonoBehaviour:
   - I forgot to introduce myself. My name is Louis Watson. People call me Mr Watson.
     I used to sing in the Cathedral Choir when I was a young boy, and later when
     I became a teacher, I brought my students here every year.
-  - There were some naughty ones wandering and missing their ways that I had to remind
-    them to look for the tallest spire to find the right way.
-  - I have so many memories of this Cathedral. Some are carved in stone, some can
-    be seen in its windows, and some can still be heard in music. Since you are here
+  - There were always a few who wandered off or lost their way! I used to remind
+    them to look for the Cathedral's spire to find their way back.
+  - I have many memories of this Cathedral. Some are carved in stone, some can be
+    seen in its windows, and some can still be heard in music. Since you are here
     today, why don't you spend a little time with me so I can show you around?
-  - I will keep you company, just in case you need a hand. I can tell you what I
-    remember about each spot you explore. Take your time, and remember you can always
-    pause, put down the tablet, and take in the real space around you.
+  - 'Brilliant! I will keep you company, just in case you need a hand. I can tell
+    you what I remember about each spot you explore. Take your time, and remember
+    you can always
+
+    pause, put down the tablet, and take in the real space around
+    you.'
   alignmentPrompt: 
   alignmentButtonText: 
   interactionInstruction: Three memories are waiting in this space \u2014 carved
