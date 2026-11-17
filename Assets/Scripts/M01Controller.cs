@@ -185,11 +185,13 @@ public class M01Controller : MonoBehaviour
             : null;
         string speaker = storyData != null ? storyData.speakerName : null;
 
+        Sprite avatar = storyData != null ? storyData.characterAvatar : null;
+
         if (dialogueController != null)
         {
             dialogueController.OnDialogueFinished -= ShowAlignHint;
             dialogueController.OnDialogueFinished += ShowAlignHint;
-            dialogueController.StartDialogue(lines, speaker);
+            dialogueController.StartDialogue(lines, speaker, avatar);
         }
         else
         {

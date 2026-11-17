@@ -11,14 +11,10 @@ using TMPro;
 public class DialogueController : MonoBehaviour
 {
     [Header("UI References")]
-    [Tooltip("显示说话角色名字的文本")]
     public TMP_Text characterNameText;
-
-    [Tooltip("显示台词正文的文本")]
     public TMP_Text dialogueBodyText;
-
-    [Tooltip("下一句箭头或确认按钮（可选）")]
     public Button continueButton;
+    public Image avatarImage;
 
     [Header("UX & Click Settings")]
     [Tooltip("是否允许点击屏幕任意区域推进对话")]
@@ -72,6 +68,9 @@ public class DialogueController : MonoBehaviour
 
         if (continueButton == null)
             continueButton = transform.Find("ContinueButton")?.GetComponent<Button>() ?? GetComponentInChildren<Button>();
+
+        if (avatarImage == null)
+            avatarImage = transform.Find("AvatarImage")?.GetComponent<Image>() ?? transform.Find("Avatar")?.GetComponent<Image>();
     }
 
     private void SetupFullScreenClickArea()
@@ -131,14 +130,28 @@ public class DialogueController : MonoBehaviour
     /// <summary>
     /// 启动对话流程
     /// </summary>
-    public void StartDialogue(string[] lines = null, string speaker = null)
+    public void StartDialogue(string[] lines = null, string speaker = null, Sprite avatar = null)
     {
         activeLines = (lines != null && lines.Length > 0) ? lines : defaultLines;
         string activeSpeaker = !string.IsNullOrEmpty(speaker) ? speaker : defaultSpeaker;
 
         if (characterNameText != null)
             characterNameText.text = activeSpeaker;
-
+        
+        if (avatarImage != null)
+        {
+            if (avatar != null)
+            {
+              avatarImage.sprite = avatar;
+              avatarImage.gameObject.SetActive(true);
+            }
+            
+            else
+            {
+                avatarImage.gameObject.SetActive(false); 
+            }
+        }
+        
         currentLine = 0;
         gameObject.SetActive(true);
         DisplayCurrentLine();

@@ -238,8 +238,10 @@ public class M03Controller : MonoBehaviour
             string[] lines = storyData != null && storyData.dialogueLines != null && storyData.dialogueLines.Length > 0
                 ? storyData.dialogueLines
                 : new string[] { "Hello, young friend. Let me show you around this sacred place." };
+            
+             Sprite avatar = storyData != null ? storyData.characterAvatar : null;
 
-            dialogueController.StartDialogue(lines, speaker);
+            dialogueController.StartDialogue(lines, speaker, avatar);
         }
         else
         {
@@ -334,14 +336,59 @@ public class M03Controller : MonoBehaviour
         var bubble = targetObj.GetComponentInChildren<InfoBubbleTrigger>(true);
         if (bubble != null)
         {
-            bubble.onBubbleOpened.RemoveListener(() => MarkHotspotVisited(hotspotId));
-            bubble.onBubbleOpened.AddListener(() => MarkHotspotVisited(hotspotId));
+            bubble.onBubbleOpened.RemoveListener(() => OnBubbleHotspotOpened(bubble, hotspotId));
+            bubble.onBubbleOpened.AddListener(() => OnBubbleHotspotOpened(bubble, hotspotId));
         }
+    }
+
+    private void OnBubbleHotspotOpened(InfoBubbleTrigger openedBubble, string hotspotId)
+    {
+        // Mutual exclusion: Close any other active bubble or rose window
+        CloseOtherHotspotViews(exceptBubble: openedBubble);
+        MarkHotspotVisited(hotspotId);
     }
 
     private void OnRoseWindowOpened()
     {
+        // Mutual exclusion: Close any open info bubbles when Rose Window opens
+        CloseOtherHotspotViews(exceptRoseWindow: true);
         MarkHotspotVisited("RoseWindow");
+    }
+
+    /// <summary>
+    /// Closes any other active modal / bubble to ensure only one hotspot is open at any time.
+    /// </summary>
+    public void CloseOtherHotspotViews(InfoBubbleTrigger exceptBubble = null, bool exceptRoseWindow = false)
+    {
+        // Close Choir bubble if it is not the exception
+        if (hotspotChoir != null)
+        {
+            var choirBubble = hotspotChoir.GetComponentInChildren<InfoBubbleTrigger>(true);
+            if (choirBubble != null && choirBubble != exceptBubble)
+            {
+                choirBubble.CloseInfoBubble();
+            }
+        }
+
+        // Close Stone bubble if it is not the exception
+        if (hotspotStone != null)
+        {
+            var stoneBubble = hotspotStone.GetComponentInChildren<InfoBubbleTrigger>(true);
+            if (stoneBubble != null && stoneBubble != exceptBubble)
+            {
+                stoneBubble.CloseInfoBubble();
+            }
+        }
+
+        // Close Rose Window if it is open and not the exception
+        if (!exceptRoseWindow && hotspotRoseWindow != null)
+        {
+            var arRoseWindow = FindFirstObjectByType<ARWorldRoseWindow>();
+            if (arRoseWindow != null)
+            {
+                arRoseWindow.Close();
+            }
+        }
     }
 
     /// <summary>
@@ -465,6 +512,7 @@ public class M03Controller : MonoBehaviour
 
     public void HideAllHotspots()
     {
+        CloseOtherHotspotViews();
         if (hotspotRoseWindow != null) hotspotRoseWindow.SetActive(false);
         if (hotspotChoir != null) hotspotChoir.SetActive(false);
         if (hotspotStone != null) hotspotStone.SetActive(false);
