@@ -27,6 +27,15 @@ public class InfoBubbleTrigger: MonoBehaviour
 
     private int currentPage;
 
+    private Collider myCollider;
+    private Camera targetCamera;
+
+    private void Awake()
+    {
+        myCollider = GetComponent<Collider>();
+        targetCamera = Camera.main;
+    }
+
     private void Start()
     {
         if (nextButton != null) nextButton.onClick.AddListener(NextPage);
@@ -36,7 +45,50 @@ public class InfoBubbleTrigger: MonoBehaviour
             infoBubble.SetActive(false);
     }
 
+    private void Update()
+    {
+        // Handle Mobile AR Touch Input
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                CheckRaycastHit(touch.position);
+            }
+        }
+        // Handle PC Mouse Click
+        else if (Input.GetMouseButtonDown(0))
+        {
+            CheckRaycastHit(Input.mousePosition);
+        }
+    }
+
+    private void CheckRaycastHit(Vector2 screenPosition)
+    {
+        if (targetCamera == null) targetCamera = Camera.main;
+        if (targetCamera == null) return;
+
+        Ray ray = targetCamera.ScreenPointToRay(screenPosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider == myCollider || hit.transform == transform || hit.transform.IsChildOf(transform))
+            {
+                TriggerOpen();
+                break;
+            }
+        }
+    }
+
     private void OnMouseDown()
+    {
+        TriggerOpen();
+    }
+
+    public void TriggerOpen()
     {
         if (infoBubble != null)
         {

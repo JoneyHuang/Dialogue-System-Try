@@ -6,6 +6,8 @@ using UnityEngine;
 /// 负责编排：到达提示 → Susan 对话 → 视角对齐 → 历史照片对比 → 反思 → 进入 M02。
 /// 叙事内容全部来自 PoIStoryData ScriptableObject，代码与文案完全分离。
 /// </summary>
+
+
 public class M01Controller : MonoBehaviour
 {
     public static M01Controller Instance { get; private set; }
@@ -36,6 +38,9 @@ public class M01Controller : MonoBehaviour
 
     [Tooltip("历史照片对比控制器")]
     public HistoricalComparisonController historicalComparisonController;
+
+    [Tooltip("Christchurch Cathedral AR 3D Model")]
+    public GameObject christchurchCathedral3DModel;
 
     [Header("Next Destination (optional)")]
     [Tooltip("完成该 POI 后激活的下一个目标物体 (如 PoI 2 Pin 或玫瑰窗 HotSpot)")]
@@ -222,12 +227,14 @@ public class M01Controller : MonoBehaviour
     {
         currentState = FlowState.HistoricalComparison;
 
-        if (promptPanelController != null) promptPanelController.Hide();
+        if (promptPanelController != null)
+            promptPanelController.Hide();
+
+        if (christchurchCathedral3DModel != null)
+            christchurchCathedral3DModel.SetActive(true);
 
         if (historicalComparisonController != null)
-        {
             historicalComparisonController.OpenComparison();
-        }
     }
 
     public void UpdateHistoricalOpacity(float value)

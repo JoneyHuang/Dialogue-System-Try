@@ -39,26 +39,40 @@ public class RoseWindowHotSpotTrigger : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
-                if (arCamera == null) arCamera = Camera.main;
-                if (arCamera != null && myCollider != null)
-                {
-                    Ray ray = arCamera.ScreenPointToRay(touch.position);
-                    if (Physics.Raycast(ray, out RaycastHit hit))
-                    {
-                        // Check if this hotspot was tapped
-                        if (hit.collider == myCollider || hit.transform == transform || hit.transform.IsChildOf(transform))
-                        {
-                            TriggerOpen();
-                        }
-                    }
-                }
+                CheckRaycastHit(touch.position);
+            }
+        }
+        // Handle PC Mouse Click in Editor / Standalone for reliable hit testing
+        else if (Input.GetMouseButtonDown(0))
+        {
+            CheckRaycastHit(Input.mousePosition);
+        }
+    }
+
+    private void CheckRaycastHit(Vector2 screenPosition)
+    {
+        if (arCamera == null) arCamera = Camera.main;
+        if (arCamera == null) return;
+
+        Ray ray = arCamera.ScreenPointToRay(screenPosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+
+        // Sort hits by distance to prioritize the closest hit
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider == myCollider || hit.transform == transform || hit.transform.IsChildOf(transform))
+            {
+                TriggerOpen();
+                break;
             }
         }
     }
 
     private void OnMouseDown()
     {
-        // PC Editor fallback
+        // Fallback for Unity's built-in physics click event
         TriggerOpen();
     }
 
@@ -76,7 +90,8 @@ public class RoseWindowHotSpotTrigger : MonoBehaviour
         Vector3 spawnPos = transform.position + spawnOffset;
 
         // Keep the window active when its HotSpot is hidden.
-        roseWindow.transform.SetParent(transform.parent, true);
+        // Removed reparenting to avoid orientation flips when activated from POI3.
+        // roseWindow.transform.SetParent(transform.parent, true);
 
         // Hide this hotspot
         gameObject.SetActive(false);

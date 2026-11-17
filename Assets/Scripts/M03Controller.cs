@@ -375,6 +375,12 @@ public class M03Controller : MonoBehaviour
                 progressText.text = $"Memories: [{dot1} {dot2} {dot3}] {count}/3";
             }
         }
+        
+        if (finishExplorationButton != null)
+       {
+        // Inactivate the Finish Button until 3 memories discovered
+        finishExplorationButton.gameObject.SetActive(inspectedHotspots.Count >= kTotalHotspots);
+       }
     }
 
     private void OnFinishButtonClicked()

@@ -30,11 +30,14 @@ public class ARWorldRoseWindow : MonoBehaviour
     [Header("Billboard Settings")]
     [Tooltip("Whether to constantly face the main AR camera.")]
     [SerializeField] private bool billboardToCamera = true;
+    [Tooltip("If the sprite faces away from the camera, check this to flip 180 degrees.")]
+    [SerializeField] private bool flipForward = false;
 
     private Camera targetCamera;
     private Coroutine activeAnimRoutine;
     private Action onCloseCallback;
     private bool isVisible = false;
+    private float currentAnimSpinAngle = 0f;
 
     private void Awake()
     {
@@ -55,12 +58,25 @@ public class ARWorldRoseWindow : MonoBehaviour
     {
         if (!isVisible || !billboardToCamera) return;
 
+        UpdateBillboardOrientation();
+    }
+
+    private void UpdateBillboardOrientation()
+    {
         if (targetCamera == null)
             targetCamera = Camera.main;
 
         if (targetCamera != null)
         {
-            transform.forward = targetCamera.transform.forward;
+            // Align with camera orientation so the plane is parallel to the camera view plane
+            Quaternion baseRot = targetCamera.transform.rotation;
+            if (flipForward)
+            {
+                baseRot *= Quaternion.Euler(0f, 180f, 0f);
+            }
+
+            // Apply spin animation around the camera view axis (Z-axis)
+            transform.rotation = baseRot * Quaternion.Euler(0f, 0f, currentAnimSpinAngle);
         }
     }
 
@@ -72,14 +88,9 @@ public class ARWorldRoseWindow : MonoBehaviour
     {
         onCloseCallback = onClose;
         transform.position = spawnPosition;
+        currentAnimSpinAngle = totalSpinDegrees;
 
-        if (targetCamera == null)
-            targetCamera = Camera.main;
-
-        if (targetCamera != null)
-        {
-            transform.forward = targetCamera.transform.forward;
-        }
+        UpdateBillboardOrientation();
 
         gameObject.SetActive(true);
         isVisible = true;
@@ -114,9 +125,9 @@ public class ARWorldRoseWindow : MonoBehaviour
             // 1. Scale
             transform.localScale = Vector3.LerpUnclamped(Vector3.zero, targetScale, easeOut);
 
-            // 2. Spiral rotation on Z
-            float currentAngle = Mathf.Lerp(totalSpinDegrees, 0f, easeOut);
-            transform.localRotation = Quaternion.Euler(0f, 0f, currentAngle);
+            // 2. Spiral rotation on Z (relative to camera plane)
+            currentAnimSpinAngle = Mathf.Lerp(totalSpinDegrees, 0f, easeOut);
+            UpdateBillboardOrientation();
 
             // 3. Alpha
             if (spriteRenderer != null)
@@ -130,7 +141,9 @@ public class ARWorldRoseWindow : MonoBehaviour
         }
 
         transform.localScale = targetScale;
-        transform.localRotation = Quaternion.identity;
+        currentAnimSpinAngle = 0f;
+        UpdateBillboardOrientation();
+
         if (spriteRenderer != null)
         {
             Color c = spriteRenderer.color;

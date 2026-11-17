@@ -78,6 +78,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -3888481672020999207, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7510444409258083804}
+    - targetCorrespondingSourceObject: {fileID: -3888481672020999207, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3869507347922250100}
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 1669d17578f181a469cc37584e4e55f9, type: 3}
 --- !u!1 &1116093096605894342 stripped
 GameObject:
@@ -118,3 +121,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoBubble: {fileID: 0}
+  titleText: {fileID: 0}
+  bodyText: {fileID: 0}
+  nextButton: {fileID: 0}
+  backButton: {fileID: 0}
+  pageIndicator: {fileID: 0}
+  pageTitles:
+  - "\u7B80\u4ECB"
+  - "\u5386\u53F2\u4E0E\u5EFA\u7B51\u7EC6\u8282"
+  pageBodies:
+  - "\u7528\u7B80\u77ED\u6587\u5B57\u4ECB\u7ECD\u8FD9\u4E2A\u5730\u70B9\u3002\u70B9\u51FB
+    Know more \u4E86\u89E3\u5B83\u7684\u5386\u53F2\u4E0E\u5EFA\u7B51\u7EC6\u8282\u3002"
+  - "\u8FD9\u91CC\u4ECB\u7ECD\u8FD9\u4E2A\u5730\u70B9\u7684\u5EFA\u9020\u80CC\u666F\u3001\u91CD\u8981\u5E74\u4EE3\u6216\u5EFA\u7B51\u7279\u8272\u3002\u5EFA\u8BAE\u6311\u9009
+    2\u20133 \u4E2A\u6700\u503C\u5F97\u73B0\u573A\u89C2\u5BDF\u7684\u7EC6\u8282\uFF0C\u8BA9\u8BBF\u5BA2\u80FD\u5C06\u5C4F\u5E55\u4E0A\u7684\u4FE1\u606F\u4E0E\u773C\u524D\u7684\u5EFA\u7B51\u5BF9\u5E94\u8D77\u6765\u3002"
+  onBubbleOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  onBubbleClosed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3869507347922250100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116093096605894342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458b2fc05489cbd3c8d193ab8609c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  billboard: 1
+  lockYAxisOnly: 0
+  enableScalePulse: 1
+  pulseSpeed: 2
+  pulseAmplitude: 0.08
+  enableAlphaPulse: 1
+  minAlpha: 0.65
+  maxAlpha: 1
