@@ -108,6 +108,12 @@ public class ExperimentHubController : MonoBehaviour
             hubPanel.SetActive(false);
         }
 
+        // 切换到非 M1 模块时，安全清理 M01 的大教堂 3D 模型
+        if (item.poiId != "M1" && M01Controller.Instance != null)
+        {
+            M01Controller.Instance.HideCathedralModel();
+        }
+
         // 如果配置了对应的 GameObject (例如现场 Pin 导航标志)，将其激活以引导用户前往
         if (item.poiTargetObject != null)
         {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PoI_01_Susan
   m_EditorClassIdentifier: 
   speakerName: Susan
-  characterAvatar: {fileID: 21300000, guid: bd4b81cdb803fbb49bce8602344612c4, type: 3}
+  characterAvatar: {fileID: 21300000, guid: 32fb296c575faff4f98e6d60a0b72a44, type: 3}
   arrivalPrompt: 'Susan, a Christchurch resident, has been to the square for many
     times.
 
@@ -46,8 +46,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  alignmentPrompt: Position yourself to match the historical perspective.
-  alignmentButtonText: I'm in Position
+  alignmentPrompt: A historical photo will be revealed. Now point your camera to
+    the current Cathedral site within the white frame and adjust the slider in the
+    bottom to align it to match the perspective.
+  alignmentButtonText: Okay
   interactionInstruction: 
   interactionButtonText: Got it
   reflectionPrompt: 'Take a moment to reflect on what you''ve just experienced: What

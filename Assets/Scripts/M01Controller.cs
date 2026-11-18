@@ -312,4 +312,31 @@ public class M01Controller : MonoBehaviour
     /// 保留方法名兼容旧事件绑定（内部改为调用 OnHistoricalComparisonClosed）
     /// </summary>
     public void ExitHistoricalComparison() => OnHistoricalComparisonClosed();
+
+    /// <summary>
+    /// Hide the cathedral 3D model. Called by ExperimentHubController when switching modules.
+    /// </summary>
+    public void HideCathedralModel()
+    {
+        if (christchurchCathedral3DModel != null)
+        {
+            christchurchCathedral3DModel.SetActive(false);
+            Debug.Log("[M01Controller] Cathedral model hidden via HideCathedralModel().");
+        }
+        else
+        {
+            // Fallback: attempt to find by known names
+            var obj = GameObject.Find("Christchurch Cathedral 3D Model") ??
+                      GameObject.Find("ChristchurchCathedral");
+            if (obj != null)
+            {
+                obj.SetActive(false);
+                Debug.Log("[M01Controller] Cathedral model hidden via fallback lookup.");
+            }
+            else
+            {
+                Debug.LogWarning("[M01Controller] Cathedral model not found to hide.");
+            }
+        }
+    }
 }
