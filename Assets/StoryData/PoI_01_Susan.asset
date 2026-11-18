@@ -38,7 +38,14 @@ MonoBehaviour:
     that never left me."
   - Even when you weren't standing right next to it, knowing where the Cathedral
     was helped you find your bearings. I suppose it was always a part of how I knew
-    I was home..
+    I was home...
+  voiceClips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   alignmentPrompt: Position yourself to match the historical perspective.
   alignmentButtonText: I'm in Position
   interactionInstruction: 

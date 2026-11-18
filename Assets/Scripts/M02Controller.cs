@@ -217,12 +217,13 @@ public class M02Controller : MonoBehaviour
         string speaker = storyData != null ? storyData.speakerName : "Wen";
 
         Sprite avatar = storyData != null ? storyData.characterAvatar : null;
+        AudioClip[] clips = storyData != null ? storyData.voiceClips : null;
 
         if (dialogueController != null)
         {
             dialogueController.OnDialogueFinished -= ShowPortalInstruction;
             dialogueController.OnDialogueFinished += ShowPortalInstruction;
-            dialogueController.StartDialogue(lines, speaker, avatar);
+            dialogueController.StartDialogue(lines, speaker, avatar, clips);
         }
         else
         {

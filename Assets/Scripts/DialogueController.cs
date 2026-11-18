@@ -37,7 +37,7 @@ public class DialogueController : MonoBehaviour
     public string[] defaultLines = { };
 
     /// <summary>
-    /// 对话全部播放完毕后触发的事件
+    /// Events after the dialogue
     /// </summary>
     public event Action OnDialogueFinished;
 
@@ -47,12 +47,20 @@ public class DialogueController : MonoBehaviour
     private float lastSkipTime = 0f;
     private string[] activeLines;
     private GameObject fullScreenTapArea;
+ 
+    private AudioClip[] activeVoiceClips; //Audio
+    private AudioSource audioSource; 
 
     private void Awake()
     {
         AutoWireComponents();
         SetupFullScreenClickArea();
         WireListeners();
+        
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
     /// <summary>
@@ -130,9 +138,10 @@ public class DialogueController : MonoBehaviour
     /// <summary>
     /// 启动对话流程
     /// </summary>
-    public void StartDialogue(string[] lines = null, string speaker = null, Sprite avatar = null)
+    public void StartDialogue(string[] lines = null, string speaker = null, Sprite avatar = null, AudioClip[] voiceClips = null)
     {
         activeLines = (lines != null && lines.Length > 0) ? lines : defaultLines;
+        activeVoiceClips = voiceClips; //Adding voice clips
         string activeSpeaker = !string.IsNullOrEmpty(speaker) ? speaker : defaultSpeaker;
 
         if (characterNameText != null)
@@ -190,14 +199,42 @@ public class DialogueController : MonoBehaviour
     private void DisplayCurrentLine()
     {
         if (currentLine >= activeLines.Length) return;
-
+        
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        typingCoroutine = StartCoroutine(TypeSentenceRoutine(activeLines[currentLine]));
+        // 获取当前行的音频
+        AudioClip currentClip = (activeVoiceClips != null && currentLine < activeVoiceClips.Length) 
+        ? activeVoiceClips[currentLine] 
+        : null;
+            
+        // 如果有配音，启动播放
+        if (audioSource != null)
+            {
+              audioSource.Stop();
+              
+              if (currentClip != null)
+               {
+                audioSource.clip = currentClip;
+                audioSource.Play();
+               }
+            }
+           
+        // 计算同步打字速度
+        string currentSentence = activeLines[currentLine];
+        float calculatedTypingSpeed = typingSpeed;
+           
+        if (currentClip != null && currentClip.length > 0f)
+        {
+            // 将音频时长分摊到每个字，保证播完音频时正好打完全部字
+            calculatedTypingSpeed = currentClip.length / Mathf.Max(currentSentence.Length, 1);
+        }
+          
+        typingCoroutine = StartCoroutine(TypeSentenceRoutine(currentSentence, calculatedTypingSpeed));
+
     }
 
-    private IEnumerator TypeSentenceRoutine(string sentence)
+    private IEnumerator TypeSentenceRoutine(string sentence, float charDelay)
     {
         isTyping = true;
         if (continueButton != null) continueButton.gameObject.SetActive(false);
@@ -213,7 +250,7 @@ public class DialogueController : MonoBehaviour
 
                 if (enablePunctuationPauses && (c == ',' || c == '.' || c == '!' || c == '?' || c == '—' || c == ':'))
                 {
-                    yield return new WaitForSeconds(typingSpeed * 4f);
+                    yield return new WaitForSeconds(charDelay * 2.5f);
                 }
                 else
                 {
@@ -227,6 +264,11 @@ public class DialogueController : MonoBehaviour
 
     private void SkipTyping()
     {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
         if (typingCoroutine != null)
         {
             StopCoroutine(typingCoroutine);
@@ -244,6 +286,11 @@ public class DialogueController : MonoBehaviour
 
     private void FinishTyping()
     {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
         isTyping = false;
         if (continueButton != null) continueButton.gameObject.SetActive(true);
     }

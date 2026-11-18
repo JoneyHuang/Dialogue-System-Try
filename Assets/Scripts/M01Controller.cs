@@ -177,6 +177,8 @@ public class M01Controller : MonoBehaviour
     public void StartDialogue()
     {
         currentState = FlowState.Dialogue;
+        
+
 
         if (promptPanelController != null) promptPanelController.Hide();
 
@@ -186,12 +188,13 @@ public class M01Controller : MonoBehaviour
         string speaker = storyData != null ? storyData.speakerName : null;
 
         Sprite avatar = storyData != null ? storyData.characterAvatar : null;
+        AudioClip[] clips = storyData != null ? storyData.voiceClips : null;
 
         if (dialogueController != null)
         {
             dialogueController.OnDialogueFinished -= ShowAlignHint;
             dialogueController.OnDialogueFinished += ShowAlignHint;
-            dialogueController.StartDialogue(lines, speaker, avatar);
+            dialogueController.StartDialogue(lines, speaker, avatar, clips);
         }
         else
         {

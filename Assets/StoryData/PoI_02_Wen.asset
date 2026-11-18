@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PoI_02_Wen
   m_EditorClassIdentifier: 
   speakerName: Wen
-  characterAvatar: {fileID: 0}
+  characterAvatar: {fileID: 21300000, guid: 7df72ca9f5d41b84683c4351d0d5df47, type: 3}
   arrivalPrompt: You have arrived at the site.
   arrivalButtonText: Meet Wen
   dialogueLines:
@@ -30,6 +30,12 @@ MonoBehaviour:
     that I hardly remembered what it tused to look like.
   - Since I never got to step inside back then... could you help me discover what
     the Cathedral might have sounded like that day?
+  voiceClips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   alignmentPrompt: Open the camera, and you will see a portal window in front of
     you. Please look around and ensure your surrounding is safe.
   alignmentButtonText: Okay

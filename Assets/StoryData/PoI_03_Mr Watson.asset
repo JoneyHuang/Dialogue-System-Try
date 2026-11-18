@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PoI_03_Mr Watson
   m_EditorClassIdentifier: 
   speakerName: Mr Watson
-  characterAvatar: {fileID: 0}
+  characterAvatar: {fileID: 21300000, guid: 99f6b8bcd4e45cd4da781657f40b06ce, type: 3}
   arrivalPrompt: "As a choirister in the 1970s, a lifetime of memories about the
     Cathedral stays with Mr Watson. Even after the earthquakes, he has continued
     to follow the Cathedral's story. He knows its stories intimately \u2014 and believes
@@ -35,6 +35,12 @@ MonoBehaviour:
 
     pause, put down the tablet, and take in the real space around
     you.'
+  voiceClips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   alignmentPrompt: 
   alignmentButtonText: 
   interactionInstruction: Three memories are waiting in this space \u2014 carved

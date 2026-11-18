@@ -240,8 +240,9 @@ public class M03Controller : MonoBehaviour
                 : new string[] { "Hello, young friend. Let me show you around this sacred place." };
             
              Sprite avatar = storyData != null ? storyData.characterAvatar : null;
+             AudioClip[] clips = storyData != null ? storyData.voiceClips : null;
 
-            dialogueController.StartDialogue(lines, speaker, avatar);
+            dialogueController.StartDialogue(lines, speaker, avatar, clips);
         }
         else
         {

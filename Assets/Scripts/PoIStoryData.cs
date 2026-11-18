@@ -24,6 +24,10 @@ public class PoIStoryData : ScriptableObject
     [TextArea(2, 5)]
     public string[] dialogueLines;
 
+    [Header("Voice-over")]
+    [Tooltip("与 dialogueLines 逐句对应的语音片段")]
+    public AudioClip[] voiceClips;
+
     [Header("Alignment Prompt — 阶段 3 (AR 交互前站位)")]
     [TextArea(2, 5)]
     public string alignmentPrompt = "Position yourself to match the historical perspective.";
