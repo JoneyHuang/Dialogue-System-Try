@@ -19,8 +19,7 @@ MonoBehaviour:
     What''s exactly is she looking for? Let''s find out. '
   arrivalButtonText: Meet Susan
   dialogueLines:
-  - "My name is Susan. I grew up here in Christchurch, and it\u2019s still my home
-    today."
+  - My name is Susan. I grew up and live in Christchurch.
   - Standing here in Cathedral Square now, it feels quite different from what I remember.
     The tower and spire are missing, but they hold a special place in my memory.
     You used to be able to see it from almost anywhere in the city.
@@ -31,18 +30,18 @@ MonoBehaviour:
   - The last time I saw the Cathedral standing as it once was was right before the
     earthquake, when I visited the Square with my homestay student, Wen. We had no
     idea how much that ordinary afternoon would come to mean to us.
-  - "Now, when I pass by here, I still see the absence of that spire. I always try
-    to look up as I used to, and outline its contours in my mind \u2014 it's a habit
-    that never left me."
+  - "Now, when I pass by here, I still see the absence of that spire... I always
+    try to look up as I used to, and outline its contours in my mind \u2014 it's
+    a habit that never left me."
   - Even when you weren't standing right next to it, knowing where the Cathedral
     was helped you find your bearings. I suppose it was always a part of how I knew
     I was home...
   voiceClips:
+  - {fileID: 8300000, guid: a6492cf4dfb78de48b9d62258b922944, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 97294186df02df54abfc8056a4826ed5, type: 3}
   - {fileID: 0}
   alignmentPrompt: A historical photo will be revealed. Now point your camera to
     the current Cathedral site within the white frame and adjust the slider in the

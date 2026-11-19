@@ -30,6 +30,13 @@ public class DialogueController : MonoBehaviour
     [Tooltip("标点符号额外停顿，模拟说话自然语气")]
     public bool enablePunctuationPauses = true;
 
+    [Header("Subtitle Fade Settings")]
+    [Tooltip("CanvasGroup for Fading In")]
+    public CanvasGroup textCanvasGroup;
+    [Tooltip("Fade-in Duration")]
+    public float fadeInDuration = 0.25f;
+    private Coroutine textFadeCoroutine;
+
     [Header("Dialogue Content (Fallback — 通常由 PoIStoryData 覆盖)")]
     [Tooltip("当调用方未传入 lines 参数时使用的后备台词。生产环境建议留空，内容改由 PoIStoryData 管理。")]
     public string defaultSpeaker = "Storyteller";
@@ -61,6 +68,9 @@ public class DialogueController : MonoBehaviour
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
+
+        if (textCanvasGroup == null && dialogueBodyText != null)
+        textCanvasGroup = dialogueBodyText.GetComponent<CanvasGroup>();
     }
 
     /// <summary>
@@ -134,6 +144,23 @@ public class DialogueController : MonoBehaviour
         panelBtn.onClick.RemoveListener(OnUserClickAdvance);
         panelBtn.onClick.AddListener(OnUserClickAdvance);
     }
+    
+    private IEnumerator FadeInTextRoutine(float duration)
+    {
+        if (textCanvasGroup == null) yield break;
+
+        textCanvasGroup.alpha = 0f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            textCanvasGroup.alpha = Mathf.Clamp01(elapsed / duration);
+            yield return null;
+        }
+
+        textCanvasGroup.alpha = 1f;
+    }
 
     /// <summary>
     /// 启动对话流程
@@ -173,65 +200,78 @@ public class DialogueController : MonoBehaviour
     {
         if (activeLines == null || activeLines.Length == 0) return;
 
-        // 防误触保护：跳过动画后的极短时间内忽略连点
-        if (Time.unscaledTime - lastSkipTime < debounceAfterSkip) return;
-
-        if (isTyping)
+        if (continueButton != null && !continueButton.gameObject.activeSelf)
         {
-            // 状态 1：正在打字 -> 立即显示整句话
-            SkipTyping();
+            return;
         }
+
+        // Next line
+        currentLine++;
+        if (currentLine < activeLines.Length)
+        {
+            DisplayCurrentLine();
+        }
+        
         else
         {
-            // 状态 2：打字已完成 -> 进入下一句
-            currentLine++;
-            if (currentLine < activeLines.Length)
-            {
-                DisplayCurrentLine();
-            }
-            else
-            {
-                FinishDialogue();
-            }
+            FinishDialogue();
         }
     }
+
+    private Coroutine voiceWaitCoroutine;
 
     private void DisplayCurrentLine()
     {
         if (currentLine >= activeLines.Length) return;
         
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-
-        // 获取当前行的音频
-        AudioClip currentClip = (activeVoiceClips != null && currentLine < activeVoiceClips.Length) 
-        ? activeVoiceClips[currentLine] 
-        : null;
-            
-        // 如果有配音，启动播放
+        // Stop previous processure
+        if (voiceWaitCoroutine != null) StopCoroutine(voiceWaitCoroutine);
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        
+        // 1. Text setting
+        string currentSentence = activeLines[currentLine];
+        if (dialogueBodyText != null)
+        {
+            dialogueBodyText.text = currentSentence;
+        }
+        // 2. Fade in
+        if (textCanvasGroup != null && fadeInDuration > 0f)
+        {
+            textFadeCoroutine = StartCoroutine(FadeInTextRoutine(fadeInDuration));
+        }
+        
+        // 3. Prevent skip
+        isTyping = false;
+        if (continueButton != null) continueButton.gameObject.SetActive(false);
+        
+        // 4. Audio clip check
+        AudioClip currentClip = (activeVoiceClips != null && currentLine < activeVoiceClips.Length)
+            ? activeVoiceClips[currentLine]
+            : null;
+        
         if (audioSource != null)
+        {
+            audioSource.Stop(); // 换新句子时切掉上一句残留
+            if (currentClip != null)
             {
-              audioSource.Stop();
-              
-              if (currentClip != null)
-               {
                 audioSource.clip = currentClip;
                 audioSource.Play();
-               }
             }
-           
-        // 计算同步打字速度
-        string currentSentence = activeLines[currentLine];
-        float calculatedTypingSpeed = typingSpeed;
-           
-        if (currentClip != null && currentClip.length > 0f)
-        {
-            // 将音频时长分摊到每个字，保证播完音频时正好打完全部字
-            calculatedTypingSpeed = currentClip.length / Mathf.Max(currentSentence.Length, 1);
         }
-          
-        typingCoroutine = StartCoroutine(TypeSentenceRoutine(currentSentence, calculatedTypingSpeed));
+        
+        // 5. Wait for audio to complete
+        float waitTime = (currentClip != null && currentClip.length > 0f) ? currentClip.length : 1.5f;
+        voiceWaitCoroutine = StartCoroutine(UnlockContinueButtonAfterRoutine(waitTime));
+    }
 
+    private IEnumerator UnlockContinueButtonAfterRoutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        // 语音播完了，解锁继续按钮
+        if (continueButton != null)
+        {
+            continueButton.gameObject.SetActive(true);
+        }
     }
 
     private IEnumerator TypeSentenceRoutine(string sentence, float charDelay)
@@ -286,13 +326,10 @@ public class DialogueController : MonoBehaviour
 
     private void FinishTyping()
     {
-        if (audioSource != null && audioSource.isPlaying)
-        {
-            audioSource.Stop();
-        }
-
-        isTyping = false;
-        if (continueButton != null) continueButton.gameObject.SetActive(true);
+        if (voiceWaitCoroutine != null) StopCoroutine(voiceWaitCoroutine);
+        if (audioSource != null && audioSource.isPlaying) audioSource.Stop();
+        gameObject.SetActive(false);
+        OnDialogueFinished?.Invoke();
     }
 
     private void FinishDialogue()
