@@ -15,10 +15,8 @@ MonoBehaviour:
   speakerName: Susan
   characterAvatar: {fileID: 21300000, guid: 32fb296c575faff4f98e6d60a0b72a44, type: 3}
   arrivalPrompt: 'Susan, a Christchurch resident, has been to the square for many
-    times.
-
-    Everytime when she walks by, she looks at the sky, searching for
-    something. What''s exactly is she looking for? Let''s find out. '
+    times. Everytime when she walks by, she looks at the sky, searching for something.
+    What''s exactly is she looking for? Let''s find out. '
   arrivalButtonText: Meet Susan
   dialogueLines:
   - "My name is Susan. I grew up here in Christchurch, and it\u2019s still my home

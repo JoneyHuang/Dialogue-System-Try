@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakerName: Wen
   characterAvatar: {fileID: 21300000, guid: 7df72ca9f5d41b84683c4351d0d5df47, type: 3}
-  arrivalPrompt: You have arrived at the site.
+  arrivalPrompt: 'Studied in Christchurch 15 years ago, Wen comes back to the square
+    for the first time since he left, discoverin the changes this place has experienced... '
   arrivalButtonText: Meet Wen
   dialogueLines:
   - "I\u2019ve always felt a special connection to this Cathedral, ever since I first

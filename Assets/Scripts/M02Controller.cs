@@ -28,12 +28,15 @@ public class M02Controller : MonoBehaviour
     [Tooltip("将 Assets/StoryData/PoI_02_Wen.asset 拖入此栏")]
     public PoIStoryData storyData;
 
-    [Header("Sub-Controllers (复用通用 UI 组件)")]
+    [Header("Sub-Controllers")]
     [Tooltip("通用提示/引导弹窗控制器 (HintPanel)")]
     public PromptPanelController promptPanelController;
 
     [Tooltip("Typewriter 对话系统控制器 (DialoguePanel)")]
     public DialogueController dialogueController;
+
+    [Tooltip("Meet Me Panel")]
+    public MeetMePanelController meetMePanelController;
 
     [Header("AR Portal Content & Placement")]
     [Tooltip("现场的 Gothic Window 传送门根物体 (包含窗框与全景球)")]
@@ -147,6 +150,13 @@ public class M02Controller : MonoBehaviour
             if (t != null)
                 dialogueController = t.GetComponent<DialogueController>();
         }
+
+        if (meetMePanelController == null)
+        {
+            Transform t = canvasTr.Find("MeetMePanel");
+            if (t != null)
+                meetMePanelController = t.GetComponent<MeetMePanelController>();
+        }
     }
 
     public void HideAllPanels()
@@ -163,6 +173,7 @@ public class M02Controller : MonoBehaviour
         if (portalHudRoot != null) portalHudRoot.SetActive(false);
         if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(false);
         if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(false);
+        if (meetMePanelController != null) meetMePanelController.Hide();
 
         currentState = FlowState.Hidden;
     }
@@ -184,20 +195,24 @@ public class M02Controller : MonoBehaviour
     {
         currentState = FlowState.MeetingHint;
 
-        string prompt = (storyData != null && !string.IsNullOrEmpty(storyData.arrivalPrompt))
-            ? storyData.arrivalPrompt
-            : kFallbackArrivalPrompt;
-        string btnText = (storyData != null && !string.IsNullOrEmpty(storyData.arrivalButtonText))
-            ? storyData.arrivalButtonText
-            : kFallbackArrivalBtn;
-
-        if (promptPanelController != null)
+        string brief = storyData != null ? storyData.arrivalPrompt : kFallbackArrivalPrompt;
+        string btnText = storyData != null ? storyData.arrivalButtonText : kFallbackArrivalBtn;
+        string name   = storyData != null ? storyData.speakerName : "Storyteller";
+        Sprite avatar = storyData != null ? storyData.characterAvatar : null;
+      
+      // MeetMePanel
+       if (meetMePanelController != null)
         {
-            promptPanelController.ShowPrompt(prompt, btnText, StartDialogue);
+          meetMePanelController.SetName(name);
+          meetMePanelController.SetBrief(brief);
+          meetMePanelController.SetAvatar(avatar);
+          meetMePanelController.SetAction(StartDialogue);
+          meetMePanelController.Show();
         }
+ 
         else
         {
-            Debug.LogWarning("[M02Controller] 未找到 PromptPanelController，直接进入对话！");
+            Debug.LogWarning("[M02Controller] MeetMePanel not found. Starts dialogue instead.");
             StartDialogue();
         }
     }
@@ -209,7 +224,7 @@ public class M02Controller : MonoBehaviour
     {
         currentState = FlowState.Dialogue;
 
-        if (promptPanelController != null) promptPanelController.Hide();
+        if (meetMePanelController != null) meetMePanelController.Hide();
 
         string[] lines = (storyData != null && storyData.dialogueLines != null && storyData.dialogueLines.Length > 0)
             ? storyData.dialogueLines

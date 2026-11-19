@@ -12,10 +12,10 @@ public class PoIStoryData : ScriptableObject
     [Tooltip("说话角色的显示名称")]
     public string speakerName = "Storyteller";
 
-    [Tooltip("角色头像（可选）")]
+    [Tooltip("角色头像")]
     public Sprite characterAvatar;
 
-    [Header("Arrival Prompt — 阶段 1")]
+    [Header("Arrival Prompt — 阶段 1（Meet Me)")]
     [TextArea(2, 5)]
     public string arrivalPrompt = "You have arrived at the site.";
     public string arrivalButtonText = "Start";

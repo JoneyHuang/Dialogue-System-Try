@@ -47,6 +47,9 @@ public class M03Controller : MonoBehaviour
     [Tooltip("Typewriter dialogue controller (DialoguePanel).")]
     public DialogueController dialogueController;
 
+    [Tooltip("Meet Me Panel")]
+    public MeetMePanelController meetMePanelController;
+
     [Header("PoI 3 Hotspots in Scene")]
     [Tooltip("Root or trigger for the Rose Window hotspot.")]
     public GameObject hotspotRoseWindow;
@@ -135,6 +138,10 @@ public class M03Controller : MonoBehaviour
             {
                 dialogueController = canvas.GetComponentInChildren<DialogueController>(true);
             }
+           if (meetMePanelController == null)
+           {
+               meetMePanelController = canvas.GetComponentInChildren<MeetMePanelController>(true);
+           }
         }
 
         // Auto-find scene hotspots if not assigned
@@ -193,29 +200,39 @@ public class M03Controller : MonoBehaviour
         currentState = FlowState.ArrivalPrompt;
         HideAllPanels();
 
-        string text = storyData != null && !string.IsNullOrEmpty(storyData.arrivalPrompt)
+        string brief = (storyData != null && !string.IsNullOrEmpty(storyData.arrivalPrompt))
             ? storyData.arrivalPrompt
             : kFallbackArrival;
 
-        string btn = storyData != null && !string.IsNullOrEmpty(storyData.arrivalButtonText)
+        string btnText = (storyData != null && !string.IsNullOrEmpty(storyData.arrivalButtonText))
             ? storyData.arrivalButtonText
             : kFallbackArrivalBtn;
 
-        if (promptPanelController != null)
+        string name = (storyData != null && !string.IsNullOrEmpty(storyData.speakerName))
+            ? storyData.speakerName
+            : "Mr Watson";
+
+        Sprite avatar = storyData != null ? storyData.characterAvatar : null;
+
+        if (meetMePanelController != null)
         {
-            promptPanelController.ShowPrompt(text, btn, OnArrivalPromptConfirmed);
+            meetMePanelController.SetName(name);
+            meetMePanelController.SetBrief(brief);
+            meetMePanelController.SetAvatar(avatar);
+            meetMePanelController.SetAction(OnArrivalPromptConfirmed);
+            meetMePanelController.Show();
         }
         else
         {
-            Debug.LogWarning("[M03Controller] PromptPanelController missing, proceeding to Dialogue.");
+            Debug.LogWarning("[M03Controller] MeetMePanelController not found, proceeding to Dialogue.");
             OnArrivalPromptConfirmed();
         }
     }
 
     private void OnArrivalPromptConfirmed()
     {
-        if (promptPanelController != null)
-            promptPanelController.Hide();
+        if (meetMePanelController != null)
+            meetMePanelController.Hide();
 
         ShowIntroDialogue();
     }
@@ -225,6 +242,8 @@ public class M03Controller : MonoBehaviour
     private void ShowIntroDialogue()
     {
         currentState = FlowState.Dialogue;
+        
+        if (meetMePanelController != null) meetMePanelController.Hide();
 
         if (dialogueController != null)
         {

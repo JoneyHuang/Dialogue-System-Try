@@ -588,6 +588,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 4598720411253101827, guid: 29f014a35a5f87c46bea9217c1bae9c0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4795641671680315559, guid: 29f014a35a5f87c46bea9217c1bae9c0, type: 3}
       propertyPath: m_text
       value: "Christchurch Cathedral Choir is New Zealand\u2019s only professional
@@ -2870,6 +2874,7 @@ MonoBehaviour:
   storyData: {fileID: 11400000, guid: a66ff6e8c27f7e0429dac96492c110be, type: 2}
   promptPanelController: {fileID: 8150316963004870456}
   dialogueController: {fileID: 8328906292513212158}
+  meetMePanelController: {fileID: 0}
   hotspotRoseWindow: {fileID: 388149566}
   hotspotChoir: {fileID: 2107308845}
   hotspotStone: {fileID: 1704999208}
@@ -4215,8 +4220,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 0.25075758, y: 1.434491, z: 0.8490569}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1515640708}
+  m_Children: []
   m_Father: {fileID: 384480290193553652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4364,6 +4368,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1116093096605894342, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869507347922250100, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: billboard
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
@@ -4443,12 +4451,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1195338800}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pictureImage
+      value: 
+      objectReference: {fileID: 1717445829}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: pageIndicator
       value: 
       objectReference: {fileID: 658449139}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: pageBodies.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pageImages.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: pageTitles.Array.size
@@ -4495,11 +4515,73 @@ PrefabInstance:
       propertyPath: 'pageTitles.Array.data[2]'
       value: Touch and feel
       objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[0].body
+      value: "The Christ Church Cathedral was built mainly of stone, with timber
+        widely used in its structure and interior. In the 1860s, architect Sir George
+        Gilbert Scott initially proposed a timber Gothic design, partly responding
+        to New Zealand\u2019s earthquake risk. Bishop Henry Harper, however, favoured
+        stone, and the availability of building stone in Canterbury helped shape
+        the Cathedral we know today.\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[1].body
+      value: "The 2010\u20132011 earthquake severely damaged parts of the Cathedral,
+        particularly the tower and spire, and the remaining structure was later dismantled.
+        Some heritage objects were successfully salvaged \u2014 for example, the
+        eagle from the lectern was retrieved and is still used in the Transitional
+        Cathedral (The Cardboard Cathedral)."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[2].body
+      value: 'For some Christchurch families, these materials carry deeply personal
+        memories. Their fathers and grandfathers worked in quarries, shaped stone
+        as stonemasons, or worked with timber as craftspeople.
+
+        Touch and
+        feel the stone and wood. Notice its texture and imagine the hands that shaped
+        it.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[0].title
+      value: 'Materials: What stood here'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[1].title
+      value: What happened after the earthquake?
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[2].title
+      value: Touch and feel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[0].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: efb55cbd4ccb0c545b6551daa96d9ba7, type: 3}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[1].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: efb55cbd4ccb0c545b6551daa96d9ba7, type: 3}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[2].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7970df06b810de442b367bc53d726af5, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+--- !u!114 &993674810 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9143546606998275843, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+  m_PrefabInstance: {fileID: 7373060154947435142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1012063957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4708,15 +4790,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64.76
+      value: -77.81
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.2
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -25.32
+      value: -15.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4756,7 +4838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5029,7 +5111,7 @@ GameObject:
   - component: {fileID: 1217479621}
   - component: {fileID: 1217479622}
   m_Layer: 0
-  m_Name: Child Hotspot_Design - Designer
+  m_Name: Child Hotspot_Designer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5087,12 +5169,23 @@ MonoBehaviour:
   infoBubble: {fileID: 175808324}
   titleText: {fileID: 175808321}
   bodyText: {fileID: 175808320}
+  pictureRawImage: {fileID: 0}
+  pictureImage: {fileID: 1933166972}
   nextButton: {fileID: 175808322}
   backButton: {fileID: 175808323}
   pageIndicator: {fileID: 175808319}
-  pageTitles:
-  - Lorum
-  - Lorum
+  pages:
+  - title: The Designer
+    body: Designed in 1881 by master architect Benjamin Mountfort, its stone framework
+      was gifted by the Cathedral Guild, while its brilliant stained glass was presented
+      by Leonard and Emily Harper, son and daughter-in-law of Canterbury's first
+      bishop.
+    sprite: {fileID: 21300000, guid: 595e86adee4690a4c9df4b6e4d8f0f4f, type: 3}
+  - title: The Designer
+    body: "This 7.5-meter window was the pinnacle of Gothic Revival art in Christchurch\u2014turning
+      western sunlight into a radiant wheel of spiritual symbolism."
+    sprite: {fileID: 0}
+  pageTitles: []
   pageBodies:
   - Lorum  Ipsom
   - Lorum  Ipsom
@@ -5557,6 +5650,7 @@ MonoBehaviour:
   storyData: {fileID: 11400000, guid: d0f8ca8b3d41075419f92a4647ff88fa, type: 2}
   promptPanelController: {fileID: 8150316963004870456}
   dialogueController: {fileID: 8328906292513212158}
+  meetMePanelController: {fileID: 0}
   portalObject: {fileID: 531558451}
   spawnInFrontOfUser: 1
   spawnDistance: 1.8
@@ -5566,7 +5660,7 @@ MonoBehaviour:
   portalHudRoot: {fileID: 1955109840}
   capturePhotoButton: {fileID: 1466468037}
   finishViewingButton: {fileID: 61062384}
-  delayBeforeHudVisible: 30
+  delayBeforeHudVisible: 15
   autoStartOnPlay: 0
 --- !u!1 &1307055116
 GameObject:
@@ -5647,6 +5741,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1309999008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2242491337112535757, guid: 29f014a35a5f87c46bea9217c1bae9c0, type: 3}
+  m_PrefabInstance: {fileID: 4190422673129552733}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1312386956
 GameObject:
   m_ObjectHideFlags: 0
@@ -6258,6 +6363,7 @@ MonoBehaviour:
   currentState: 0
   storyData: {fileID: 11400000, guid: b842155c64645b64989f49f4c0303c42, type: 2}
   promptPanelController: {fileID: 8150316963004870456}
+  meetMePanelController: {fileID: 2080602495}
   dialogueController: {fileID: 8328906292513212158}
   historicalComparisonController: {fileID: 6143374607047530868}
   christchurchCathedral3DModel: {fileID: 479716930}
@@ -6278,6 +6384,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1012063958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1423539247 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6456652766387124181, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+  m_PrefabInstance: {fileID: 7373060154947435142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1435955455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6587,7 +6704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1487578149
 Transform:
   m_ObjectHideFlags: 0
@@ -6777,143 +6894,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1515640707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1515640708}
-  - component: {fileID: 1515640710}
-  - component: {fileID: 1515640709}
-  m_Layer: 0
-  m_Name: CloseLabel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1515640708
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515640707}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4238, y: 0.44412, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 937314865}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1515640709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515640707}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: "\xD7"
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 1
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1515640710
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515640707}
-  m_CullTransparentMesh: 1
 --- !u!1 &1550360847
 GameObject:
   m_ObjectHideFlags: 0
@@ -7183,7 +7163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 0.99215686}
+  m_Color: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7243,6 +7223,17 @@ MonoBehaviour:
   - {fileID: 1256363077}
   - {fileID: 2004071910}
   - {fileID: 1163031448}
+--- !u!114 &1619467896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+  m_PrefabInstance: {fileID: 7373060154947435142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1632449224 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 951684580850407959, guid: 98a1d4ff5df8d48438e78d2d4d9fb971, type: 3}
@@ -7884,13 +7875,22 @@ MonoBehaviour:
   infoBubble: {fileID: 175808324}
   titleText: {fileID: 175808321}
   bodyText: {fileID: 175808320}
+  pictureRawImage: {fileID: 0}
+  pictureImage: {fileID: 1933166972}
   nextButton: {fileID: 175808322}
   backButton: {fileID: 175808323}
   pageIndicator: {fileID: 175808319}
+  pages:
+  - title: Symbol
+    body: "Set high within the West Wall, the rose window is a masterpiece of art
+      in the Cathedral. Spanning 7.5 meters with over 4000 glass pieces, it is a
+      glowing circle of angelic guardians adoring the central Lamb of God\u2014a
+      timeless symbol of Jesus Christ."
+    sprite: {fileID: 21300000, guid: 2879435e7510e0347a7f300aa077d4d0, type: 3}
   pageTitles:
-  - The Designer
-  - Let It Shine
-  - Mountford's Influence
+  - 
+  - 
+  - 
   pageBodies:
   - 'The Rose Window was designed by Benjamin Mountford, the English architector
     in New Zealand. He supervised the build of the Cathedral and imported the Gothic
@@ -8066,6 +8066,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29f014a35a5f87c46bea9217c1bae9c0, type: 3}
+--- !u!114 &1717445829 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2242491337112535757, guid: 29f014a35a5f87c46bea9217c1bae9c0, type: 3}
+  m_PrefabInstance: {fileID: 1717445828}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1718002121 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
@@ -8267,7 +8278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1736454976
 Transform:
   m_ObjectHideFlags: 0
@@ -8573,6 +8584,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1116093096605894342, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869507347922250100, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: billboard
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869507347922250100, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: lockYAxisOnly
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
@@ -9037,15 +9056,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.024
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.005
+      value: 0.84
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.103
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9082,6 +9101,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 370e2759620450548a8d27f0576250f3, type: 3}
       propertyPath: m_Name
       value: heart_in_love_original
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 370e2759620450548a8d27f0576250f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -9242,6 +9265,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1933166972 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2242491337112535757, guid: 29f014a35a5f87c46bea9217c1bae9c0, type: 3}
+  m_PrefabInstance: {fileID: 175808317}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1935319181
 GameObject:
   m_ObjectHideFlags: 0
@@ -9979,6 +10013,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049540355}
   m_CullTransparentMesh: 1
+--- !u!1 &2080602491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1616059840662176801, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+  m_PrefabInstance: {fileID: 7373060154947435142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2080602492 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+  m_PrefabInstance: {fileID: 7373060154947435142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2080602495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080602491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c192db0c3dbca45ac8da45df61f894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avatarImage: {fileID: 2088015434}
+  nameText: {fileID: 993674810}
+  briefText: {fileID: 1619467896}
+  actionButton: {fileID: 1423539247}
+--- !u!114 &2088015434 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 495834551522721467, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+  m_PrefabInstance: {fileID: 7373060154947435142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2107308845 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1116093096605894342, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
@@ -10000,7 +10071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2108227905
 Transform:
   m_ObjectHideFlags: 0
@@ -10363,6 +10434,7 @@ RectTransform:
   - {fileID: 1955109841}
   - {fileID: 1459038713}
   - {fileID: 799607096}
+  - {fileID: 2080602492}
   m_Father: {fileID: 430387267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12252,6 +12324,177 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4672431764031836007}
   m_CullTransparentMesh: 1
+--- !u!1001 &7373060154947435142
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 384480290193553652}
+    m_Modifications:
+    - target: {fileID: 1616059840662176801, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_Name
+      value: MeetMePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616059840662176801, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -602.8228
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -334.9016
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 28.340942
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634318747156148772, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_text
+      value: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_margin.w
+      value: -136.26291
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_margin.x
+      value: 170.85158
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_margin.y
+      value: -21.085794
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_margin.z
+      value: 61.476616
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_lineSpacing
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_wordWrappingRatios
+      value: 0.249
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807771741836394432, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456652766387124181, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456652766387124181, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456652766387124181, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2080602491}
+    - target: {fileID: 6456652766387124181, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143546606998275843, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      propertyPath: m_margin.z
+      value: 7.9449844
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4655371312753997130, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1616059840662176801, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2080602495}
+  m_SourcePrefab: {fileID: 100100000, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
 --- !u!224 &7445201423171056626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12660,6 +12903,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1116093096605894342, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869507347922250100, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: billboard
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
@@ -12751,9 +12998,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1861943267}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pictureImage
+      value: 
+      objectReference: {fileID: 1309999008}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: pageIndicator
       value: 
       objectReference: {fileID: 1495938446}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pictureRawImage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: 'pageBodies.Array.data[0]'
       value: "Christchurch Cathedral Choir is New Zealand\u2019s only professional
@@ -12777,6 +13036,45 @@ PrefabInstance:
       propertyPath: 'pageTitles.Array.data[1]'
       value: What happened after the earthquake?
       objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[0].body
+      value: "Christchurch Cathedral Choir is New Zealand\u2019s only professional
+        choir for trebles and adults, and one of two in the southern hemisphere with
+        its own choir school. Though the quake silenced the old building, this tradition
+        lives on through its junior choristers at the Transitional Cathedral."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[1].body
+      value: "After the 2011 earthquake, the choir found temporary homes\u2014including
+        the Chapel at Christ\u2019s College and the Transitional Cathedral (the \"Cardboard\"
+        Cathedral)\u2014ensuring this centuries-old musical tradition lived on through
+        its junior choristers. The choir singers are still singing, and maybe it
+        will echo again here one day.  "
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[0].title
+      value: 'Music: What echoed here'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[1].title
+      value: What happened after the earthquake?
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[0].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d362b0514beedd647a00e64562fe8092, type: 3}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[1].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 966d34b1b373bb444a1bb1739b7bbc73, type: 3}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[0].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: d362b0514beedd647a00e64562fe8092, type: 3}
+    - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: pages.Array.data[1].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 966d34b1b373bb444a1bb1739b7bbc73, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

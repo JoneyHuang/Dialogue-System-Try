@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// M01 现场体验流程调度器 (Coordinator / Sequencer)。
@@ -32,6 +33,9 @@ public class M01Controller : MonoBehaviour
     [Header("Sub-Controllers (即插即用组件)")]
     [Tooltip("通用提示/引导弹窗控制器")]
     public PromptPanelController promptPanelController;
+
+    [Tooltip("Meet Me Panel")]
+    public MeetMePanelController meetMePanelController;
 
     [Tooltip("Typewriter 对话系统控制器")]
     public DialogueController dialogueController;
@@ -127,6 +131,13 @@ public class M01Controller : MonoBehaviour
             if (t != null)
                 historicalComparisonController = t.GetComponent<HistoricalComparisonController>();
         }
+
+        if (meetMePanelController == null)
+        {
+            Transform t = canvasTr.Find("MeetMePanel");
+            if (t != null)
+                meetMePanelController = t.GetComponent<MeetMePanelController>();
+        }
     }
 
     // ─── Panel Utility ────────────────────────────────────────────────────────
@@ -136,6 +147,7 @@ public class M01Controller : MonoBehaviour
         if (promptPanelController != null) promptPanelController.Hide();
         if (dialogueController != null) dialogueController.gameObject.SetActive(false);
         if (historicalComparisonController != null) historicalComparisonController.gameObject.SetActive(false);
+        if (meetMePanelController != null) meetMePanelController.gameObject.SetActive(false);
 
         currentState = FlowState.Hidden;
     }
@@ -147,26 +159,34 @@ public class M01Controller : MonoBehaviour
     /// </summary>
     public void StartStoryFlow()
     {
-        ShowMeetingHint();
+        ShowMeetMeHint();
     }
 
     /// <summary>
     /// 阶段 1：展示"初识 Susan"到达提示
     /// </summary>
-    public void ShowMeetingHint()
+    public void ShowMeetMeHint()
     {
         currentState = FlowState.MeetingHint;
 
-        string prompt = storyData != null ? storyData.arrivalPrompt : kFallbackArrivalPrompt;
+        string brief = storyData != null ? storyData.arrivalPrompt : kFallbackArrivalPrompt;
         string btnText = storyData != null ? storyData.arrivalButtonText : kFallbackArrivalBtn;
-
-        if (promptPanelController != null)
+        string name   = storyData != null ? storyData.speakerName : "Storyteller";
+        Sprite avatar = storyData != null ? storyData.characterAvatar : null;
+      
+      // MeetMePanel
+       if (meetMePanelController != null)
         {
-            promptPanelController.ShowPrompt(prompt, btnText, StartDialogue);
+          meetMePanelController.SetName(name);
+          meetMePanelController.SetBrief(brief);
+          meetMePanelController.SetAvatar(avatar);
+          meetMePanelController.SetAction(StartDialogue);
+          meetMePanelController.Show();
         }
+
         else
         {
-            Debug.LogWarning("[M01Controller] 未找到 PromptPanelController，直接进入对话！");
+            Debug.LogWarning("[M01Controller] MeetMePanel not found. Starts dialogue instead.");
             StartDialogue();
         }
     }
@@ -178,8 +198,7 @@ public class M01Controller : MonoBehaviour
     {
         currentState = FlowState.Dialogue;
         
-
-
+        if (meetMePanelController != null) meetMePanelController.Hide();
         if (promptPanelController != null) promptPanelController.Hide();
 
         string[] lines = (storyData != null && storyData.dialogueLines != null && storyData.dialogueLines.Length > 0)
@@ -291,9 +310,12 @@ public class M01Controller : MonoBehaviour
         // 1. 如果存在 ExperimentHubController，通知 Hub：M1 已完成并返回控制台
         if (ExperimentHubController.Instance != null)
         {
-            ExperimentHubController.Instance.OnPoICompleted("M1");
+            ExperimentHubController.Instance.OnPoICompleted("M1"); 
+            HideCathedralModel();
+
         }
 
+       
         // 2. 兼容原先的直接链式激活（如果设置了 nextPoiTarget）
         if (nextPoiTarget != null)
         {
@@ -302,7 +324,7 @@ public class M01Controller : MonoBehaviour
         }
         else
         {
-            Debug.Log("[M01Controller] M01 完成！已向 Hub 汇报完毕。");
+            Debug.Log("[M01Controller] M01 completed. Reported to hub.");
         }
     }
 
