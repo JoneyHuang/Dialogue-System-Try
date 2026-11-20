@@ -429,9 +429,9 @@ public class M03Controller : MonoBehaviour
         if (progressText != null)
         {
             int count = inspectedHotspots.Count;
-            string dot1 = inspectedHotspots.Contains("Stone") ? "●" : "○";
-            string dot2 = inspectedHotspots.Contains("RoseWindow") ? "●" : "○";
-            string dot3 = inspectedHotspots.Contains("Choir") ? "●" : "○";
+            string dot1 = count >= 1 ? "●" : "○";
+            string dot2 = count >= 2 ? "●" : "○";
+            string dot3 = count >= 3 ? "●" : "○";
 
             if (count >= kTotalHotspots)
             {

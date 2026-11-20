@@ -2174,7 +2174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &430796913
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3456,7 +3456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1169, y: 747}
+  m_AnchoredPosition: {x: -1299, y: 844}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &750155126
@@ -3479,17 +3479,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Meet me in the Cathedral
+  m_text: Meet Me In the Cathedral
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4288666507
+  m_fontColor: {r: 0.54509807, g: 0.85882354, b: 0.62352943, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3545,7 +3545,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -326.1878, w: 0}
+  m_margin: {x: 0, y: 0, z: -764.44226, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4574,6 +4574,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+--- !u!1 &986377240 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6330902983710418755, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+  m_PrefabInstance: {fileID: 7373060154947435142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &986377244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986377240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba43058b02884ca42841c519d2d31c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAlpha: 0.4
+  maxAlpha: 1
+  period: 1.5
+  onlyWhenInteractable: 1
 --- !u!114 &993674810 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9143546606998275843, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
@@ -4714,6 +4735,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 430387267}
     m_Modifications:
+    - target: {fileID: 374173721594012781, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
+      propertyPath: LogLevel
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2603503272331012375, guid: 47b589aed74d8412389cce5205dbe81c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1480
@@ -7087,7 +7112,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1580740389
@@ -14907,7 +14932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2108227905
 Transform:
   m_ObjectHideFlags: 0
@@ -15410,6 +15435,7 @@ GameObject:
   - component: {fileID: 3886483901815416519}
   - component: {fileID: 2701366400953715118}
   - component: {fileID: 8252954519074853951}
+  - component: {fileID: 8252954519074853952}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -16261,7 +16287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &4672431764031836007
 GameObject:
   m_ObjectHideFlags: 0
@@ -17330,6 +17356,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1616059840662176801, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2080602495}
+    - targetCorrespondingSourceObject: {fileID: 6330902983710418755, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 986377244}
   m_SourcePrefab: {fileID: 100100000, guid: e1d35abdfa6ec1045aa48efec865527c, type: 3}
 --- !u!224 &7445201423171056626
 RectTransform:
@@ -17637,6 +17666,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8252954519074853952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937689564658260513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba43058b02884ca42841c519d2d31c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAlpha: 0.4
+  maxAlpha: 1
+  period: 1.6
+  onlyWhenInteractable: 1
 --- !u!1 &8269944470783854746
 GameObject:
   m_ObjectHideFlags: 0
@@ -17702,9 +17747,6 @@ MonoBehaviour:
   continueButton: {fileID: 6623358728811564165}
   avatarImage: {fileID: 6635857146535714270}
   enableFullScreenClick: 1
-  debounceAfterSkip: 0.15
-  typingSpeed: 0.035
-  enablePunctuationPauses: 1
   textCanvasGroup: {fileID: 8669938579674929180}
   fadeInDuration: 0.35
   defaultSpeaker: 

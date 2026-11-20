@@ -12,7 +12,7 @@ public class InfoBubbleTrigger : MonoBehaviour
         public string title = "Title";
         [TextArea(4, 10)]
         public string body = "Content here...";
-        [Tooltip("如果使用 RawImage 组件，请将图片 Texture 拖入此项")]
+        [Tooltip("For RawImage Texture")]
         public Sprite sprite;
     }
 
@@ -48,6 +48,11 @@ public class InfoBubbleTrigger : MonoBehaviour
     public UnityEngine.Events.UnityEvent onBubbleOpened;
     public UnityEngine.Events.UnityEvent onBubbleClosed;
 
+    [Header("Full Screen Viewer")]
+    [SerializeField] private GameObject fullScreenViewerPanel;
+    [SerializeField] private Image fullScreenImageDisplay;
+    [SerializeField] private Button closeViewerButton;
+
     public bool HasBeenInspected { get; private set; } = false;
 
     private int currentPage;
@@ -70,6 +75,19 @@ public class InfoBubbleTrigger : MonoBehaviour
         ShowPage(0);
         if (infoBubble != null)
             infoBubble.SetActive(false);
+        if (pictureImage != null)
+        {
+            // Make sure pictureImage has Button component
+            Button imgBtn = pictureImage.GetComponent<Button>();
+            if (imgBtn != null)
+            {
+                imgBtn.onClick.AddListener(OpenFullScreenImage);
+            }
+        }
+        if (closeViewerButton != null)
+        {
+            closeViewerButton.onClick.AddListener(() => fullScreenViewerPanel.SetActive(false));
+        }
     }
 
     private void MigrateLegacyDataIfNeeded()
@@ -91,6 +109,35 @@ public class InfoBubbleTrigger : MonoBehaviour
             }
         }
     }
+
+    public void OpenFullScreenImage()
+    {
+        if (fullScreenViewerPanel == null)
+        {
+            Debug.LogError("[InfoBubble] fullScreenViewerPanel 未在 Inspector 中绑定！", this);
+            return;
+        }
+        if (fullScreenImageDisplay == null)
+        {
+            Debug.LogError("[InfoBubble] fullScreenImageDisplay 未在 Inspector 中绑定！", this);
+            return;
+        }
+        if (pictureImage == null || pictureImage.sprite == null)
+        {
+            Debug.LogWarning("[InfoBubble] pictureImage 没有 Sprite，无法全屏预览！", this);
+            return;
+        }
+
+        // 赋值并显示
+        fullScreenImageDisplay.sprite = pictureImage.sprite;
+        fullScreenViewerPanel.SetActive(true);
+
+        // 确保显示在当前父级 Canvas 的最上层，避免被其他 UI 元素遮挡
+        fullScreenViewerPanel.transform.SetAsLastSibling();
+        
+        Debug.Log("[InfoBubble] 全屏大图已成功激活显示！");
+    }
+    
 
     private void Update()
     {
@@ -182,14 +229,14 @@ public class InfoBubbleTrigger : MonoBehaviour
             if (pageBodies != null && currentPage < pageBodies.Length) currentBody = pageBodies[currentPage];
         }
 
-        // 1. 设置标题和文本
+        // 1. title
         if (titleText != null) titleText.text = currentTitle;
         if (bodyText != null) bodyText.text = currentBody;
 
-        // 2. 设置页码指示器
+        // 2. page indicator
         if (pageIndicator != null) pageIndicator.text = $"{currentPage + 1} / {totalPages}";
 
-        // 3. 翻页按钮状态
+        // 3. turn page
         if (backButton != null) backButton.gameObject.SetActive(currentPage > 0);
         if (nextButton != null)
         {
@@ -199,7 +246,7 @@ public class InfoBubbleTrigger : MonoBehaviour
             if (label != null) label.text = currentPage == 0 ? "Know more" : "Next";
         }
 
-        // 4. 更新图片 (优先 RawImage，其次 Image)
+        // 4. update photos
         UpdateImageDisplay(currentTexture, currentSprite);
     }
 

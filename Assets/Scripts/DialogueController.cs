@@ -20,15 +20,9 @@ public class DialogueController : MonoBehaviour
     [Tooltip("是否允许点击屏幕任意区域推进对话")]
     public bool enableFullScreenClick = true;
 
-    [Tooltip("打字时跳过动画后的微小防误触冷却（秒），防止快速连点吃掉下一句")]
-    public float debounceAfterSkip = 0.15f;
+    //[Tooltip("打字时跳过动画后的微小防误触冷却（秒），防止快速连点吃掉下一句")]
+    //public float debounceAfterSkip = 0.15f;
 
-    [Header("Typewriter Settings")]
-    [Tooltip("每个字的打字速度（秒）")]
-    public float typingSpeed = 0.035f;
-
-    [Tooltip("标点符号额外停顿，模拟说话自然语气")]
-    public bool enablePunctuationPauses = true;
 
     [Header("Subtitle Fade Settings")]
     [Tooltip("CanvasGroup for Fading In")]
@@ -49,9 +43,6 @@ public class DialogueController : MonoBehaviour
     public event Action OnDialogueFinished;
 
     private int currentLine = 0;
-    private Coroutine typingCoroutine = null;
-    private bool isTyping = false;
-    private float lastSkipTime = 0f;
     private string[] activeLines;
     private GameObject fullScreenTapArea;
  
@@ -224,9 +215,6 @@ public class DialogueController : MonoBehaviour
     {
         if (currentLine >= activeLines.Length) return;
         
-        // Stop previous processure
-        if (voiceWaitCoroutine != null) StopCoroutine(voiceWaitCoroutine);
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         
         // 1. Text setting
         string currentSentence = activeLines[currentLine];
@@ -241,7 +229,7 @@ public class DialogueController : MonoBehaviour
         }
         
         // 3. Prevent skip
-        isTyping = false;
+        // isTyping = false; // removed typewriter state
         if (continueButton != null) continueButton.gameObject.SetActive(false);
         
         // 4. Audio clip check
@@ -274,33 +262,7 @@ public class DialogueController : MonoBehaviour
         }
     }
 
-    private IEnumerator TypeSentenceRoutine(string sentence, float charDelay)
-    {
-        isTyping = true;
-        if (continueButton != null) continueButton.gameObject.SetActive(false);
 
-        if (dialogueBodyText != null)
-        {
-            dialogueBodyText.text = "";
-            char[] chars = sentence.ToCharArray();
-            for (int i = 0; i < chars.Length; i++)
-            {
-                char c = chars[i];
-                dialogueBodyText.text += c;
-
-                if (enablePunctuationPauses && (c == ',' || c == '.' || c == '!' || c == '?' || c == '—' || c == ':'))
-                {
-                    yield return new WaitForSeconds(charDelay * 2.5f);
-                }
-                else
-                {
-                    yield return new WaitForSeconds(typingSpeed);
-                }
-            }
-        }
-
-        FinishTyping();
-    }
 
     private void SkipTyping()
     {
@@ -309,18 +271,11 @@ public class DialogueController : MonoBehaviour
             audioSource.Stop();
         }
 
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
-
         if (dialogueBodyText != null && currentLine < activeLines.Length)
         {
             dialogueBodyText.text = activeLines[currentLine];
         }
 
-        lastSkipTime = Time.unscaledTime;
         FinishTyping();
     }
 
@@ -334,8 +289,6 @@ public class DialogueController : MonoBehaviour
 
     private void FinishDialogue()
     {
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
-        isTyping = false;
 
         gameObject.SetActive(false);
         OnDialogueFinished?.Invoke();

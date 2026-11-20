@@ -952,9 +952,12 @@ MonoBehaviour:
   infoBubble: {fileID: 1255388190347200307}
   titleText: {fileID: 0}
   bodyText: {fileID: 0}
+  pictureRawImage: {fileID: 0}
+  pictureImage: {fileID: 0}
   nextButton: {fileID: 0}
   backButton: {fileID: 0}
   pageIndicator: {fileID: 0}
+  pages: []
   pageTitles:
   - "\u7B80\u4ECB"
   - "\u5386\u53F2\u4E0E\u5EFA\u7B51\u7EC6\u8282"
@@ -2147,7 +2150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &430387267
 Transform:
   m_ObjectHideFlags: 0
@@ -2164,7 +2167,6 @@ Transform:
   - {fileID: 2024166744}
   - {fileID: 384480290193553652}
   - {fileID: 430796913}
-  - {fileID: 1605832082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &430796912
@@ -4708,7 +4710,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8168585829983048746, guid: a8caf5583c33c8e43804820f351bc822, type: 3}
 --- !u!4 &1375737374 stripped
@@ -4722,7 +4724,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 430387267}
+    m_TransformParent: {fileID: 384480290193553652}
     m_Modifications:
     - target: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_Name
@@ -4730,7 +4732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1255388190266590070, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1321962094934918813, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -4870,11 +4872,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4894,23 +4896,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 3264
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 2086
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0
+      value: 0.33088237
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 0.33088237
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
+      value: 0.33088237
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4930,23 +4932,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 345.1103
       objectReference: {fileID: 0}
     - target: {fileID: 7160928445388495059, guid: 39210a0dd84cf024989470efd9a33eae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5030,6 +5032,7 @@ MonoBehaviour:
   currentState: 0
   storyData: {fileID: 0}
   promptPanelController: {fileID: 8150316963004870456}
+  meetMePanelController: {fileID: 0}
   dialogueController: {fileID: 8328906292513212158}
   historicalComparisonController: {fileID: 6143374607047530868}
   christchurchCathedral3DModel: {fileID: 0}
@@ -5317,6 +5320,7 @@ MonoBehaviour:
   animationDuration: 0.8
   totalSpinDegrees: 720
   billboardToCamera: 1
+  flipForward: 0
 --- !u!212 &1487578151
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6359,9 +6363,12 @@ MonoBehaviour:
   infoBubble: {fileID: 175808324}
   titleText: {fileID: 175808321}
   bodyText: {fileID: 175808320}
+  pictureRawImage: {fileID: 0}
+  pictureImage: {fileID: 0}
   nextButton: {fileID: 175808322}
   backButton: {fileID: 175808323}
   pageIndicator: {fileID: 175808319}
+  pages: []
   pageTitles:
   - The Designer
   - Let It Shine
@@ -8082,6 +8089,7 @@ RectTransform:
   - {fileID: 1420760260}
   - {fileID: 7160928445458619542}
   - {fileID: 175808318}
+  - {fileID: 1605832082}
   m_Father: {fileID: 430387267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -10460,10 +10468,10 @@ MonoBehaviour:
   characterNameText: {fileID: 9195539324709959578}
   dialogueBodyText: {fileID: 5599549490604622058}
   continueButton: {fileID: 6623358728811564165}
+  avatarImage: {fileID: 0}
   enableFullScreenClick: 1
-  debounceAfterSkip: 0.15
-  typingSpeed: 0.035
-  enablePunctuationPauses: 1
+  textCanvasGroup: {fileID: 0}
+  fadeInDuration: 0.25
   defaultSpeaker: Susan
   defaultLines:
   - My name is Susan. I grew up and live in Christchurch.
