@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// A lightweight, reusable spatial trigger component for Navigation Pins.
 /// Detects when the user/AR camera approaches the pin, plays a breathing animation,
 /// and invokes onTriggered (e.g. to open a panel or start a PoI story flow) before hiding itself.
 /// </summary>
-public class ProximityTrigger : MonoBehaviour
+public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
 {
     [Header("Target & Detection")]
     [Tooltip("The AR camera or player transform. If unassigned, defaults to Camera.main.")]
@@ -30,6 +31,11 @@ public class ProximityTrigger : MonoBehaviour
     [Tooltip("Invoked when the player enters the triggerDistance or collides with the pin.")]
     public UnityEvent onTriggered;
 
+    [Header("Click / Fallback Trigger")]
+    [Tooltip("Allow triggering the pin by clicking or tapping it.")]
+    public bool allowClickTrigger = true;
+    [Tooltip("Max distance (meters) within which clicking the pin is allowed.")]
+    public float maxClickDistance = 2.0f;
     private Vector3 initialScale;
     private bool hasTriggered = false;
 
@@ -136,6 +142,49 @@ public class ProximityTrigger : MonoBehaviour
         transform.localScale = initialScale;
         gameObject.SetActive(true);
     }
+
+    /// <summary>
+    /// If physical pin trigger is not available onsite
+    /// </summary>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        TryTriggerByClick();
+    }
+    
+    private void OnMouseDown()
+    {
+        TryTriggerByClick();
+    }
+    
+    public void TryTriggerByClick()
+    {
+        if (!allowClickTrigger || hasTriggered) return;
+        if (arCamera == null && Camera.main != null)
+        {
+            arCamera = Camera.main.transform;
+        }
+        if (arCamera == null) return;
+        float distance = GetDistanceToCamera();
+        if (distance <= maxClickDistance)
+        {
+            Debug.Log($"[ProximityTrigger] Pin '{gameObject.name}' clicked within valid distance ({distance:F2}m <= {maxClickDistance:F2}m).");
+            TriggerPinAction();
+        }
+        else
+        {
+            Debug.Log($"[ProximityTrigger] Pin '{gameObject.name}' clicked but too far ({distance:F2}m > {maxClickDistance:F2}m).");
+        }
+    }
+    
+    private float GetDistanceToCamera()
+    {
+        Vector3 pinPos = transform.position;
+        Vector3 camPos = arCamera.position;
+        if (ignoreVerticalDistance)
+        {
+            pinPos.y = 0f;
+            camPos.y = 0f;
+        }
+        return Vector3.Distance(pinPos, camPos);
+    }
 }
-
-
