@@ -23,8 +23,26 @@ public class M01Controller : MonoBehaviour
         Reflection
     }
 
+    public enum OverlayMode
+    {
+        Model3D = 0,    // AR 3D)
+        Photo2D = 1     // Historical 2D
+    }
+
     [Header("Current Flow State")]
     public FlowState currentState = FlowState.Hidden;
+
+    [Header("Overlay View Mode")]
+    [Tooltip("Default Overlay Mode）")]
+    public OverlayMode defaultOverlayMode = OverlayMode.Model3D;
+    public OverlayMode currentOverlayMode = OverlayMode.Model3D;
+
+    [Tooltip("Switch")]
+    public GameObject overlaySwitchBar;
+
+    [Tooltip("Toggle")]
+    public Toggle toggle3D;
+    public Toggle toggle2D;
 
     [Header("Story Data (ScriptableObject)")]
     [Tooltip("将 Assets/StoryData/PoI_01_Susan.asset 拖入此栏")]
@@ -148,6 +166,8 @@ public class M01Controller : MonoBehaviour
         if (dialogueController != null) dialogueController.gameObject.SetActive(false);
         if (historicalComparisonController != null) historicalComparisonController.gameObject.SetActive(false);
         if (meetMePanelController != null) meetMePanelController.gameObject.SetActive(false);
+        if (overlaySwitchBar != null) overlaySwitchBar.SetActive(false);
+        HideCathedralModel();
 
         currentState = FlowState.Hidden;
     }
@@ -245,7 +265,7 @@ public class M01Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// 阶段 4：站位完成，打开历史照片对比
+    /// 阶段 4：站位完成，打开历史对比与 3D/2D 覆盖层切换
     /// </summary>
     public void ShowHistoricalPanel()
     {
@@ -254,11 +274,111 @@ public class M01Controller : MonoBehaviour
         if (promptPanelController != null)
             promptPanelController.Hide();
 
-        if (christchurchCathedral3DModel != null)
-            christchurchCathedral3DModel.SetActive(true);
+        // 激活独立切换栏 UI（如果在 Hierarchy 中配置了）
+        if (overlaySwitchBar != null)
+            overlaySwitchBar.SetActive(true);
 
-        if (historicalComparisonController != null)
-            historicalComparisonController.OpenComparison();
+        // 应用默认覆盖层模式（互斥切换 3D 或 2D）
+        SetOverlayMode(defaultOverlayMode);
+    }
+
+    // ─── 覆盖层互斥切换方法 (Overlay Mode Switching) ──────────────────────────
+
+    /// <summary>
+    /// 设置并应用指定的覆盖层模式（3D模型 或 2D历史照片）
+    /// 现场（AR相机实景）始终作为底图呈现，两层覆盖物严格互斥显示
+    /// </summary>
+    public void SetOverlayMode(OverlayMode mode)
+    {
+        currentOverlayMode = mode;
+        ApplyOverlayMode(mode);
+    }
+
+    /// <summary>
+    /// 通过整数索引切换（0 = Model3D, 1 = Photo2D），便于通用 UI 控件绑定
+    /// </summary>
+    public void SetOverlayModeByIndex(int index)
+    {
+        OverlayMode mode = (OverlayMode)Mathf.Clamp(index, 0, 1);
+        SetOverlayMode(mode);
+    }
+
+    /// <summary>
+    /// Switch to 3D
+    /// </summary>
+    public void SwitchTo3D() => SetOverlayMode(OverlayMode.Model3D);
+
+    /// <summary>
+    /// Switch to 2D Historical Archival
+    /// </summary>
+    public void SwitchTo2D() => SetOverlayMode(OverlayMode.Photo2D);
+
+    /// <summary>
+    /// Unity Toggle: 3D Toggle
+    /// </summary>
+    public void OnToggle3DChanged(bool isOn)
+    {
+        if (isOn) SetOverlayMode(OverlayMode.Model3D);
+    }
+
+    /// <summary>
+    /// Unity Toggle: 2D Toggle
+    /// </summary>
+    public void OnToggle2DChanged(bool isOn)
+    {
+        if (isOn) SetOverlayMode(OverlayMode.Photo2D);
+    }
+
+    /// <summary>
+    /// Mutual exclusion
+    /// </summary>
+    private void ApplyOverlayMode(OverlayMode mode)
+    {
+        if (mode == OverlayMode.Model3D)
+        {
+            // 1. Hide 2D（注意：直接隐藏 GameObject，切勿调用 CloseComparison 防止误触发 onComparisonClosed）
+            if (historicalComparisonController != null)
+            {
+                historicalComparisonController.gameObject.SetActive(false);
+            }
+
+            // 2. Activate 3D
+            if (christchurchCathedral3DModel != null)
+            {
+                christchurchCathedral3DModel.SetActive(true);
+            }
+        }
+        else if (mode == OverlayMode.Photo2D)
+        {
+            // 1. Hide 3D 
+            HideCathedralModel();
+
+            // 2. Open 2D Historical
+            if (historicalComparisonController != null)
+            {
+                historicalComparisonController.gameObject.SetActive(true);
+                historicalComparisonController.OpenComparison();
+            }
+        }
+
+        // Synchronise toggles
+        SyncToggleUI();
+    }
+
+    /// <summary>
+    /// 保持 UI Toggle 的视觉状态与当前 currentOverlayMode 一致
+    /// </summary>
+    private void SyncToggleUI()
+    {
+        if (toggle3D != null && toggle3D.isOn != (currentOverlayMode == OverlayMode.Model3D))
+        {
+            toggle3D.SetIsOnWithoutNotify(currentOverlayMode == OverlayMode.Model3D);
+        }
+
+        if (toggle2D != null && toggle2D.isOn != (currentOverlayMode == OverlayMode.Photo2D))
+        {
+            toggle2D.SetIsOnWithoutNotify(currentOverlayMode == OverlayMode.Photo2D);
+        }
     }
 
     public void UpdateHistoricalOpacity(float value)
@@ -275,6 +395,17 @@ public class M01Controller : MonoBehaviour
     /// </summary>
     private void OnHistoricalComparisonClosed()
     {
+        // 彻底清理 3D 与 2D，并隐藏切换控制条
+        HideCathedralModel();
+        if (historicalComparisonController != null)
+        {
+            historicalComparisonController.gameObject.SetActive(false);
+        }
+        if (overlaySwitchBar != null)
+        {
+            overlaySwitchBar.SetActive(false);
+        }
+
         ShowReflection();
     }
 

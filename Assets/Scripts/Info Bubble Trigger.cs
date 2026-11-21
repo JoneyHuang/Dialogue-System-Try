@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class InfoBubbleTrigger : MonoBehaviour
@@ -54,6 +55,7 @@ public class InfoBubbleTrigger : MonoBehaviour
     [SerializeField] private Button closeViewerButton;
 
     public bool HasBeenInspected { get; private set; } = false;
+    private bool isFullScreenOpen = false;
 
     private int currentPage;
     private Collider myCollider;
@@ -86,7 +88,8 @@ public class InfoBubbleTrigger : MonoBehaviour
         }
         if (closeViewerButton != null)
         {
-            closeViewerButton.onClick.AddListener(() => fullScreenViewerPanel.SetActive(false));
+            closeViewerButton.onClick.RemoveListener(CloseFullScreenImage);
+            closeViewerButton.onClick.AddListener(CloseFullScreenImage);
         }
     }
 
@@ -134,8 +137,24 @@ public class InfoBubbleTrigger : MonoBehaviour
 
         // 确保显示在当前父级 Canvas 的最上层，避免被其他 UI 元素遮挡
         fullScreenViewerPanel.transform.SetAsLastSibling();
-        
-        Debug.Log("[InfoBubble] 全屏大图已成功激活显示！");
+    }
+
+    /// <summary>
+    /// Exit Full Viewer
+    /// </summary>
+    public void CloseFullScreenImage()
+    {
+        if (fullScreenViewerPanel != null)
+        {
+            fullScreenViewerPanel.SetActive(false);
+        }
+
+        if (fullScreenImageDisplay != null)
+        {
+            fullScreenImageDisplay.sprite = null;
+        }
+
+        Debug.Log("[InfoBubble] Full view closed.");
     }
     
 
@@ -147,7 +166,7 @@ public class InfoBubbleTrigger : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
-                CheckRaycastHit(touch.position);
+                CheckRaycastHit(touch.position, touch.fingerId);
             }
         }
         // Handle PC Mouse Click
@@ -157,8 +176,26 @@ public class InfoBubbleTrigger : MonoBehaviour
         }
     }
 
-    private void CheckRaycastHit(Vector2 screenPosition)
+    private void CheckRaycastHit(Vector2 screenPosition, int fingerId = -1)
     {
+        // 若全屏预览已打开，直接拦截所有 3D 点击
+        if (isFullScreenOpen) return;
+
+        // 防止 UI 点击穿透到 3D 场景
+        if (EventSystem.current != null)
+        {
+            if (fingerId >= 0)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(fingerId))
+                    return;
+            }
+            else
+            {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+            }
+        }
+
         if (targetCamera == null) targetCamera = Camera.main;
         if (targetCamera == null) return;
 
