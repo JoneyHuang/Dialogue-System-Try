@@ -43,9 +43,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 8300000, guid: 97294186df02df54abfc8056a4826ed5, type: 3}
   - {fileID: 0}
-  alignmentPrompt: A historical photo will be revealed. Now point your camera to
-    the current Cathedral site within the white frame and adjust the slider in the
-    bottom to align it to match the perspective.
+  alignmentPrompt: 'Point your camera to the Cathedral site, and observe what used
+    to stand here in the Square. You can choose 2D historical and 3D model to observe.
+    Slide the bar to adjust the opacity of historical photos. '
   alignmentButtonText: Okay
   interactionInstruction: 
   interactionButtonText: Got it

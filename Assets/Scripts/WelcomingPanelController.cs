@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 // Added for onboarding page navigation
@@ -44,10 +44,12 @@ public class WelcomingPanelController : MonoBehaviour
     [Tooltip("Define title and body for each page. Order must match the `pages` array.")]
     public OnboardingPageData[] pageData;
 
-    // Optional: assign the Text components that render the page titles (same order as pages)
-    [Header("Title Text Components")]
-    [Tooltip("Assign the Text or TMP_Text component for each page title.")]
-    public Text[] titleTexts;
+    [Header("Title Text Component (Single or Per-Page)")]
+    [Tooltip("If you have ONE shared title text across all pages, assign it here.")]
+    public TMP_Text sharedTitleText;
+
+    [Tooltip("Optional: If each page has its own separate title text component, assign them here.")]
+    public TMP_Text[] titleTexts;
 
 
 
@@ -86,11 +88,7 @@ public class WelcomingPanelController : MonoBehaviour
                 // if needed you can expose a separate string[] pageTitles later.
                 if (!string.IsNullOrEmpty(title))
                 {
-                    // Title may be Text or TMP_Text – we accept both via the base class Text (covers UI Text) or TMP_Text.
-                    var titleTxt = titleTexts[i].GetComponent<Text>();
-                    var titleTmp = titleTexts[i].GetComponent<TMP_Text>();
-                    if (titleTxt != null) { titleTxt.text = title; }
-                    else if (titleTmp != null) { titleTmp.text = title; }
+                    titleTexts[i].text = title;
                 }
             }
         }
@@ -128,7 +126,7 @@ public class WelcomingPanelController : MonoBehaviour
 
         // Show first onboarding page
         ShowPage(0);
-        // Populate text content for each page (if you supplied pageContents in the Inspector)
+        // Populate body text content for each page
         FillPageContent();
 
         // Ensure PoI 1 starts completely hidden while user is at Starting Point / Welcoming Panel
@@ -158,7 +156,40 @@ public class WelcomingPanelController : MonoBehaviour
             }
         }
 
+        // Update single/shared title text for the current page
+        UpdateTitleForCurrentPage();
+
+        // Update CTA button label (">>>>" or "Start Exploring")
+        UpdateCtaLabel();
+
         Debug.Log($"[WelcomingPanelController] Showing onboarding page {currentPage} ({(pages[currentPage]!=null?pages[currentPage].name:"null")})");
+    }
+
+    /// <summary>
+    /// Updates the title text when a page is shown.
+    /// Supports both sharedTitleText (single header) and titleTexts[currentPage] (per-page headers).
+    /// </summary>
+    void UpdateTitleForCurrentPage()
+    {
+        string title = null;
+        if (pageData != null && currentPage < pageData.Length && !string.IsNullOrEmpty(pageData[currentPage].title))
+        {
+            title = pageData[currentPage].title;
+        }
+
+        if (string.IsNullOrEmpty(title)) return;
+
+        // If a single shared title component is assigned
+        if (sharedTitleText != null)
+        {
+            sharedTitleText.text = title;
+        }
+
+        // If individual title components are assigned per page
+        if (titleTexts != null && currentPage < titleTexts.Length && titleTexts[currentPage] != null)
+        {
+            titleTexts[currentPage].text = title;
+        }
     }
 
     /// <summary>
