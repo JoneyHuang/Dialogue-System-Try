@@ -14,19 +14,32 @@ public class ExperimentHubController : MonoBehaviour
     [System.Serializable]
     public class PoIHubItem
     {
-        [Tooltip("POI 标识名，例如 M1, M2, M3")]
+        [Tooltip("Module name")]
         public string poiId = "M1";
 
-        [Tooltip("点击启动该 POI 的按钮")]
+        [Tooltip("Location name")]
+        public string locationName = "Cathedral West Front";
+
+        [Tooltip("Top-left category title on the panel (e.g. 'LOCATION ARCHIVE' or 'MODULE BRIEF')")]
+        public string cardHeaderTitle = "LOCATION ARCHIVE";
+
+        [Tooltip("Location reference photos")]
+        public Sprite locationPhoto;
+
+        [Tooltip("Introduction and navigation")]
+        [TextArea(3, 8)]
+        public string guideAndHistory;
+
+        [Tooltip("Launch button")]
         public Button launchButton;
 
-        [Tooltip("状态提示文字 (可选)，例如显示 Not Started 或 Done ✓")]
+        [Tooltip("Status text")]
         public TMP_Text statusText;
 
-        [Tooltip("完成时显示的打钩图标/小红绿点 (可选)")]
+        [Tooltip("Checkmark icon")]
         public GameObject checkmarkIcon;
 
-        [Tooltip("该 POI 在现场对应的 Pin 导航目标或启动 GameObject")]
+        [Tooltip("The target object for navigation or launching")]
         public GameObject poiTargetObject;
 
         [HideInInspector]
@@ -34,8 +47,14 @@ public class ExperimentHubController : MonoBehaviour
     }
 
     [Header("UI Panels")]
-    [Tooltip("Hub 控制台根节点 (包含 3 个按钮的 Panel)")]
+    [Tooltip("Hub 控制台根节点 (包含全景图和 3 个按钮的 Panel)")]
     public GameObject hubPanel;
+
+    [Tooltip("复用的地点档案/卡片面板 (直接将 MeetMePanel 拖入)")]
+    public MeetMePanelController locationInfoPanel;
+
+    [Tooltip("通用提示面板控制器 (直接将 PromptPanel 拖入)")]
+    public PromptPanelController promptPanelController;
 
     [Tooltip("标题或指导说明文本 (可选)")]
     public TMP_Text headerText;
@@ -70,6 +89,16 @@ public class ExperimentHubController : MonoBehaviour
             hubPanel = gameObject;
         }
 
+        // 自动装配 locationInfoPanel 与 promptPanelController，防止 Inspector 遗漏
+        if (locationInfoPanel == null)
+        {
+            locationInfoPanel = FindFirstObjectByType<MeetMePanelController>(FindObjectsInactive.Include);
+        }
+        if (promptPanelController == null)
+        {
+            promptPanelController = FindFirstObjectByType<PromptPanelController>(FindObjectsInactive.Include);
+        }
+
         BindListeners();
     }
 
@@ -81,26 +110,70 @@ public class ExperimentHubController : MonoBehaviour
     private void BindListeners()
     {
         if (poi1.launchButton != null)
-            poi1.launchButton.onClick.AddListener(() => LaunchPoI(poi1));
+            poi1.launchButton.onClick.AddListener(() => OpenLocationCard(poi1));
 
         if (poi2.launchButton != null)
-            poi2.launchButton.onClick.AddListener(() => LaunchPoI(poi2));
+            poi2.launchButton.onClick.AddListener(() => OpenLocationCard(poi2));
 
         if (poi3.launchButton != null)
-            poi3.launchButton.onClick.AddListener(() => LaunchPoI(poi3));
+            poi3.launchButton.onClick.AddListener(() => OpenLocationCard(poi3));
 
         if (resetAllButton != null)
             resetAllButton.onClick.AddListener(ResetAllProgress);
     }
 
     /// <summary>
-    /// 启动指定的 POI
+    /// 点击 Hub 全景图上的地点图标：弹出地点档案卡片 (复用 MeetMePanel)
+    /// </summary>
+    public void OpenLocationCard(PoIHubItem item)
+    {
+        if (item == null) return;
+
+        if (locationInfoPanel != null)
+        {
+            // 1. 动态设置左上角小标题（避免固定的 MEMORY UNLOCKED 显得不合时宜）
+            string header = !string.IsNullOrEmpty(item.cardHeaderTitle) ? item.cardHeaderTitle : "LOCATION ARCHIVE";
+            locationInfoPanel.SetTitle(header);
+
+            locationInfoPanel.SetName(string.IsNullOrEmpty(item.locationName) ? item.poiId : item.locationName);
+            if (item.locationPhoto != null)
+            {
+                locationInfoPanel.SetAvatar(item.locationPhoto);
+            }
+            locationInfoPanel.SetBrief(item.guideAndHistory);
+            locationInfoPanel.SetButtonText("GOING THERE");
+
+            // Confirm arrival and trigger love heart pin
+            locationInfoPanel.SetAction(() =>
+            {
+                locationInfoPanel.Hide();
+                LaunchPoI(item);
+            });
+
+            // 2. 退出机制：点击卡片右上角退出或返回时，仅关闭卡片，回到 Hub 全景图
+            locationInfoPanel.SetCloseAction(() =>
+            {
+                locationInfoPanel.Hide();
+                if (hubPanel != null) hubPanel.SetActive(true);
+            });
+
+            locationInfoPanel.Show();
+        }
+        else
+        {
+            // 降级：如果未找到卡片，直接启动
+            LaunchPoI(item);
+        }
+    }
+
+    /// <summary>
+    /// 启动指定的 POI（用户在卡片点击“确认到达”后调用）
     /// </summary>
     public void LaunchPoI(PoIHubItem item)
     {
         if (item == null) return;
 
-        Debug.Log($"[ExperimentHub] 正在启动 {item.poiId}...");
+        Debug.Log($"[ExperimentHub] Arrival confirmed {item.poiId}...");
 
         // 隐藏 Hub 面板
         if (hubPanel != null)
@@ -114,18 +187,27 @@ public class ExperimentHubController : MonoBehaviour
             M01Controller.Instance.HideCathedralModel();
         }
 
-        // 如果配置了对应的 GameObject (例如现场 Pin 导航标志)，将其激活以引导用户前往
+        // 1. 如果配置了对应的 GameObject (如现场心形标记或 Pin 导航)，将其激活
         if (item.poiTargetObject != null)
         {
             item.poiTargetObject.SetActive(true);
-            Debug.Log($"[ExperimentHub] 已激活 {item.poiId} 的现场目标物体：{item.poiTargetObject.name}。等待用户走近...");
+            Debug.Log($"[ExperimentHub] 已激活 {item.poiId} 的现场目标物体：{item.poiTargetObject.name}。");
+        }
+
+        // 2. 弹出 PromptPanel 提示用户使用相机画面寻找爱心标记
+        if (promptPanelController != null)
+        {
+            promptPanelController.ShowPrompt(
+                "Look around and find the love heart. Approch or tap it to unlock the memory.",
+                "Got it"
+            );
         }
         else
         {
-            // 仅作为调试降级方案：如果未指定现场 Pin，才直接触发故事
-            if (item.poiId == "M1" && M01Controller.Instance != null)
+            // 调试降级：若无 promptPanel 且无实体 Pin，才直接开跑 M1
+            if (item.poiId == "M1" && item.poiTargetObject == null && M01Controller.Instance != null)
             {
-                Debug.LogWarning("[ExperimentHub] 未配置 poiTargetObject，直接启动 M1 故事！");
+                Debug.LogWarning("[ExperimentHub] poiTargetObject not found. Starts it anyway.");
                 M01Controller.Instance.StartStoryFlow();
             }
         }

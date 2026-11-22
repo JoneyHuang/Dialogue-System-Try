@@ -214,8 +214,8 @@ public class WelcomingPanelController : MonoBehaviour
         }
         else
         {
-            if (txt != null) txt.text = "Start Exploring";
-            else if (tmp != null) tmp.text = "Start Exploring";
+            if (txt != null) txt.text = "Start";
+            else if (tmp != null) tmp.text = "Start";
         }
     }
 
