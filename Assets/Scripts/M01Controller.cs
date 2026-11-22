@@ -68,6 +68,10 @@ public class M01Controller : MonoBehaviour
     [Tooltip("完成该 POI 后激活的下一个目标物体 (如 PoI 2 Pin 或玫瑰窗 HotSpot)")]
     public GameObject nextPoiTarget;
 
+    [Header("Exit / Continue")]
+    [Tooltip("Global finish/continue button located on the overlay switch bar or HUD")]
+    public Button finishComparisonButton;
+
     [Header("Debug")]
     [Tooltip("Play 模式启动时自动触发流程（正式测试请保持 false，等待走到 Pin 触发）")]
     public bool autoStartOnPlay = false;
@@ -156,6 +160,13 @@ public class M01Controller : MonoBehaviour
             if (t != null)
                 meetMePanelController = t.GetComponent<MeetMePanelController>();
         }
+
+        if (finishComparisonButton != null)
+        {
+            finishComparisonButton.onClick.RemoveListener(FinishComparisonAndProceed);
+            finishComparisonButton.onClick.AddListener(FinishComparisonAndProceed);
+        }
+
     }
 
     // ─── Panel Utility ────────────────────────────────────────────────────────
@@ -364,6 +375,31 @@ public class M01Controller : MonoBehaviour
         // Synchronise toggles
         SyncToggleUI();
     }
+
+    /// <summary>
+    /// Unified exit point whether user was viewing 2D photo or 3D model.
+   /// </summary>
+   public void FinishComparisonAndProceed()
+     {
+       // 1. Clean up 3D model
+       HideCathedralModel();
+       
+       // 2. Clean up 2D Historical panel safely
+       if (historicalComparisonController != null)
+       {
+         historicalComparisonController.gameObject.SetActive(false);
+       }
+       
+       // 3. Hide the switch bar itself
+       if (overlaySwitchBar != null)
+       {
+         overlaySwitchBar.SetActive(false);
+       }
+       
+       // 4. Progress to reflection
+       ShowReflection();
+     }
+     
 
     /// <summary>
     /// 保持 UI Toggle 的视觉状态与当前 currentOverlayMode 一致

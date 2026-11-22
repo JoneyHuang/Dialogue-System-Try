@@ -103,10 +103,11 @@ public class HistoricalComparisonController : MonoBehaviour
             Transform btnTr = transform.Find("ExitButton") ?? transform.Find("Button");
             if (btnTr != null) exitButton = btnTr.GetComponent<Button>();
         }
-
+         
         if (historicalAudioSource == null)
         {
             historicalAudioSource = GetComponent<AudioSource>();
+            
             if (historicalAudioSource == null)
             {
                 historicalAudioSource = GetComponentInParent<AudioSource>();
@@ -116,10 +117,10 @@ public class HistoricalComparisonController : MonoBehaviour
 
     private void WireListeners()
     {
-        if (exitButton != null)
+     if (exitButton != null)
         {
             exitButton.onClick.RemoveListener(CloseComparison);
-            exitButton.onClick.AddListener(CloseComparison);
+            exitButton.onClick.AddListener(CloseComparison);//
         }
 
         if (opacitySlider != null)
