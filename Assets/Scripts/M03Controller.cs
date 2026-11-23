@@ -49,6 +49,10 @@ public class M03Controller : MonoBehaviour
 
     [Tooltip("Meet Me Panel")]
     public MeetMePanelController meetMePanelController;
+    
+    [Header("Current POI Trigger Pin")]
+    [Tooltip("Trigger current POI")]
+    public ProximityTrigger currentPinTrigger;
 
     [Header("PoI 3 Hotspots in Scene")]
     [Tooltip("Root or trigger for the Rose Window hotspot.")]
@@ -221,7 +225,20 @@ public class M03Controller : MonoBehaviour
             meetMePanelController.SetAvatar(avatar);
             meetMePanelController.SetAction(OnArrivalPromptConfirmed);
             meetMePanelController.Show();
+
+            meetMePanelController.SetCloseAction(() =>
+            {
+                meetMePanelController.Hide();
+                currentState = FlowState.Hidden;
+                if (currentPinTrigger != null)
+                {
+                    currentPinTrigger.ResetTrigger();
+                }
+            });
+
+            meetMePanelController.Show();
         }
+        
         else
         {
             Debug.LogWarning("[M03Controller] MeetMePanelController not found, proceeding to Dialogue.");

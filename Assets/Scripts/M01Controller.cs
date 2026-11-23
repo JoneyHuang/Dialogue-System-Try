@@ -68,6 +68,10 @@ public class M01Controller : MonoBehaviour
     [Tooltip("完成该 POI 后激活的下一个目标物体 (如 PoI 2 Pin 或玫瑰窗 HotSpot)")]
     public GameObject nextPoiTarget;
 
+    [Header("Current POI Trigger Pin")]
+    [Tooltip("Trigger current POI")]
+    public ProximityTrigger currentPinTrigger;
+
     [Header("Exit / Continue")]
     [Tooltip("Global finish/continue button located on the overlay switch bar or HUD")]
     public Button finishComparisonButton;
@@ -199,22 +203,32 @@ public class M01Controller : MonoBehaviour
     public void ShowMeetMeHint()
     {
         currentState = FlowState.MeetingHint;
-
         string brief = storyData != null ? storyData.arrivalPrompt : kFallbackArrivalPrompt;
         string btnText = storyData != null ? storyData.arrivalButtonText : kFallbackArrivalBtn;
         string name   = storyData != null ? storyData.speakerName : "Storyteller";
         Sprite avatar = storyData != null ? storyData.characterAvatar : null;
       
-      // MeetMePanel
-       if (meetMePanelController != null)
+        if (meetMePanelController != null)
         {
-          meetMePanelController.SetName(name);
-          meetMePanelController.SetBrief(brief);
-          meetMePanelController.SetAvatar(avatar);
-          meetMePanelController.SetAction(StartDialogue);
-          meetMePanelController.Show();
-        }
+            meetMePanelController.SetTitle("MEMORY UNLOCKED");
+            meetMePanelController.SetName(name);
+            meetMePanelController.SetBrief(brief);
+            meetMePanelController.SetAvatar(avatar);
+            meetMePanelController.SetButtonText(btnText);
+            meetMePanelController.SetAction(StartDialogue);
 
+            meetMePanelController.SetCloseAction(() =>
+            {
+                meetMePanelController.Hide();
+                currentState = FlowState.Hidden;
+                if (currentPinTrigger != null)
+                {
+                    currentPinTrigger.ResetTrigger();
+                }
+            });
+
+            meetMePanelController.Show();
+        }
         else
         {
             Debug.LogWarning("[M01Controller] MeetMePanel not found. Starts dialogue instead.");

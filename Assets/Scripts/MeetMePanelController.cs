@@ -13,7 +13,29 @@ public class MeetMePanelController : MonoBehaviour
     [SerializeField] private Button closeButton; // Optional: top-right 'X' or cancel button
 
     public void SetTitle(string title) { if (titleText != null) titleText.text = title; }
-    public void SetName(string name) { if (nameText != null) nameText.text = name; }
+    // Set the name text and force the colour to the configured green.
+    [SerializeField] private Color nameColor = new Color(0x69/255f, 0xFF/255f, 0x87/255f);
+    public void SetName(string name)
+    {
+        if (nameText != null)
+        {
+            nameText.text = name;
+            nameText.color = nameColor; // guarantee green
+        }
+    }
+
+    /// <summary>Set the name text colour (optional, kept for backward compatibility).</summary>
+    public void SetNameColor(Color color)
+    {
+        if (nameText != null) nameText.color = color;
+    }
+
+    /// <summary>Set the name text colour.</summary>
+    //public void SetNameColor(Color color)
+    //{
+      //  if (nameText != null)
+      //  nameText.color = new Color(0x69/255f, 0xFF/255f, 0x87/255f);
+    //}
     public void SetBrief(string txt) { if (briefText != null) briefText.text = txt; }
     public void SetAvatar(Sprite img) { if (avatarImage != null) avatarImage.sprite = img; }
 

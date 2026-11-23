@@ -37,6 +37,10 @@ public class M02Controller : MonoBehaviour
     [Tooltip("Meet Me Panel")]
     public MeetMePanelController meetMePanelController;
 
+    [Header("Current POI Trigger Pin")]
+    [Tooltip("Trigger current POI")]
+    public ProximityTrigger currentPinTrigger;
+
     [Header("AR Portal Content & Placement")]
     [Tooltip("现场的 Gothic Window 传送门根物体 (包含窗框与全景球)")]
     public GameObject portalObject;
@@ -198,7 +202,19 @@ public class M02Controller : MonoBehaviour
             meetMePanelController.SetAvatar(avatar);
             meetMePanelController.SetAction(StartDialogue);
             meetMePanelController.Show();
+
+            meetMePanelController.SetCloseAction(() =>
+            {
+                meetMePanelController.Hide();
+                currentState = FlowState.Hidden;
+                if (currentPinTrigger != null)
+                {
+                    currentPinTrigger.ResetTrigger();
+                }
+            });
+            meetMePanelController.Show();
         }
+        
         else
         {
             Debug.LogWarning("[M02Controller] MeetMePanel not found. Starts dialogue instead.");
