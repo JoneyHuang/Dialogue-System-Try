@@ -175,6 +175,13 @@ public class ExperimentHubController : MonoBehaviour
 
         Debug.Log($"[ExperimentHub] Arrival confirmed {item.poiId}...");
 
+        // 进入 AR / Module 前，平滑淡出背景氛围音乐
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.FadeOutBGM(1.5f);
+            AudioManager.Instance.PlayConfirm();
+        }
+
         // 隐藏 Hub 面板
         if (hubPanel != null)
         {
@@ -231,6 +238,12 @@ public class ExperimentHubController : MonoBehaviour
         if (hubPanel != null)
         {
             hubPanel.SetActive(true);
+        }
+
+        // 回到 Hub 控制台时，重新平滑淡入背景氛围音乐
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.FadeInBGM(duration: 2.0f);
         }
 
         RefreshAllStatuses();
