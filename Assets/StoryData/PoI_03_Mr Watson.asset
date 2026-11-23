@@ -21,26 +21,23 @@ MonoBehaviour:
   arrivalButtonText: Meet Mr Watson
   dialogueLines:
   - Hello, young friend. What a pleasure to see you here.
-  - I forgot to introduce myself. My name is Louis Watson. People call me Mr Watson.
-    I used to sing in the Cathedral Choir when I was a young boy, and later when
-    I became a teacher, I brought my students here every year.
+  - "Sorry, I haven\u2019t introduced myself yet. I\u2019m William Watson\u2014most
+    people call me Mr. Watson. I used to sing in the Cathedral Choir when I was a
+    young boy, and later when I became a teacher, I brought my students here every
+    year."
   - There were always a few who wandered off or lost their way! I used to remind
     them to look for the Cathedral's spire to find their way back.
   - I have many memories of this Cathedral. Some are carved in stone, some can be
-    seen in its windows, and some can still be heard in music. Since you are here
-    today, why don't you spend a little time with me so I can show you around?
-  - 'Brilliant! I will keep you company, just in case you need a hand. I can tell
-    you what I remember about each spot you explore. Take your time, and remember
-    you can always
-
-    pause, put down the tablet, and take in the real space around
-    you.'
+    seen in its windows, and some can still be heard in music.
+  - "While you\u2019re here, look out for interactive hotspots along the wall\u2014you
+    can tap them to see more details. Take your time, and remember you can always
+    pause, put down the tablet, and take in the real space around."
   voiceClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: ccc6627e40675a2499ca56bc76b69f10, type: 3}
+  - {fileID: 8300000, guid: 85ff07efcdbc74144920707f7f09bbc1, type: 3}
+  - {fileID: 8300000, guid: a68c85653f885704c9b56e44c6293321, type: 3}
+  - {fileID: 8300000, guid: 36959112421f5a94d86f7665cc9ba0f5, type: 3}
+  - {fileID: 8300000, guid: 5afaee1a5bfd5c3429ec113c9a0cd0b6, type: 3}
   alignmentPrompt: 
   alignmentButtonText: 
   interactionInstruction: Three memories are waiting in this space \u2014 carved

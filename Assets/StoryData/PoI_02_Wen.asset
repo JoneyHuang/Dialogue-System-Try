@@ -19,24 +19,24 @@ MonoBehaviour:
   arrivalButtonText: Meet Wen
   dialogueLines:
   - "I\u2019ve always felt a special connection to this Cathedral, ever since I first
-    visited it in 2011."
-  - Back in 2011, while staying with my homestay Susan as an international student,
-    we came here just a week before the earthquake. The Cathedral Square was vibrant,
-    and I could hear musi ccoming from inside.
-  - 'We only took a quick photo outside on the West Porch and didn''t step in. At
-    the time, it just seemed like an ordinary visit, but I never imagined that would
-    be my last chance. '
-  - 15 years have passed, I revisit here today not only to meet Susan, but also to
-    check the place. The place has gone through so many changes since the earthquake
-    that I hardly remembered what it tused to look like.
-  - Since I never got to step inside back then... could you help me discover what
-    the Cathedral might have sounded like that day?
+    visited here."
+  - Back in 2011, while staying with my homestay host, Susan, as an international
+    student, we came here just a week before the earthquake. The Cathedral Square
+    was vibrant, and I could hear music coming from inside.
+  - We only took a quick photo outside on the West Porch and didn't step in. At the
+    time, it just seemed like an ordinary visit, but I never imagined that would
+    be my last chance.
+  - "I\u2019m revisiting today not only to meet Susan, but also to see how the place
+    looks now. It has changed so much since the earthquake that I can hardly remember
+    what it used to look like."
+  - "Since I never got to step inside back then\u2026 could you please help me discover
+    what the Cathedral might have sounded like that day?"
   voiceClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: e015db3dfa7795a4b91b5761b537b804, type: 3}
+  - {fileID: 8300000, guid: e5e19f044a43deb4ea6ba90d2df24e4d, type: 3}
+  - {fileID: 8300000, guid: 73bf29b22ccf5434180ccfe23b6ae721, type: 3}
+  - {fileID: 8300000, guid: f32063beb96f6244d92f34fbb6d92aa1, type: 3}
+  - {fileID: 8300000, guid: 4099b769e5ff04a4286889f28e7349a4, type: 3}
   alignmentPrompt: Open the camera, and you will see a portal window in front of
     you. Please look around and ensure your surrounding is safe.
   alignmentButtonText: Okay

@@ -280,7 +280,7 @@ public class ExperimentHubController : MonoBehaviour
         // 1. 如果有单独的 StatusText
         if (item.statusText != null)
         {
-            item.statusText.text = item.isCompleted ? "Done ✓" : "Not Started";
+            item.statusText.text = item.isCompleted ? "Done" : "Not Started";
             item.statusText.color = item.isCompleted ? completedColor : notStartedColor;
         }
 
@@ -296,7 +296,7 @@ public class ExperimentHubController : MonoBehaviour
             var btnText = item.launchButton.GetComponentInChildren<TMP_Text>();
             if (btnText != null && item.isCompleted && !btnText.text.EndsWith("✓"))
             {
-                btnText.text += " (Done ✓)";
+                btnText.text += " (Done)";
                 btnText.color = completedColor;
             }
         }

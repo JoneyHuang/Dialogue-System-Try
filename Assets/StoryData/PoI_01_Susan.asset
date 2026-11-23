@@ -19,7 +19,8 @@ MonoBehaviour:
     What''s exactly is she looking for? Let''s find out. '
   arrivalButtonText: Meet Susan
   dialogueLines:
-  - My name is Susan. I grew up and live in Christchurch.
+  - "My name is Susan. I grew up here in Christchurch, and it\u2019s still my home
+    today."
   - Standing here in Cathedral Square now, it feels quite different from what I remember.
     The tower and spire are missing, but they hold a special place in my memory.
     You used to be able to see it from almost anywhere in the city.
@@ -27,22 +28,22 @@ MonoBehaviour:
     I remembered my teacher, Mr Watson, always told us: 'If you are lost, look for
     the Cathedral spire\u2014it's the tallest building in the town!' I heard the
     bell, looked up, and found my way back."
-  - The last time I saw the Cathedral standing as it once was was right before the
-    earthquake, when I visited the Square with my homestay student, Wen. We had no
-    idea how much that ordinary afternoon would come to mean to us.
+  - The last time I saw the Cathedral standing was right before the earthquake, when
+    I visited the Square with my homestay student, Wen. We had no idea how much that
+    ordinary afternoon would come to mean to us.
   - "Now, when I pass by here, I still see the absence of that spire... I always
     try to look up as I used to, and outline its contours in my mind \u2014 it's
     a habit that never left me."
-  - Even when you weren't standing right next to it, knowing where the Cathedral
-    was helped you find your bearings. I suppose it was always a part of how I knew
-    I was home...
+  - "Even when you weren\u2019t standing right next to it, knowing where the Cathedral
+    was helped you find your bearings. I suppose it was always a part of how I remember
+    Christchurch."
   voiceClips:
-  - {fileID: 8300000, guid: a6492cf4dfb78de48b9d62258b922944, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: fd1ceef2f6577334db1e3cf18a9d8e11, type: 3}
+  - {fileID: 8300000, guid: 54f53d9c4e6619d4f8040b960f951c6c, type: 3}
+  - {fileID: 8300000, guid: 6aa361a7422f98f43ac57d9aef3ac882, type: 3}
+  - {fileID: 8300000, guid: 049b8b87d25e9f34ea3a7b1647631674, type: 3}
   - {fileID: 8300000, guid: 97294186df02df54abfc8056a4826ed5, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 1def5b0233171c641abe4c31884dace0, type: 3}
   alignmentPrompt: 'Point your camera to the Cathedral site, and observe what used
     to stand here in the Square. You can choose 2D historical and 3D model to observe.
     Slide the bar to adjust the opacity of historical photos. '
