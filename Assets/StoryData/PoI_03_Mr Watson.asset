@@ -40,9 +40,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5afaee1a5bfd5c3429ec113c9a0cd0b6, type: 3}
   alignmentPrompt: 
   alignmentButtonText: 
-  interactionInstruction: Three memories are waiting in this space \u2014 carved
-    in stone, reflected in glass, and carried in music. Explore them at your own
-    pace, and feel free to look around and touch your surroundings.
+  interactionInstruction: Walk along the panel, and bring your tablet closer to it
+    and discover 3 hotspots related to Mr Watson's memory.
   interactionButtonText: Start Exploring
   reflectionPrompt: '"What do you think makes a place worth remembering?"'
   reflectionButtonText: Continue

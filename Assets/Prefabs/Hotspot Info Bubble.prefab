@@ -169,15 +169,15 @@ RectTransform:
   m_GameObject: {fileID: 1634254328590935170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06552204, y: 0.096909426, z: 0.36656964}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5314814385384510892}
-  m_Father: {fileID: 2944846800285759558}
+  m_Father: {fileID: 8002929861620968226}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.938934, y: -55.4739}
+  m_AnchoredPosition: {x: 197.47427, y: -57.430267}
   m_SizeDelta: {x: 57.6364, y: 57.6364}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8273422422065469879
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634254328590935170}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -208,8 +208,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bcb23c68f6e9a4b488c9986ef0b3623c, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -757,8 +757,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 15.262041, y: 10.318913, z: 2.727995}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8555693717201406423}
+  m_Children: []
   m_Father: {fileID: 8002929861620968226}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -847,19 +846,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2242491337112535757}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: 661ced26c5143784fb7f7d7df9dfa7e7, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5231920088882337143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1115,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -5.042465, y: 0, z: 2.9403458, w: 0}
+  m_margin: {x: -5.042465, y: 0, z: 2.9403458, w: -14.574764}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1307,6 +1294,7 @@ RectTransform:
   - {fileID: 7082298449019681248}
   - {fileID: 2988543467970927015}
   - {fileID: 4185626801681524291}
+  - {fileID: 8555693717201406423}
   - {fileID: 2944846800285759558}
   - {fileID: 2533943445802955933}
   - {fileID: 4048678464497540092}
@@ -1364,7 +1352,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &754366741999852100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,7 +1508,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -1551,7 +1539,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -406.96014, y: -501.28204, z: -924.07306, w: 275.61487}
+  m_margin: {x: -406.96014, y: -539.26965, z: -924.07306, w: 275.61487}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -49,6 +49,14 @@ public class InfoBubbleTrigger : MonoBehaviour
     public UnityEngine.Events.UnityEvent onBubbleOpened;
     public UnityEngine.Events.UnityEvent onBubbleClosed;
 
+    [Header("Audio First Mode (e.g. Choir)")]
+    public bool playAudioFirst = false;
+    public AudioClip ambientAudioClip;
+    public GameObject listenOnlyBanner;
+    public Button openDetailFromBannerButton;
+    
+    private AudioSource audioSource;
+
     [Header("Full Screen Viewer")]
     [SerializeField] private GameObject fullScreenViewerPanel;
     [SerializeField] private Image fullScreenImageDisplay;
@@ -90,6 +98,20 @@ public class InfoBubbleTrigger : MonoBehaviour
         {
             closeViewerButton.onClick.RemoveListener(CloseFullScreenImage);
             closeViewerButton.onClick.AddListener(CloseFullScreenImage);
+        }
+
+        if (ambientAudioClip != null)
+        {
+        audioSource = gameObject.GetComponent<AudioSource>();
+        if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = ambientAudioClip;
+        audioSource.playOnAwake = false;
+        audioSource.loop = true; 
+        }
+
+        if (openDetailFromBannerButton != null)
+        {
+        openDetailFromBannerButton.onClick.AddListener(ShowFullInfoFromBanner);
         }
     }
 
@@ -221,6 +243,39 @@ public class InfoBubbleTrigger : MonoBehaviour
 
     public void TriggerOpen()
     {
+        // 如果开启了音频优先模式
+        if (playAudioFirst)
+        {
+            // 1. 播放音乐
+            if (audioSource != null && !audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+
+            // 2. 显示精简的小 Banner，不弹大 Bubble
+            if (listenOnlyBanner != null)
+            {
+                listenOnlyBanner.SetActive(true);
+            }
+
+            HasBeenInspected = true;
+            onBubbleOpened?.Invoke();
+            return;
+        }
+
+        // 普通模式（Stone 等原有逻辑不变）
+        OpenFullBubble();
+    }
+
+    // 从小 Banner 点击“查看详情”时调用
+    public void ShowFullInfoFromBanner()
+    {
+        if (listenOnlyBanner != null) listenOnlyBanner.SetActive(false);
+        OpenFullBubble();
+    }
+
+    private void OpenFullBubble()
+    {
         if (infoBubble != null)
         {
             ShowPage(0);
@@ -329,10 +384,9 @@ public class InfoBubbleTrigger : MonoBehaviour
 
     public void CloseInfoBubble()
     {
-        if (infoBubble != null)
-        {
-            infoBubble.SetActive(false);
-            onBubbleClosed?.Invoke();
-        }
+        if (infoBubble != null) infoBubble.SetActive(false);
+        if (listenOnlyBanner != null) listenOnlyBanner.SetActive(false);
+        if (audioSource != null && audioSource.isPlaying) audioSource.Stop();
+        onBubbleClosed?.Invoke();
     }
 }
