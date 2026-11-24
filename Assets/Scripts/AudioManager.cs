@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
     #region BGM Controls
 
     /// <summary>
-    /// 平滑淡入背景音乐（若音乐已在播放且片段相同，则保持播放仅平滑调整音量）
+    /// Fade in
     /// </summary>
     public void FadeInBGM(AudioClip clip = null, float duration = -1f)
     {
@@ -125,7 +125,7 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 平滑淡出背景音乐并暂停
+    /// Fade out
     /// </summary>
     public void FadeOutBGM(float duration = -1f)
     {

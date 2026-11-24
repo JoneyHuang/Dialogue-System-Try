@@ -91,6 +91,22 @@ public class MeetMePanelController : MonoBehaviour
 
 
     // Optional: show / hide helpers
+    // Reset all UI fields to defaults to avoid state leakage between uses
+    public void ResetPanel()
+    {
+        if (titleText != null) titleText.text = "";
+        if (nameText != null)
+        {
+            nameText.text = "";
+            nameText.color = nameColor; // reset to default green
+        }
+        if (briefText != null) briefText.text = "";
+        // Reset button text to empty
+        SetButtonText("");
+        // Remove all action listeners
+        if (actionButton != null) actionButton.onClick.RemoveAllListeners();
+    }
+
     public void Show() => gameObject.SetActive(true);
     public void Hide() => gameObject.SetActive(false);
 }

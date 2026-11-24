@@ -131,7 +131,10 @@ public class ExperimentHubController : MonoBehaviour
 
         if (locationInfoPanel != null)
         {
-            // 1. 动态设置左上角小标题（避免固定的 MEMORY UNLOCKED 显得不合时宜）
+            // Reset panel UI to clear any previous state
+            locationInfoPanel.ResetPanel();
+
+            // 1. Dynamic changing title
             string header = !string.IsNullOrEmpty(item.cardHeaderTitle) ? item.cardHeaderTitle : "LOCATION ARCHIVE";
             locationInfoPanel.SetTitle(header);
 
@@ -323,4 +326,3 @@ public class ExperimentHubController : MonoBehaviour
         return null;
     }
 }
-
