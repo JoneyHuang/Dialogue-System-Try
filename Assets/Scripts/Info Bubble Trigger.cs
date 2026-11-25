@@ -80,9 +80,6 @@ public class InfoBubbleTrigger : MonoBehaviour
 
     private void Start()
     {
-        if (nextButton != null) nextButton.onClick.AddListener(NextPage);
-        if (backButton != null) backButton.onClick.AddListener(PreviousPage);
-        ShowPage(0);
         if (infoBubble != null)
             infoBubble.SetActive(false);
         if (pictureImage != null)
@@ -278,6 +275,17 @@ public class InfoBubbleTrigger : MonoBehaviour
     {
         if (infoBubble != null)
         {
+            if (nextButton != null)
+            {
+                nextButton.onClick.RemoveAllListeners();
+                nextButton.onClick.AddListener(NextPage);
+            }
+            if (backButton != null)
+            {
+                backButton.onClick.RemoveAllListeners();
+                backButton.onClick.AddListener(PreviousPage);
+            }
+
             ShowPage(0);
             infoBubble.SetActive(true);
             HasBeenInspected = true;
@@ -300,6 +308,9 @@ public class InfoBubbleTrigger : MonoBehaviour
         int totalPages = GetTotalPageCount();
         if (totalPages == 0) return;
 
+        // Debug log to trace which hotspot and page is being shown
+        Debug.Log($"[InfoBubble] {gameObject.name} ShowPage {page} (total {totalPages})");
+
         currentPage = Mathf.Clamp(page, 0, totalPages - 1);
 
         string currentTitle = "";
@@ -320,6 +331,9 @@ public class InfoBubbleTrigger : MonoBehaviour
             if (pageTitles != null && currentPage < pageTitles.Length) currentTitle = pageTitles[currentPage];
             if (pageBodies != null && currentPage < pageBodies.Length) currentBody = pageBodies[currentPage];
         }
+
+        // Log the resolved title for further debugging
+        Debug.Log($"[InfoBubble] {gameObject.name} resolved title: '{currentTitle}'");
 
         // 1. title
         if (titleText != null) titleText.text = currentTitle;

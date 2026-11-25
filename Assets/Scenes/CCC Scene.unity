@@ -153,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.55534, y: 0.05892}
-  m_SizeDelta: {x: 219.9058, y: 34.51243}
+  m_AnchoredPosition: {x: -0.0000047684, y: -0.72}
+  m_SizeDelta: {x: 215.96516, y: 33.89397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8944866
 CanvasRenderer:
@@ -520,7 +520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.9000244, y: -234.7}
+  m_AnchoredPosition: {x: 3.8999023, y: -234.69995}
   m_SizeDelta: {x: 777.16, y: -476.4905}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &112886492
@@ -685,13 +685,13 @@ MonoBehaviour:
   onBubbleClosed:
     m_PersistentCalls:
       m_Calls: []
-  fullScreenViewerPanel: {fileID: 151719725}
-  fullScreenImageDisplay: {fileID: 8944867}
-  closeViewerButton: {fileID: 501588901}
   playAudioFirst: 0
   ambientAudioClip: {fileID: 0}
   listenOnlyBanner: {fileID: 0}
   openDetailFromBannerButton: {fileID: 0}
+  fullScreenViewerPanel: {fileID: 151719725}
+  fullScreenImageDisplay: {fileID: 8944867}
+  closeViewerButton: {fileID: 501588901}
 --- !u!65 &113666164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -886,7 +886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16862746, g: 0.16862746, b: 0.16862746, a: 0.9019608}
+  m_Color: {r: 0.16862746, g: 0.16862746, b: 0.16862746, a: 0.9411765}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2026,7 +2026,7 @@ Transform:
   m_GameObject: {fileID: 332543087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.18294667, z: -0, w: 0.9831229}
-  m_LocalPosition: {x: 55.2, y: 0.73, z: -22.4}
+  m_LocalPosition: {x: 54.97, y: 0.73, z: -22.16}
   m_LocalScale: {x: 4.7151756, y: 4.4468, z: 0.2911}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2837,7 +2837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 123.4, y: 21.482576}
+  m_AnchoredPosition: {x: 111.8, y: 17.88}
   m_SizeDelta: {x: 67.764, y: 12.43275}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &505994327
@@ -4965,6 +4965,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 278740091}
     m_Modifications:
+    - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_Size.z
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1116093096605894342, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_Name
       value: HotSpot (Stone)
@@ -4991,11 +5003,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.0000196
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.z
@@ -5039,6 +5051,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6320489057206006054, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
@@ -5131,8 +5147,6 @@ PrefabInstance:
       value: 'For some Christchurch families, these materials carry deeply personal
         memories. Their fathers and grandfathers worked in quarries, shaped stone
         as stonemasons, or worked with timber as craftspeople.
-
-
 
         Touch and
         feel the stone and wood. Notice its texture and imagine the hands that shaped
@@ -6679,13 +6693,13 @@ MonoBehaviour:
   onBubbleClosed:
     m_PersistentCalls:
       m_Calls: []
-  fullScreenViewerPanel: {fileID: 151719725}
-  fullScreenImageDisplay: {fileID: 8944867}
-  closeViewerButton: {fileID: 501588901}
   playAudioFirst: 0
   ambientAudioClip: {fileID: 0}
   listenOnlyBanner: {fileID: 0}
   openDetailFromBannerButton: {fileID: 0}
+  fullScreenViewerPanel: {fileID: 151719725}
+  fullScreenImageDisplay: {fileID: 8944867}
+  closeViewerButton: {fileID: 501588901}
 --- !u!1 &1220637581
 GameObject:
   m_ObjectHideFlags: 0
@@ -9919,13 +9933,13 @@ MonoBehaviour:
   onBubbleClosed:
     m_PersistentCalls:
       m_Calls: []
-  fullScreenViewerPanel: {fileID: 151719725}
-  fullScreenImageDisplay: {fileID: 8944867}
-  closeViewerButton: {fileID: 501588901}
   playAudioFirst: 0
   ambientAudioClip: {fileID: 0}
   listenOnlyBanner: {fileID: 0}
   openDetailFromBannerButton: {fileID: 0}
+  fullScreenViewerPanel: {fileID: 151719725}
+  fullScreenImageDisplay: {fileID: 8944867}
+  closeViewerButton: {fileID: 501588901}
 --- !u!65 &1681077558
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10836,15 +10850,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_Size.x
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_Size.y
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_Size.z
-      value: 0.7
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1116093096605894342, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_Name
@@ -10872,15 +10886,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17704,7 +17718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2108227905
 Transform:
   m_ObjectHideFlags: 0
@@ -20960,6 +20974,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 278740091}
     m_Modifications:
+    - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014591820107552059, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_Size.z
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1116093096605894342, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_Name
       value: HotSpot (Choir)
@@ -20986,15 +21012,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21034,6 +21060,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6320489057206006054, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
+      propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6320489057206006054, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
