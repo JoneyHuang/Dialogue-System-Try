@@ -116,11 +116,11 @@ public class M02Controller : MonoBehaviour
             finishViewingButton.onClick.AddListener(OnFinishViewingClicked);
         }
 
-        if (capturePhotoButton != null)
-        {
-            capturePhotoButton.onClick.RemoveListener(OnCapturePhotoClicked);
-            capturePhotoButton.onClick.AddListener(OnCapturePhotoClicked);
-        }
+        //if (capturePhotoButton != null)
+        //{
+          //  capturePhotoButton.onClick.RemoveListener(OnCapturePhotoClicked);
+            //capturePhotoButton.onClick.AddListener(OnCapturePhotoClicked);
+        //}
 
         if (resetPortalButton != null)
         {
@@ -201,17 +201,16 @@ public class M02Controller : MonoBehaviour
             meetMePanelController.SetBrief(brief);
             meetMePanelController.SetAvatar(avatar);
             meetMePanelController.SetAction(StartDialogue);
-            meetMePanelController.Show();
 
             meetMePanelController.SetCloseAction(() =>
             {
-                meetMePanelController.Hide();
                 currentState = FlowState.Hidden;
                 if (currentPinTrigger != null)
                 {
                     currentPinTrigger.ResetTrigger();
                 }
             });
+
             meetMePanelController.Show();
         }
         
@@ -328,14 +327,14 @@ public class M02Controller : MonoBehaviour
         if (portalHudRoot != null) portalHudRoot.SetActive(true);
         if (finishViewingButton != null) finishViewingButton.gameObject.SetActive(true);
         if (capturePhotoButton != null) capturePhotoButton.gameObject.SetActive(true);
-        Debug.Log("[M02Controller] 沉浸期结束，已激活操作按钮 (拍照 / 完成)。");
+        Debug.Log("[M02Controller] User can choose Move On at this stage");
     }
 
-    public void OnCapturePhotoClicked()
-    {
-        Debug.Log("[M02Controller] User clicked Capture Photo button! Preparing to record and give to Wen.");
-        OnFinishViewingClicked();
-    }
+    //public void OnCapturePhotoClicked()
+    //{
+      //  Debug.Log("[M02Controller] User clicked Capture Photo button! Preparing to record and give to Wen.");
+        //OnFinishViewingClicked();
+    //}
 
     public void OnResetPortalClicked()
     {

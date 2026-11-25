@@ -154,9 +154,9 @@ public class ExperimentHubController : MonoBehaviour
             });
 
             // 2. 退出机制：点击卡片右上角退出或返回时，仅关闭卡片，回到 Hub 全景图
+            // Hide() is now built into SetCloseAction, no need to call it manually
             locationInfoPanel.SetCloseAction(() =>
             {
-                locationInfoPanel.Hide();
                 if (hubPanel != null) hubPanel.SetActive(true);
             });
 

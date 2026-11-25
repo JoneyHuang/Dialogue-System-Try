@@ -210,16 +210,13 @@ public class M01Controller : MonoBehaviour
       
         if (meetMePanelController != null)
         {
-            meetMePanelController.SetTitle("MEMORY UNLOCKED");
             meetMePanelController.SetName(name);
             meetMePanelController.SetBrief(brief);
             meetMePanelController.SetAvatar(avatar);
-            meetMePanelController.SetButtonText(btnText);
             meetMePanelController.SetAction(StartDialogue);
 
             meetMePanelController.SetCloseAction(() =>
             {
-                meetMePanelController.Hide();
                 currentState = FlowState.Hidden;
                 if (currentPinTrigger != null)
                 {

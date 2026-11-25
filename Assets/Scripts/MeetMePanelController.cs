@@ -62,6 +62,7 @@ public class MeetMePanelController : MonoBehaviour
         if (closeButton != null)
         {
             closeButton.onClick.RemoveAllListeners();
+            closeButton.onClick.AddListener(Hide); // always hide the panel first
             if (onClose != null) closeButton.onClick.AddListener(onClose);
         }
     }
