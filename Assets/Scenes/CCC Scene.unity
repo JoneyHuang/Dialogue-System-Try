@@ -719,6 +719,8 @@ MonoBehaviour:
   closeAudioButton: {fileID: 0}
   lyricsText: {fileID: 0}
   lyrics: []
+  lyricScrollOffset: 20
+  lyricAnimSpeed: 10
   fullScreenViewerPanel: {fileID: 151719725}
   fullScreenImageDisplay: {fileID: 8944867}
   closeViewerButton: {fileID: 501588901}
@@ -3877,6 +3879,7 @@ MonoBehaviour:
   defaultConfirmClip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   ContinueClip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   NextPreviousClip: {fileID: 8300000, guid: 6e8772b49f34d402a90016ed445d8a2f, type: 3}
+  TriggerClip: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   sfxVolume: 0.66
 --- !u!1 &750155124
 GameObject:
@@ -3912,7 +3915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1413, y: 852}
+  m_AnchoredPosition: {x: -1332, y: 798}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &750155126
@@ -4001,7 +4004,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -764.44226, w: 0}
+  m_margin: {x: 0, y: -6.020508, z: -764.44226, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5827,6 +5830,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  triggerSound: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   allowClickTrigger: 1
   maxClickDistance: 4
 --- !u!135 &1121803838
@@ -6147,10 +6151,10 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 91
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 82.7
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -6215,7 +6219,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.965
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -6834,6 +6838,8 @@ MonoBehaviour:
   closeAudioButton: {fileID: 0}
   lyricsText: {fileID: 0}
   lyrics: []
+  lyricScrollOffset: 20
+  lyricAnimSpeed: 10
   fullScreenViewerPanel: {fileID: 151719725}
   fullScreenImageDisplay: {fileID: 8944867}
   closeViewerButton: {fileID: 501588901}
@@ -7357,6 +7363,7 @@ GameObject:
   - component: {fileID: 1274996060}
   - component: {fileID: 1274996062}
   - component: {fileID: 1274996061}
+  - component: {fileID: 1274996063}
   m_Layer: 5
   m_Name: Lyrics
   m_TagString: Untagged
@@ -7483,6 +7490,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274996059}
   m_CullTransparentMesh: 1
+--- !u!225 &1274996063
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274996059}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1278016498
 GameObject:
   m_ObjectHideFlags: 0
@@ -8023,6 +8042,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  triggerSound: {fileID: 0}
   allowClickTrigger: 1
   maxClickDistance: 2
 --- !u!114 &1375737372
@@ -8870,7 +8890,7 @@ Transform:
   m_GameObject: {fileID: 1487578148}
   serializedVersion: 2
   m_LocalRotation: {x: 1.1186123e-21, y: 0.2009062, z: 1.2647716e-21, w: 0.97961044}
-  m_LocalPosition: {x: 55.898, y: 1.1800009, z: -23.175001}
+  m_LocalPosition: {x: 55.446316, y: 0.6530353, z: -22.982094}
   m_LocalScale: {x: 0.1, y: 0.10000001, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -10013,6 +10033,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  triggerSound: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   allowClickTrigger: 1
   maxClickDistance: 4
 --- !u!135 &1672887801
@@ -10290,6 +10311,8 @@ MonoBehaviour:
   closeAudioButton: {fileID: 0}
   lyricsText: {fileID: 0}
   lyrics: []
+  lyricScrollOffset: 20
+  lyricAnimSpeed: 10
   fullScreenViewerPanel: {fileID: 151719725}
   fullScreenImageDisplay: {fileID: 8944867}
   closeViewerButton: {fileID: 501588901}
@@ -11356,15 +11379,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 55.91
+      value: 55.458317
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.837
+      value: 0.3100344
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.22
+      value: -23.027092
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17974,6 +17997,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  triggerSound: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   allowClickTrigger: 1
   maxClickDistance: 4
 --- !u!135 &2030300425
@@ -18176,7 +18200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2108227905
 Transform:
   m_ObjectHideFlags: 0
@@ -18734,8 +18758,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18773,7 +18797,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -97.52583, y: 41.26089, z: -97.36093, w: 1.2109299}
+  m_margin: {x: -97.52583, y: 24.475893, z: -97.36093, w: 1.2109299}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -21371,8 +21395,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 7, y: 331.98}
-  m_SizeDelta: {x: -630.3433, y: 89.85}
+  m_AnchoredPosition: {x: 7, y: 361}
+  m_SizeDelta: {x: -674.2237, y: 120.3679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8150316963004870456
 MonoBehaviour:
@@ -21642,15 +21666,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 57.97
+      value: 57.8
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.82
+      value: -0.284
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.02
+      value: -22.69
       objectReference: {fileID: 0}
     - target: {fileID: 4334646727992290044, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21808,10 +21832,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: pages.Array.data[0].body
-      value: "Christchurch Cathedral Choir is New Zealand\u2019s only professional
-        choir for trebles and adults, and one of two in the southern hemisphere with
-        its own choir school. Though the quake silenced the old building, this tradition
-        lives on through its junior choristers at the Transitional Cathedral."
+      value: What you just heard was 'Nunc Dimittis' by Christchurch Cathedral Choir.
+        Though the quake silenced the old building, this tradition lives on through
+        its junior choristers at the Transitional Cathedral.
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: pages.Array.data[1].body
@@ -21827,7 +21850,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: lyrics.Array.data[0].time
-      value: 0.21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: lyrics.Array.data[1].text
@@ -21835,15 +21858,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: lyrics.Array.data[1].time
-      value: 0.2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: lyrics.Array.data[2].text
-      value: '"Amen."'
+      value: '- Nunc Dimittis'
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: lyrics.Array.data[2].time
-      value: 0.2
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 7510444409258083804, guid: 702da5c622672dd4e8f383f1b6ccafc5, type: 3}
       propertyPath: pages.Array.data[0].title

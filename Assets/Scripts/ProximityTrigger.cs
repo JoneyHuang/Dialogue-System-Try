@@ -31,6 +31,9 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
     [Tooltip("Invoked when the player enters the triggerDistance or collides with the pin.")]
     public UnityEvent onTriggered;
 
+    [Header("Audio")]
+    public AudioClip triggerSound;
+
     [Header("Click / Fallback Trigger")]
     [Tooltip("Allow triggering the pin by clicking or tapping it.")]
     public bool allowClickTrigger = true;
@@ -115,22 +118,27 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    /// <summary>
-    /// Executes the trigger action, fires onTriggered event, and hides the pin.
-    /// </summary>
-    public void TriggerPinAction()
-    {
-        if (hasTriggered) return;
-        hasTriggered = true;
-
-        Debug.Log($"[ProximityTrigger] Pin '{gameObject.name}' reached! Invoking onTriggered event.");
-
-        onTriggered?.Invoke();
-
-        if (hidePinOnTrigger)
-        {
+       /// <summary>
+       /// Executes the trigger action, fires onTriggered event, and hides the pin.
+       /// </summary>
+       public void TriggerPinAction()
+       {
+         if (hasTriggered) return;
+         hasTriggered = true;
+         Debug.Log($"[ProximityTrigger] Pin '{gameObject.name}' reached! Invoking onTriggered event.");
+         
+         // 统一在此处播放触发音效（无论是靠近、碰撞还是点击触发，都会播放）
+         if (AudioManager.Instance != null && triggerSound != null)
+         {
+            AudioManager.Instance.PlaySFX(triggerSound);
+         }
+         
+         onTriggered?.Invoke();
+         
+         if (hidePinOnTrigger)
+         {
             gameObject.SetActive(false);
-        }
+         }
     }
 
     /// <summary>

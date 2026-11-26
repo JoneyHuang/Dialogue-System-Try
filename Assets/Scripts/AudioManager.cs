@@ -43,6 +43,9 @@ public class AudioManager : MonoBehaviour
     [Tooltip("Next/Previous Clip")]
     public AudioClip NextPreviousClip;
 
+    [Tooltip("Trigger Sound")]
+    public AudioClip TriggerClip;
+
     [Tooltip("SFX Volume (0~1)")]
     [Range(0f, 1f)]
     public float sfxVolume = 0.8f;
@@ -188,6 +191,14 @@ public class AudioManager : MonoBehaviour
     public void NextPrevious()
     {
         PlaySFX(NextPreviousClip);
+    }
+
+    /// <summary>
+    /// Trigger Sound
+    /// </summary>
+    public void TriggerSound()
+    {
+        PlaySFX(TriggerClip);
     }
 
     /// <summary>

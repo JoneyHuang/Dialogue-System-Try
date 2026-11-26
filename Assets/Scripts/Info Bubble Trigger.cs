@@ -68,7 +68,11 @@ public class InfoBubbleTrigger : MonoBehaviour
     [Header("Lyrics")]
     public TMP_Text lyricsText;
     public List<LyricLine> lyrics = new List<LyricLine>();
+    public float lyricScrollOffset = 20f;
+    public float lyricAnimSpeed = 10f;
     private int currentLyricIndex = -1;
+    private Vector2 lyricsTargetPos;
+    private CanvasGroup lyricsCanvasGroup;
 
     [Header("Full Screen Viewer")]
     [SerializeField] private GameObject fullScreenViewerPanel;
@@ -86,6 +90,14 @@ public class InfoBubbleTrigger : MonoBehaviour
     {
         myCollider = GetComponent<Collider>();
         targetCamera = Camera.main;
+
+        if (lyricsText != null)
+        {
+            lyricsTargetPos = lyricsText.rectTransform.anchoredPosition;
+            lyricsCanvasGroup = lyricsText.GetComponent<CanvasGroup>();
+            if (lyricsCanvasGroup == null)
+                lyricsCanvasGroup = lyricsText.gameObject.AddComponent<CanvasGroup>();
+        }
 
         MigrateLegacyDataIfNeeded();
     }
@@ -237,6 +249,18 @@ public class InfoBubbleTrigger : MonoBehaviour
          {
            currentLyricIndex = index;
            lyricsText.text = lyrics[index].text;
+           lyricsText.rectTransform.anchoredPosition = lyricsTargetPos - new Vector2(0f, lyricScrollOffset);
+           if (lyricsCanvasGroup != null) lyricsCanvasGroup.alpha = 0f;
+          }
+
+          lyricsText.rectTransform.anchoredPosition = Vector2.Lerp(
+              lyricsText.rectTransform.anchoredPosition,
+              lyricsTargetPos,
+              Time.deltaTime * lyricAnimSpeed
+          );
+          if (lyricsCanvasGroup != null)
+          {
+              lyricsCanvasGroup.alpha = Mathf.Lerp(lyricsCanvasGroup.alpha, 1f, Time.deltaTime * lyricAnimSpeed);
           }
         }
     }
