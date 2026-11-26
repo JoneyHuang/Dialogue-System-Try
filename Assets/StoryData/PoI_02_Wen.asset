@@ -43,5 +43,11 @@ MonoBehaviour:
   interactionInstruction: 'Tips: Walk closer to feel how the audio flows in the space.
     Take your time to  observe and listen. '
   interactionButtonText: Got it
-  reflectionPrompt: Take a moment to reflect on what you've just experienced.
+  reflectionPrompt: 'Put down the tablet for a second and focus on the Cathedral
+    site. You can read the information on the panel, or simply take a moment to observe.
+
+    Ask
+    yourself: What has changed in this place?
+
+'
   reflectionButtonText: Continue

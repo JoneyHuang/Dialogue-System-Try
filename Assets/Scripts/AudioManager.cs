@@ -11,33 +11,39 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [Header("BGM (Ambient Music)")]
-    [Tooltip("背景音乐 AudioSource (不指定则自动创建)")]
+    [Tooltip("BGM AudioSource")]
     public AudioSource bgmSource;
 
-    [Tooltip("默认背景音乐片段 (如 Mt. Berkoo 系列)")]
+    [Tooltip("Default BGM")]
     public AudioClip defaultBgmClip;
 
-    [Tooltip("BGM 目标音量 (0~1)")]
+    [Tooltip("BGM Target Volumn (0~1)")]
     [Range(0f, 1f)]
     public float bgmMaxVolume = 0.4f;
 
-    [Tooltip("默认淡入/淡出过渡时长 (秒)")]
+    [Tooltip("Fade in/out Duration")]
     public float defaultFadeDuration = 1.5f;
 
-    [Tooltip("是否在游戏启动时自动淡入背景音乐")]
+    [Tooltip("Auto play on start")]
     public bool autoPlayOnStart = true;
 
     [Header("UX Sound Effects (SFX)")]
-    [Tooltip("音效专用 AudioSource (不指定则自动创建)")]
+    [Tooltip("SFX AudioSource")]
     public AudioSource sfxSource;
 
-    [Tooltip("通用按钮点击音效 (可选)")]
+    [Tooltip("Button Click Clip")]
     public AudioClip defaultButtonClickClip;
 
-    [Tooltip("确认/成功音效 (可选)")]
+    [Tooltip("Confirm Clip")]
     public AudioClip defaultConfirmClip;
 
-    [Tooltip("SFX 音量 (0~1)")]
+    [Tooltip("Continue Clip")]
+    public AudioClip ContinueClip;
+
+    [Tooltip("Next/Previous Clip")]
+    public AudioClip NextPreviousClip;
+
+    [Tooltip("SFX Volume (0~1)")]
     [Range(0f, 1f)]
     public float sfxVolume = 0.8f;
 
@@ -70,7 +76,7 @@ public class AudioManager : MonoBehaviour
 
     private void SetupSources()
     {
-        // 1. 初始化 BGM Source
+        // 1. Default BGM Source
         if (bgmSource == null)
         {
             bgmSource = gameObject.AddComponent<AudioSource>();
@@ -161,7 +167,7 @@ public class AudioManager : MonoBehaviour
     #region SFX Controls
 
     /// <summary>
-    /// 播放通用按钮点击音效
+    /// Click
     /// </summary>
     public void PlayButtonClick()
     {
@@ -169,12 +175,29 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 播放确认/到达/成功音效
+    /// Confirm/Arrive
     /// </summary>
     public void PlayConfirm()
     {
         PlaySFX(defaultConfirmClip);
     }
+
+    /// <summary>
+    /// Next/Previous
+    /// </summary>
+    public void NextPrevious()
+    {
+        PlaySFX(NextPreviousClip);
+    }
+
+    /// <summary>
+    /// Continue/Move on
+    /// </summary>
+    public void Continue()
+    {
+        PlaySFX(ContinueClip);
+    }
+
 
     /// <summary>
     /// 播放指定音效 (OneShot，多个音效可重叠播放且不互相打断)

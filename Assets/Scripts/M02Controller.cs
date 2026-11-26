@@ -241,7 +241,7 @@ public class M02Controller : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[M02Controller] 未找到 DialogueController，直接进入 Portal 引导！");
+            Debug.LogError("[M02Controller] DialogueController not found -> Portal");
             ShowPortalInstruction();
         }
     }
@@ -305,7 +305,7 @@ public class M02Controller : MonoBehaviour
         Camera cam = Camera.main;
         if (cam == null)
         {
-            Debug.LogWarning("[M02Controller] Camera.main 为空，无法动态放置 Portal！");
+            Debug.LogWarning("[M02Controller] Camera.main is empty; please place Portal");
             return;
         }
         Transform camTr = cam.transform;

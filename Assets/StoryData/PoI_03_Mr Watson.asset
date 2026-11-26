@@ -43,5 +43,5 @@ MonoBehaviour:
   interactionInstruction: Walk along the panel, and bring your tablet closer to it
     and discover 3 hotspots related to Mr Watson's memory.
   interactionButtonText: Start Exploring
-  reflectionPrompt: '"What do you think makes a place worth remembering?"'
+  reflectionPrompt: What do you think makes a place worth remembering?
   reflectionButtonText: Continue

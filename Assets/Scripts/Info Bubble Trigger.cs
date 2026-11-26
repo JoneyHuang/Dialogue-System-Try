@@ -54,8 +54,21 @@ public class InfoBubbleTrigger : MonoBehaviour
     public AudioClip ambientAudioClip;
     public GameObject listenOnlyBanner;
     public Button openDetailFromBannerButton;
-    
+    public Button closeAudioButton;
+
     private AudioSource audioSource;
+
+    [System.Serializable]
+    public class LyricLine
+    {
+      public float time; // 该句歌词开始的时间（秒）
+      public string text;
+    }
+
+    [Header("Lyrics")]
+    public TMP_Text lyricsText;
+    public List<LyricLine> lyrics = new List<LyricLine>();
+    private int currentLyricIndex = -1;
 
     [Header("Full Screen Viewer")]
     [SerializeField] private GameObject fullScreenViewerPanel;
@@ -74,7 +87,6 @@ public class InfoBubbleTrigger : MonoBehaviour
         myCollider = GetComponent<Collider>();
         targetCamera = Camera.main;
 
-        // 如果没有配置新的 pages，但有旧的 pageTitles 和 pageBodies，自动转换合并
         MigrateLegacyDataIfNeeded();
     }
 
@@ -103,15 +115,32 @@ public class InfoBubbleTrigger : MonoBehaviour
         if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = ambientAudioClip;
         audioSource.playOnAwake = false;
-        audioSource.loop = true; 
+        audioSource.loop = false; 
         }
 
         if (openDetailFromBannerButton != null)
         {
         openDetailFromBannerButton.onClick.AddListener(ShowFullInfoFromBanner);
         }
+    
+        if (closeAudioButton != null)
+        {
+        closeAudioButton.onClick.AddListener(CloseAudioBanner);
+        }
     }
-
+    
+    public void CloseAudioBanner()
+    {
+       if (audioSource != null && audioSource.isPlaying)
+       {
+        audioSource.Stop();
+       }
+       
+       if (listenOnlyBanner != null)
+       {
+        listenOnlyBanner.SetActive(false);
+       }
+    }
     private void MigrateLegacyDataIfNeeded()
     {
         if (pages == null || pages.Count == 0)
@@ -192,6 +221,23 @@ public class InfoBubbleTrigger : MonoBehaviour
         else if (Input.GetMouseButtonDown(0))
         {
             CheckRaycastHit(Input.mousePosition);
+        }
+        
+        if (audioSource != null && audioSource.isPlaying && lyricsText != null && lyrics.Count > 0)
+        {
+          float t = audioSource.time;
+          int index = 0;
+          for (int i = 0; i < lyrics.Count; i++)
+          {
+             if (t >= lyrics[i].time) index = i;
+            else break;
+          }
+
+        if (index != currentLyricIndex)
+         {
+           currentLyricIndex = index;
+           lyricsText.text = lyrics[index].text;
+          }
         }
     }
 

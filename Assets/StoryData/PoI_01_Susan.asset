@@ -50,6 +50,10 @@ MonoBehaviour:
   alignmentButtonText: Okay
   interactionInstruction: 
   interactionButtonText: Got it
-  reflectionPrompt: 'Take a moment to reflect on what you''ve just experienced: What
-    did the Cathedral mean to the people living in this city?'
+  reflectionPrompt: 'Now, put down your tablet and take a moment to look around Cathedral
+    Square.
+
+
+    Think about what you have just experienced: What did the Cathedral
+    mean to the people who lived in this city?'
   reflectionButtonText: Continue

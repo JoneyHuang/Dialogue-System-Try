@@ -6,7 +6,7 @@ using TMPro;
 public class TextBreathing : MonoBehaviour
 {
     [Header("Intensity")]
-    [Range(0f, 1f)] public float minAlpha = 0.4f;
+    [Range(0f, 1f)] public float minAlpha = 0.25f;
     [Range(0f, 1f)] public float maxAlpha = 1f;
     public float period = 1.6f;
     public bool onlyWhenInteractable = true;
