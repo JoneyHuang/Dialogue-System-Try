@@ -61,7 +61,7 @@ public class InfoBubbleTrigger : MonoBehaviour
     [System.Serializable]
     public class LyricLine
     {
-      public float time; // 该句歌词开始的时间（秒）
+      public float time; //lyrics starting time
       public string text;
     }
 
@@ -69,7 +69,7 @@ public class InfoBubbleTrigger : MonoBehaviour
     public TMP_Text lyricsText;
     public List<LyricLine> lyrics = new List<LyricLine>();
     public float lyricScrollOffset = 20f;
-    public float lyricAnimSpeed = 10f;
+    public float lyricAnimSpeed = 20f;
     private int currentLyricIndex = -1;
     private Vector2 lyricsTargetPos;
     private CanvasGroup lyricsCanvasGroup;
