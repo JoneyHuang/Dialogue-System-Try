@@ -68,6 +68,8 @@ public class ExperimentHubController : MonoBehaviour
     [Tooltip("研究者重置所有进度的按钮 (可选)")]
     public Button resetAllButton;
 
+    public PoIHubItem CurrentPoI { get; private set; }
+
     [Header("Status Feedback Style")]
     public Color notStartedColor = new Color(0.6f, 0.6f, 0.6f, 1f); // 灰色
     public Color completedColor = new Color(0.18f, 0.75f, 0.35f, 1f); // 鲜明绿色
@@ -176,6 +178,7 @@ public class ExperimentHubController : MonoBehaviour
     {
         if (item == null) return;
 
+        CurrentPoI = item;
         Debug.Log($"[ExperimentHub] Arrival confirmed {item.poiId}...");
 
         // 进入 AR / Module 前，平滑淡出背景氛围音乐
@@ -316,6 +319,35 @@ public class ExperimentHubController : MonoBehaviour
 
         RefreshAllStatuses();
         Debug.Log("[ExperimentHub] 已重置所有 POI 状态！");
+    }
+
+    /// <summary>
+    /// Experiment Hub
+    /// </summary>
+    public void ReturnToHub()
+    {
+        if (CurrentPoI != null && CurrentPoI.poiTargetObject != null)
+        {
+            CurrentPoI.poiTargetObject.SetActive(false);
+        }
+
+        if (M01Controller.Instance != null)
+        {
+            M01Controller.Instance.HideCathedralModel();
+        }
+
+        if (hubPanel != null)
+        {
+            hubPanel.SetActive(true);
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.FadeInBGM(duration: 1.5f);
+        }
+
+        RefreshAllStatuses();
+        Debug.Log("[ExperimentHub] Returned to Hub via Researcher Console.");
     }
 
     private PoIHubItem GetItemById(string id)
