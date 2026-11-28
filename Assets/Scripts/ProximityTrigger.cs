@@ -93,33 +93,33 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
 
         float distance = Vector3.Distance(pinPos, camPos);
 
-        if (distance <= warningDistance && distance > triggerDistance)
-        {
-            // Breathing animation to attract attention
-            float t = Mathf.PingPong(Time.time * 1f, 1f);
-            transform.localScale = Vector3.Lerp(initialScale, initialScale * 1.25f, t);
-        }
-        
-        // 2 meters reminder
-        if (!hasShownProximityHint)
-        {
-            hasShownProximityHint = true;
-            var prompt = FindFirstObjectByType<PromptPanelController>(FindObjectsInactive.Include);
-            if (prompt != null)
-            {
-                prompt.ShowPrompt(
-                    "Approach or tap the heart to unlock someone's memory.",
-                    "Got it",
-                    photo: null,            
-                    enableBreathing: false  
-                );
-            }
-        }
-        
-        else if (distance <= triggerDistance)
+        // 1. Within 2m: Trigger content
+        if (distance <= triggerDistance)
         {
             TriggerPinAction();
         }
+        // 2. 2-5 meters: Breathing
+        else if (distance <= warningDistance)
+        {
+            float t = Mathf.PingPong(Time.time * 1f, 1f);
+            transform.localScale = Vector3.Lerp(initialScale, initialScale * 1.25f, t);
+
+            if (!hasShownProximityHint)
+            {
+                hasShownProximityHint = true;
+                var prompt = FindFirstObjectByType<PromptPanelController>(FindObjectsInactive.Include);
+                if (prompt != null)
+                {
+                    prompt.ShowPrompt(
+                        "Approach or tap the heart to unlock someone's memory.",
+                        " ",
+                        photo: null,
+                        enableBreathing: true
+                    );
+                }
+            }
+        }
+        // 3. Over 5m
         else
         {
             transform.localScale = initialScale;
@@ -150,6 +150,13 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
          if (AudioManager.Instance != null && triggerSound != null)
          {
             AudioManager.Instance.PlaySFX(triggerSound);
+         }
+
+         // 触发时隐藏之前弹出的地点寻找/靠近提示，避免与 MeetMePanel 叠层
+         var prompt = FindFirstObjectByType<PromptPanelController>(FindObjectsInactive.Include);
+         if (prompt != null)
+         {
+             prompt.Hide();
          }
          
          onTriggered?.Invoke();

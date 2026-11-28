@@ -204,7 +204,7 @@ public class ExperimentHubController : MonoBehaviour
         if (item.poiTargetObject != null)
         {
             item.poiTargetObject.SetActive(true);
-            Debug.Log($"[ExperimentHub] 已激活 {item.poiId} 的现场目标物体：{item.poiTargetObject.name}。");
+            Debug.Log($"[ExperimentHub] Activated{item.poiId}'s {item.poiTargetObject.name}");
         }
 
         // 2. 弹出 PromptPanel 提示用户前往指定地点并使用相机画面寻找 Pin
@@ -219,7 +219,7 @@ public class ExperimentHubController : MonoBehaviour
                 onConfirmed: null,
                 photo: item.locationPhoto,
                 enableBreathing: true,
-                buttonDelay: 3f
+                buttonDelay: 8f
             );
         }
         else
