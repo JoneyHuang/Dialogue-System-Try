@@ -150,12 +150,48 @@ public class ResearcherConsole : MonoBehaviour
             return;
         }
 
+        // 1. Clear dialogue panel and audio
+        var dialogue = FindFirstObjectByType<DialogueController>(FindObjectsInactive.Include);
+        if (dialogue != null)
+        {
+            dialogue.StopAllCoroutines();
+            var audio = dialogue.GetComponent<AudioSource>();
+            if (audio != null && audio.isPlaying) audio.Stop();
+            dialogue.gameObject.SetActive(false);
+        }
+
+        // 2. Hide prompt panel and MeetMe panel
+        var prompt = FindFirstObjectByType<PromptPanelController>(FindObjectsInactive.Include);
+        if (prompt != null) prompt.Hide();
+
+        var meetMe = FindFirstObjectByType<MeetMePanelController>(FindObjectsInactive.Include);
+        if (meetMe != null) meetMe.Hide();
+
+        // 3. According to the current module, clear the AR objects and panels
+        string poiId = hub.CurrentPoI.poiId;
+        if (poiId == "M1" && M01Controller.Instance != null)
+        {
+            M01Controller.Instance.HideAllPanels();
+        }
+        else if (poiId == "M2" && M02Controller.Instance != null)
+        {
+            M02Controller.Instance.HideAllPanels();
+        }
+        else if (poiId == "M3" && M03Controller.Instance != null)
+        {
+            M03Controller.Instance.HideAllPanels();
+            M03Controller.Instance.HideAllHotspots();
+        }
+
+        // 4. Reset Pin status and show it again
         var trigger = hub.CurrentPoI.poiTargetObject.GetComponent<ProximityTrigger>();
         if (trigger != null)
         {
             trigger.ResetTrigger();
-            Debug.Log($"[ResearcherConsole] Reset Pin trigger for {hub.CurrentPoI.poiId}.");
+            Debug.Log($"[ResearcherConsole] Cleaned UI and reset Pin trigger for {hub.CurrentPoI.poiId}.");
         }
+
+        SetConsoleVisible(false);
     }
 
     public void ToggleVpsDebugger()

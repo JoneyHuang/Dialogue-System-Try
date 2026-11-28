@@ -207,12 +207,19 @@ public class ExperimentHubController : MonoBehaviour
             Debug.Log($"[ExperimentHub] 已激活 {item.poiId} 的现场目标物体：{item.poiTargetObject.name}。");
         }
 
-        // 2. 弹出 PromptPanel 提示用户使用相机画面寻找爱心标记
+        // 2. 弹出 PromptPanel 提示用户前往指定地点并使用相机画面寻找 Pin
         if (promptPanelController != null)
         {
+            string locName = !string.IsNullOrEmpty(item.locationName) ? item.locationName : item.poiId;
+            string guideMessage = $"Walk to {locName} and spot the green heart pin.";
+
             promptPanelController.ShowPrompt(
-                "Look around and find the love heart. Approch or tap it to unlock the memory.",
-                "Got it"
+                guideMessage,
+                "Start Scanning",
+                onConfirmed: null,
+                photo: item.locationPhoto,
+                enableBreathing: true,
+                buttonDelay: 3f
             );
         }
         else
@@ -225,6 +232,8 @@ public class ExperimentHubController : MonoBehaviour
             }
         }
     }
+
+    
 
     /// <summary>
     /// 当任一 POI 流程完成时调用该方法
@@ -325,30 +334,56 @@ public class ExperimentHubController : MonoBehaviour
     /// Experiment Hub
     /// </summary>
     public void ReturnToHub()
+{
+    // 1. Close dialogue panel and voiceover
+    var dialogue = FindFirstObjectByType<DialogueController>(FindObjectsInactive.Include);
+    if (dialogue != null)
     {
-        if (CurrentPoI != null && CurrentPoI.poiTargetObject != null)
-        {
-            CurrentPoI.poiTargetObject.SetActive(false);
-        }
-
-        if (M01Controller.Instance != null)
-        {
-            M01Controller.Instance.HideCathedralModel();
-        }
-
-        if (hubPanel != null)
-        {
-            hubPanel.SetActive(true);
-        }
-
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.FadeInBGM(duration: 1.5f);
-        }
-
-        RefreshAllStatuses();
-        Debug.Log("[ExperimentHub] Returned to Hub via Researcher Console.");
+        dialogue.StopAllCoroutines();
+        var audio = dialogue.GetComponent<AudioSource>();
+        if (audio != null && audio.isPlaying) audio.Stop();
+        dialogue.gameObject.SetActive(false);
     }
+
+    // 2. Hide prompt panel
+    if (locationInfoPanel != null) locationInfoPanel.Hide();
+    if (promptPanelController != null) promptPanelController.Hide();
+
+    // 3. Modules clear up
+    if (M01Controller.Instance != null)
+    {
+        M01Controller.Instance.HideAllPanels();
+    }
+    if (M02Controller.Instance != null)
+    {
+        M02Controller.Instance.HideAllPanels();
+    }
+    if (M03Controller.Instance != null)
+    {
+        M03Controller.Instance.HideAllPanels();
+        M03Controller.Instance.HideAllHotspots();
+    }
+
+    // 4. Hide Pin
+    if (CurrentPoI != null && CurrentPoI.poiTargetObject != null)
+    {
+        CurrentPoI.poiTargetObject.SetActive(false);
+    }
+
+    // 5. Recall Hub panel
+    if (hubPanel != null)
+    {
+        hubPanel.SetActive(true);
+    }
+
+    if (AudioManager.Instance != null)
+    {
+        AudioManager.Instance.FadeInBGM(duration: 1.5f);
+    }
+
+    RefreshAllStatuses();
+    Debug.Log("[ExperimentHub] Returned to Hub cleanly via Researcher Console.");
+}
 
     private PoIHubItem GetItemById(string id)
     {

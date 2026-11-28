@@ -63,7 +63,11 @@ public class M03Controller : MonoBehaviour
 
     [Tooltip("Root or trigger for the Stone hotspot.")]
     public GameObject hotspotStone;
-
+   
+    [Header("Depth Cubes (Occlusion)")]
+    [Tooltip("Depth cubes for PoI3 to be shown during exploration and hidden otherwise.")]
+   
+    public List<GameObject> depthCubes = new List<GameObject>();
     [Header("Exploration Hub HUD (Progress & Agency)")]
     [Tooltip("Root UI GameObject for the exploration HUD during M03.")]
     public GameObject explorationHudRoot;
@@ -118,6 +122,8 @@ public class M03Controller : MonoBehaviour
     {
         HideAllHotspots();
         HideAllPanels();
+        //HidetheDepthCube
+        HideAllDepthCubes();
         WireHudButtons();
 
         if (autoStartOnPlay)
@@ -155,6 +161,23 @@ public class M03Controller : MonoBehaviour
             hotspotChoir = GameObject.Find("HotSpot (Choir)");
         if (hotspotStone == null)
             hotspotStone = GameObject.Find("HotSpot (Stone)");
+
+        // Auto-find DepthCube
+        if (depthCubes == null || depthCubes.Count == 0)
+        {
+            depthCubes = new List<GameObject>();
+            GameObject poi3 = GameObject.Find("PoI3");
+            if (poi3 != null)
+            {
+                foreach (Transform child in poi3.transform)
+                {
+                    if (child.name.Contains("DepthCube"))
+                    {
+                        depthCubes.Add(child.gameObject);
+                    }
+                }
+            }
+        }
     }
 
     private void WireHudButtons()
@@ -339,6 +362,7 @@ public class M03Controller : MonoBehaviour
 
         // Show all 3 hotspots
         ShowAllHotspots();
+        ShowAllDepthCubes();
         SubscribeHotspotEvents();
 
         // Show Exploration HUD
@@ -502,8 +526,11 @@ public class M03Controller : MonoBehaviour
         Debug.Log("[M03Controller] Exiting exploration, entering Reflection.");
 
         HideAllHotspots();
+        HideAllDepthCubes(); 
+    
         if (explorationHudRoot != null) explorationHudRoot.SetActive(false);
         if (confirmFinishDialog != null) confirmFinishDialog.SetActive(false);
+
 
         string text = storyData != null && !string.IsNullOrEmpty(storyData.reflectionPrompt)
             ? storyData.reflectionPrompt
@@ -561,5 +588,23 @@ public class M03Controller : MonoBehaviour
         if (dialogueController != null) dialogueController.gameObject.SetActive(false);
         if (explorationHudRoot != null) explorationHudRoot.SetActive(false);
         if (confirmFinishDialog != null) confirmFinishDialog.SetActive(false);
+    }
+
+    public void ShowAllDepthCubes()
+    {
+        if (depthCubes == null) return;
+        foreach (var cube in depthCubes)
+        {
+            if (cube != null) cube.SetActive(true);
+        }
+    }
+
+    public void HideAllDepthCubes()
+    {
+        if (depthCubes == null) return;
+        foreach (var cube in depthCubes)
+        {
+            if (cube != null) cube.SetActive(false);
+        }
     }
 }

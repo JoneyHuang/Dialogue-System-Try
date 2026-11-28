@@ -41,6 +41,7 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
     public float maxClickDistance = 2.0f;
     private Vector3 initialScale;
     private bool hasTriggered = false;
+    private bool hasShownProximityHint = false;
 
     void Awake()
     {
@@ -70,6 +71,7 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
     public void ResetTriggerState()
     {
         hasTriggered = false;
+        hasShownProximityHint = false;
         if (initialScale != Vector3.zero)
         {
             transform.localScale = initialScale;
@@ -97,6 +99,23 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
             float t = Mathf.PingPong(Time.time * 1f, 1f);
             transform.localScale = Vector3.Lerp(initialScale, initialScale * 1.25f, t);
         }
+        
+        // 2 meters reminder
+        if (!hasShownProximityHint)
+        {
+            hasShownProximityHint = true;
+            var prompt = FindFirstObjectByType<PromptPanelController>(FindObjectsInactive.Include);
+            if (prompt != null)
+            {
+                prompt.ShowPrompt(
+                    "Approach or tap the heart to unlock someone's memory.",
+                    "Got it",
+                    photo: null,            
+                    enableBreathing: false  
+                );
+            }
+        }
+        
         else if (distance <= triggerDistance)
         {
             TriggerPinAction();
@@ -127,7 +146,7 @@ public class ProximityTrigger : MonoBehaviour, IPointerClickHandler
          hasTriggered = true;
          Debug.Log($"[ProximityTrigger] Pin '{gameObject.name}' reached! Invoking onTriggered event.");
          
-         // 统一在此处播放触发音效（无论是靠近、碰撞还是点击触发，都会播放）
+         // Trigger audio
          if (AudioManager.Instance != null && triggerSound != null)
          {
             AudioManager.Instance.PlaySFX(triggerSound);

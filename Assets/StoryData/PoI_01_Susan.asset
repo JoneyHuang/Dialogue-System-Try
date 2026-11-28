@@ -44,9 +44,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 049b8b87d25e9f34ea3a7b1647631674, type: 3}
   - {fileID: 8300000, guid: 97294186df02df54abfc8056a4826ed5, type: 3}
   - {fileID: 8300000, guid: 1def5b0233171c641abe4c31884dace0, type: 3}
-  alignmentPrompt: 'Point your camera to the Cathedral site, and observe what used
-    to stand here in the Square. You can choose 2D historical and 3D model to observe.
-    Slide the bar to adjust the opacity of historical photos. '
+  alignmentPrompt: "Point your camera to the Cathedral site, and observe what used
+    to stand here in the Square. \nYou can choose 2D historical and 3D model to observe.
+    \nSlide the bar to adjust the opacity of historical photos. "
   alignmentButtonText: Okay
   interactionInstruction: 
   interactionButtonText: Got it
